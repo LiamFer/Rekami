@@ -65,6 +65,7 @@ Rekami
    │  └─ tsconfig.json           # Configuração do TypeScript
    └─ Microservices
        └─ (em desenvolvimento)
+```
 
 ## 🔐 Autenticação
 
