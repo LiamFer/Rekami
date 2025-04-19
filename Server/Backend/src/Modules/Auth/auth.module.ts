@@ -12,6 +12,7 @@ import { ConfigModule } from '@nestjs/config';
 import { JwtStrategy } from 'src/Strategies/jwt.strategy';
 import refreshJwtConfig from 'src/Config/refresh-jwt.config';
 import { RefreshJwtStrategy } from 'src/Strategies/refresh.strategy';
+import { RedisService } from '../Redis/redis.service';
 
 @Module({
   imports: [
@@ -21,6 +22,14 @@ import { RefreshJwtStrategy } from 'src/Strategies/refresh.strategy';
     ConfigModule.forFeature(refreshJwtConfig),
   ],
   controllers: [AuthController],
-  providers: [AuthService, UserService, LocalStrategy,JwtStrategy,RefreshJwtStrategy,GoogleStrategy],
+  providers: [
+    AuthService,
+    UserService,
+    RedisService,
+    LocalStrategy,
+    JwtStrategy,
+    RefreshJwtStrategy,
+    GoogleStrategy,
+  ],
 })
 export class AuthModule {}

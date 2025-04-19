@@ -9,12 +9,14 @@ import * as bcrypt from 'bcrypt';
 import { UserService } from '../User/user.service';
 import refreshJwtConfig from 'src/Config/refresh-jwt.config';
 import { ConfigType } from '@nestjs/config';
+import { RedisService } from './../Redis/redis.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private jwtService: JwtService,
     private userService: UserService,
+    private redisService: RedisService,
     @Inject(refreshJwtConfig.KEY)
     private refreshTokenConfig: ConfigType<typeof refreshJwtConfig>,
   ) {}
@@ -24,18 +26,24 @@ export class AuthService {
     return await this.userService.createUser(name, email, hashedPassword);
   }
 
-  login(userID: string) {
-    const token = this.jwtService.sign({ id: userID });
-    const refreshToken = this.jwtService.sign(
-      { id: userID },
-      this.refreshTokenConfig,
-    );
+  async login(userID: string) {
+    const { token, refreshToken } = await this.generateTokens(userID);
+    this.redisService.setRefreshToken(userID, refreshToken);
     return { id: userID, token, refreshToken };
   }
 
   async refreshToken(userID: string) {
-    const token = this.jwtService.sign({ id: userID });
-    return { id: userID, token}
+    const { token, refreshToken } = await this.generateTokens(userID);
+    this.redisService.setRefreshToken(userID, refreshToken);
+    return { id: userID, token, refreshToken };
+  }
+
+  async generateTokens(userID: string) {
+    const [token, refreshToken] = await Promise.all([
+      this.jwtService.signAsync({ id: userID }),
+      this.jwtService.signAsync({ id: userID }, this.refreshTokenConfig),
+    ]);
+    return { token, refreshToken };
   }
 
   async validateUser(email: string, password: string) {

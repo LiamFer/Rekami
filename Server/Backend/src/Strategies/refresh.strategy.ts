@@ -3,6 +3,7 @@ import { ConfigType } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import refreshJwtConfig from 'src/Config/refresh-jwt.config';
+import { Request } from 'express';
 
 @Injectable()
 export class RefreshJwtStrategy extends PassportStrategy(
@@ -17,10 +18,12 @@ export class RefreshJwtStrategy extends PassportStrategy(
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: refreshJwtConfiguration.secret as string,
       ignoreExpiration: false,
+      passReqToCallback: true,
     });
   }
 
-  validate(payload) {
+  validate(req : Request,payload) {
+    console.log(req.headers)
     return { id: payload.id };
   }
 }
