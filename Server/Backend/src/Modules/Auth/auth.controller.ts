@@ -11,6 +11,7 @@ import { AuthService } from './auth.service';
 import { GoogleAuthGuard } from 'src/guards/google-auth/google-auth.guard';
 import { LocalAuthGuard } from 'src/guards/local-auth/local-auth.guard';
 import { RefreshAuthGuard } from 'src/guards/refresh-auth/refresh-auth.guard';
+import { UserDTO } from 'src/DTO/user.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -18,7 +19,7 @@ export class AuthController {
 
   @Post('register')
   async Register(
-    @Body() body: { name: string; email: string; password: string },
+    @Body() body: UserDTO,
   ) {
     const { email, name, password } = body;
     return await this.authService.register(name, email, password);

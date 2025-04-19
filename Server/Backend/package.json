@@ -27,12 +27,14 @@
     "@nestjs/jwt": "^11.0.0",
     "@nestjs/passport": "^11.0.5",
     "@nestjs/platform-express": "^11.0.1",
+    "@nestjs/swagger": "^11.1.4",
     "@nestjs/typeorm": "^11.0.0",
     "argon2": "^0.41.1",
     "bcrypt": "^5.1.1",
     "cloudinary": "^2.6.0",
     "cookie-parser": "^1.4.7",
     "dotenv": "^16.5.0",
+    "helmet": "^8.1.0",
     "passport": "^0.7.0",
     "passport-github2": "^0.1.12",
     "passport-google-oauth20": "^2.0.0",
@@ -41,7 +43,9 @@
     "pg": "^8.14.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
-    "typeorm": "^0.3.22"
+    "swagger-ui-express": "^5.0.1",
+    "typeorm": "^0.3.22",
+    "zod": "^3.24.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",

@@ -2,6 +2,7 @@ import {
   HttpStatus,
   Inject,
   Injectable,
+  NotAcceptableException,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -14,6 +15,7 @@ import { ConfigType } from '@nestjs/config';
 import { RedisService } from './../Redis/redis.service';
 import { Response } from 'express';
 import { ResUtil } from 'src/utils/response';
+import { ZodValidateUser } from 'src/DTO/user.dto';
 
 @Injectable()
 export class AuthService {
@@ -26,6 +28,9 @@ export class AuthService {
   ) {}
 
   async register(name: string, email: string, password: string) {
+    // Validação se o recebido atende os Requisitos de Novo User
+    const validation = ZodValidateUser.safeParse({name, email,password})
+    if(!validation.success) throw new NotAcceptableException("Fields doesn't fill the Minimum Requirements.")
     const hashedPassword = await bcrypt.hash(password, 7);
     return await this.userService.createUser(name, email, hashedPassword);
   }
@@ -33,7 +38,7 @@ export class AuthService {
   async login(userID: string, res: Response) {
     const { token, refreshToken } = await this.generateTokens(userID);
     await this.redisService.setRefreshToken(userID, refreshToken, res);
-    return ResUtil.sendResponse(res, HttpStatus.OK, 'Login Realizado', {
+    return ResUtil.sendResponse(res, HttpStatus.OK, 'Logged In', {
       id: userID,
       token,
     });
