@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { GoogleAuthGuard } from 'src/guards/google-auth/google-auth.guard';
 import { LocalAuthGuard } from 'src/guards/local-auth/local-auth.guard';
@@ -13,29 +21,29 @@ export class AuthController {
     @Body() body: { name: string; email: string; password: string },
   ) {
     const { email, name, password } = body;
-    return await this.authService.register(name,email, password);
+    return await this.authService.register(name, email, password);
   }
 
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  async Login(@Req() req) {
-    return this.authService.login(req.user.id)
+  async Login(@Req() req, @Res() res) {
+    return this.authService.login(req.user.id, res);
   }
 
   @UseGuards(RefreshAuthGuard)
   @Post('refresh')
-  async refreshToken(@Req() req) {
-    return await this.authService.refreshToken(req.user.id)
+  async refreshToken(@Req() req, @Res() res) {
+    return await this.authService.refreshToken(req.user.id, res);
   }
 
   // Login com OAuth
   @UseGuards(GoogleAuthGuard)
   @Get('google/login')
-  googleLogin(){}
+  googleLogin() {}
 
   @UseGuards(GoogleAuthGuard)
   @Get('google/callback')
-  googleCallback(@Req() req) {
-    return this.authService.login(req.user.id)
+  googleCallback(@Req() req, @Res() res) {
+    return this.authService.login(req.user.id, res);
   }
 }

@@ -1,4 +1,5 @@
 import {
+  HttpStatus,
   Inject,
   Injectable,
   NotFoundException,
@@ -6,10 +7,13 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import * as argon2 from 'argon2';
 import { UserService } from '../User/user.service';
 import refreshJwtConfig from 'src/Config/refresh-jwt.config';
 import { ConfigType } from '@nestjs/config';
 import { RedisService } from './../Redis/redis.service';
+import { Response } from 'express';
+import { ResUtil } from 'src/utils/response';
 
 @Injectable()
 export class AuthService {
@@ -26,16 +30,22 @@ export class AuthService {
     return await this.userService.createUser(name, email, hashedPassword);
   }
 
-  async login(userID: string) {
+  async login(userID: string, res: Response) {
     const { token, refreshToken } = await this.generateTokens(userID);
-    this.redisService.setRefreshToken(userID, refreshToken);
-    return { id: userID, token, refreshToken };
+    await this.redisService.setRefreshToken(userID, refreshToken, res);
+    return ResUtil.sendResponse(res, HttpStatus.OK, 'Login Realizado', {
+      id: userID,
+      token,
+    });
   }
 
-  async refreshToken(userID: string) {
+  async refreshToken(userID: string, res: Response) {
     const { token, refreshToken } = await this.generateTokens(userID);
-    this.redisService.setRefreshToken(userID, refreshToken);
-    return { id: userID, token, refreshToken };
+    await this.redisService.setRefreshToken(userID, refreshToken, res);
+    return ResUtil.sendResponse(res, HttpStatus.OK, 'Token Refreshed', {
+      id: userID,
+      token,
+    });
   }
 
   async generateTokens(userID: string) {
@@ -52,5 +62,11 @@ export class AuthService {
     const passwordCompare = await bcrypt.compare(password, user.password);
     if (!passwordCompare) throw new UnauthorizedException();
     return { id: user.id };
+  }
+
+  async validateRefreshToken(userID: string, refreshToken: string) {
+    const hashedRefreshToken = await this.redisService.get(`refresh:${userID}`);
+    if(!hashedRefreshToken) throw new UnauthorizedException
+    return argon2.verify(hashedRefreshToken,refreshToken)
   }
 }

@@ -1,6 +1,7 @@
 import { Injectable, OnModuleDestroy } from '@nestjs/common';
 import Redis from 'ioredis';
-import * as argon2 from "argon2";
+import * as argon2 from 'argon2';
+import { Response } from 'express';
 
 @Injectable()
 export class RedisService implements OnModuleDestroy {
@@ -15,8 +16,7 @@ export class RedisService implements OnModuleDestroy {
       port: +process.env.REDIS_PORT,
     });
 
-    this.client.on('connect', () => {
-    });
+    this.client.on('connect', () => {});
 
     this.client.on('error', (err) => {
       console.error('[Redis] Erro:', err);
@@ -30,9 +30,19 @@ export class RedisService implements OnModuleDestroy {
     return this.client.set(key, value);
   }
 
-  async setRefreshToken(userID: string, refreshToken: string) {
-    const hashedRefreshToken = await argon2.hash(refreshToken)
-    return this.client.set(`refresh:${userID}`, hashedRefreshToken,"EX",60 * 60 * 24); // Expira em 1 dia tempo do RefreshToken
+  async setRefreshToken(userID: string, refreshToken: string, res: Response) {
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict', 
+    });
+    const hashedRefreshToken = await argon2.hash(refreshToken);
+    return this.client.set(
+      `refresh:${userID}`,
+      hashedRefreshToken,
+      'EX',
+      60 * 60 * 24,
+    ); // Expira em 1 dia tempo do RefreshToken
   }
 
   async get(key: string): Promise<string | null> {
