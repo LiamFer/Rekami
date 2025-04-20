@@ -1,6 +1,6 @@
 import * as request from 'supertest';
 import { Test } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
+import { HttpStatus, INestApplication } from '@nestjs/common';
 import { AppModule } from '../../app.module';
 import * as cookieParser from 'cookie-parser';
 import helmet from 'helmet';
@@ -23,7 +23,7 @@ describe('RefreshAuthGuard (e2e)', () => {
     return request(app.getHttpServer())
       .post('/auth/refresh')
       .set('Cookie', [`refreshToken=${validRefreshToken}`])
-      .expect(200)
+      .expect(HttpStatus.OK)
       .expect((res) => {
         expect(res.body.message).toBe("Token Refreshed");
       });
@@ -33,7 +33,7 @@ describe('RefreshAuthGuard (e2e)', () => {
     return request(app.getHttpServer())
       .post('/auth/refresh')
       .set('Cookie', [`refreshToken=invalidtoken`])
-      .expect(401);
+      .expect(HttpStatus.UNAUTHORIZED);
   });
 
   afterAll(async () => {
