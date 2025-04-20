@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from './Database/database.module';
 import { UserModule } from './Modules/User/user.module';
