@@ -8,9 +8,9 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { GoogleAuthGuard } from 'src/guards/google-auth/google-auth.guard';
-import { LocalAuthGuard } from 'src/guards/local-auth/local-auth.guard';
-import { RefreshAuthGuard } from 'src/guards/refresh-auth/refresh-auth.guard';
+import { GoogleAuthGuard } from 'src/Guards/google-auth/google-auth.guard';
+import { LocalAuthGuard } from 'src/Guards/local-auth/local-auth.guard';
+import { RefreshAuthGuard } from 'src/Guards/refresh-auth/refresh-auth.guard';
 import { UserDTO } from 'src/DTO/user.dto';
 
 @Controller('auth')

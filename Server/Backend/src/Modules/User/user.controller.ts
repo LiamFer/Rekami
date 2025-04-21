@@ -1,6 +1,8 @@
 import {
   Controller,
   Get,
+  MaxFileSizeValidator,
+  ParseFilePipe,
   Post,
   Req,
   Res,
@@ -9,7 +11,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { JwtAuthGuard } from 'src/guards/jwt-auth/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/Guards/jwt-auth/jwt-auth.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 @UseGuards(JwtAuthGuard)
@@ -25,10 +27,15 @@ export class UserController {
   @Post('upload/photo')
   @UseInterceptors(FileInterceptor('file'))
   async uploadPhoto(
-    @UploadedFile() file: Express.Multer.File,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [new MaxFileSizeValidator({ maxSize: 2 * 1024 * 1024 })],
+      }),
+    )
+    file: Express.Multer.File,
     @Req() req,
     @Res() res,
   ) {
-    return await this.userService.uploadPicture(file, req.user.id,res);
+    return await this.userService.uploadPicture(file, req.user.id, res);
   }
 }
