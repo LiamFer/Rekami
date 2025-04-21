@@ -1,5 +1,6 @@
 import {
   Controller,
+  FileTypeValidator,
   Get,
   MaxFileSizeValidator,
   ParseFilePipe,
@@ -29,7 +30,10 @@ export class UserController {
   async uploadPhoto(
     @UploadedFile(
       new ParseFilePipe({
-        validators: [new MaxFileSizeValidator({ maxSize: 2 * 1024 * 1024 })],
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 2 * 1024 * 1024 }),
+          new FileTypeValidator({ fileType: /^image/ }),
+        ],
       }),
     )
     file: Express.Multer.File,
