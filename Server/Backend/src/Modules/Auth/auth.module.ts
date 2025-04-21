@@ -13,6 +13,7 @@ import { JwtStrategy } from 'src/Strategies/jwt.strategy';
 import refreshJwtConfig from 'src/Config/refresh-jwt.config';
 import { RefreshJwtStrategy } from 'src/Strategies/refresh.strategy';
 import { RedisService } from '../Redis/redis.service';
+import { CloudinaryService } from '../Cloudinary/cloudinary.service';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { RedisService } from '../Redis/redis.service';
     AuthService,
     UserService,
     RedisService,
+    CloudinaryService,
     LocalStrategy,
     JwtStrategy,
     RefreshJwtStrategy,

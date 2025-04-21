@@ -3,6 +3,7 @@ import {
   Get,
   Post,
   Req,
+  Res,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -23,8 +24,11 @@ export class UserController {
 
   @Post('upload/photo')
   @UseInterceptors(FileInterceptor('file'))
-  uploadPhoto(@UploadedFile() file: Express.Multer.File, @Req() req) {
-    console.log(file);
-    return req.user;
+  async uploadPhoto(
+    @UploadedFile() file: Express.Multer.File,
+    @Req() req,
+    @Res() res,
+  ) {
+    return await this.userService.uploadPicture(file, req.user.id,res);
   }
 }
