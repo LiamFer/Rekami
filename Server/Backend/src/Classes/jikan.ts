@@ -18,8 +18,16 @@ export default class JikanAPI {
     return await this.api.get(`anime/${id}/characters`).then(res => res.data)
   }
 
+  async getAnimeRecommendations(id:number) {
+    return await this.api.get(`anime/${id}/recommendations`).then(res => res.data)
+  }
+
   async getRecentAnimeRecommendations(page:number) {
     return await this.api.get(`recommendations/anime`,{params:{page}}).then(res => res.data)
+  }
+
+  async getSeasonsNow(page:number) {
+    return await this.api.get(`seasons/now`).then(res => res.data)
   }
 
 

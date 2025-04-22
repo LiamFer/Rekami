@@ -13,8 +13,20 @@ export class JikanService {
     this.Jikan = new JikanAPI();
   }
 
-  async getAnimeRecommendations(page:number) {
+  async getAnime(id:number) {
+    return await this.Jikan.getAnimeFullById(id);
+  }
+
+  async getAnimeRecommendation(id:number) {
+    return await this.Jikan.getAnimeRecommendations(id);
+  }
+
+  async getRecentRecommendations(page:number) {
     return await this.Jikan.getRecentAnimeRecommendations(page);
+  }
+
+  async getSeason(page:number) {
+    return await this.Jikan.getSeasonsNow(page);
   }
 
 
