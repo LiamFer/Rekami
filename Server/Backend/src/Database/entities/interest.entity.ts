@@ -1,4 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { mediaType } from 'src/Types/mediaType';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { User } from './user.entity';
+import { interestValue } from 'src/Types/interestValue';
 
 @Entity()
 export class Interest {
@@ -6,9 +9,14 @@ export class Interest {
   id: number;
 
   @Column()
-  objectId: number;
+  mediaId: number;
 
-  @Column()
-  value: string;
+  @Column({ type: 'enum', enum: mediaType, default: mediaType.anime })
+  mediaType: mediaType;
 
+  @Column({ type: 'enum', enum: interestValue })
+  value: interestValue;
+
+  @ManyToOne(() => User, (user) => user.interests, { onDelete: 'CASCADE' })
+  user: User;
 }

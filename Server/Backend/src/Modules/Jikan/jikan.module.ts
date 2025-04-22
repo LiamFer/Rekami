@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
-import { JikanService } from './jinkan.service';
+import { JikanService } from './jikan.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/Database/entities/user.entity';
-import { JikanController } from './jinkan.controller';
+import { JikanController } from './jikan.controller';
+import { Interest } from 'src/Database/entities/interest.entity';
 
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User])],
+  imports: [TypeOrmModule.forFeature([User,Interest])],
   controllers: [JikanController],
   providers: [JikanService],
 })

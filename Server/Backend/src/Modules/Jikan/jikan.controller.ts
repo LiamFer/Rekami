@@ -1,6 +1,6 @@
 import { Controller, Get, Param, Query, Req, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/Guards/jwt-auth/jwt-auth.guard';
-import { JikanService } from './jinkan.service';
+import { JikanService } from './jikan.service';
 
 @UseGuards(JwtAuthGuard)
 @Controller('jikan')
