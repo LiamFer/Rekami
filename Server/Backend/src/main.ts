@@ -4,11 +4,20 @@ import { AppModule } from './app.module';
 import * as cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ValidationPipe } from '@nestjs/common/pipes/validation.pipe';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(cookieParser());
   app.use(helmet());
+
+  // Pra fazer Validação do Body automática
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true, // Remove os campos que não estão no DTO
+      transform: true, // Transforma payloads para o tipo certo
+    }),
+  );
 
   const config = new DocumentBuilder()
     .setTitle('Rekami API')
