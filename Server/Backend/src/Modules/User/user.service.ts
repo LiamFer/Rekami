@@ -15,12 +15,15 @@ import { UserInfoDTO } from 'src/DTO/userInfo.dto';
 import { EditEmailDTO } from 'src/DTO/EditUser/editEmail.dto';
 import { EditPasswordDTO } from 'src/DTO/EditUser/editPassword.dto';
 import { AuthService } from '../Auth/auth.service';
+import { DeleteUserDTO } from 'src/DTO/EditUser/deleteUser.dto';
+import { RedisService } from '../Redis/redis.service';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
     private cloudinaryService: CloudinaryService,
+    private redisService : RedisService
   ) {}
 
   async createUser(name: string, email: string, password: string) {
@@ -80,9 +83,15 @@ export class UserService {
     await this.checkUserPassword(userID, info.password);
 
     // Conferir se a nova senha é igual a antiga
-    const user = await this.findById(userID) as User
-    const passwordCompare = await bcrypt.compare(info.newPassword, user.password);
-    if (passwordCompare) throw new ConflictException("New Password can't be the same as the Old Password")
+    const user = (await this.findById(userID)) as User;
+    const passwordCompare = await bcrypt.compare(
+      info.newPassword,
+      user.password,
+    );
+    if (passwordCompare)
+      throw new ConflictException(
+        "New Password can't be the same as the Old Password",
+      );
 
     const newPassword = await bcrypt.hash(info.newPassword, 7);
     const editedUser = await this.updateUser(userID, { password: newPassword });
@@ -92,4 +101,11 @@ export class UserService {
       email: editedUser?.email,
     };
   }
+
+  async deleteUser(userID: string, info: DeleteUserDTO, res: Response) {
+    await this.checkUserPassword(userID, info.password);
+    await this.userRepository.delete({id:userID})
+    await this.redisService.del(`refresh:${userID}`)
+    return ResUtil.sendResponse(res,HttpStatus.NO_CONTENT)
+}
 }

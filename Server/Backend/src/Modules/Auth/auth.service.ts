@@ -1,4 +1,5 @@
 import {
+  ConflictException,
   HttpStatus,
   Inject,
   Injectable,
@@ -33,6 +34,10 @@ export class AuthService {
       throw new NotAcceptableException(
         "Fields doesn't fill the Minimum Requirements.",
       );
+    // Verificando se o Email já está sendo utilizado
+    const emailInUse = await this.userService.findByEmail(email);
+    if (emailInUse) throw new ConflictException('Email already in use!');
+
     const hashedPassword = await bcrypt.hash(password, 7);
     return await this.userService.createUser(name, email, hashedPassword);
   }

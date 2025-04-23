@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   FileTypeValidator,
   Get,
   MaxFileSizeValidator,
@@ -18,6 +19,7 @@ import { JwtAuthGuard } from 'src/Guards/jwt-auth/jwt-auth.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { EditEmailDTO } from 'src/DTO/EditUser/editEmail.dto';
 import { EditPasswordDTO } from 'src/DTO/EditUser/editPassword.dto';
+import { DeleteUserDTO } from 'src/DTO/EditUser/deleteUser.dto';
 
 @UseGuards(JwtAuthGuard)
 @Controller('user')
@@ -55,5 +57,10 @@ export class UserController {
   @Patch('password')
   editPassword(@Req() req, @Body() body: EditPasswordDTO) {
     return this.userService.editPassword(req.user.id, body);
+  }
+
+  @Post('delete')
+  deleteUser(@Req() req, @Body() body: DeleteUserDTO, @Res() res) {
+    return this.userService.deleteUser(req.user.id,body,res)
   }
 }
