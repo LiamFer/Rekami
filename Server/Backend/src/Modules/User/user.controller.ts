@@ -1,9 +1,11 @@
 import {
+  Body,
   Controller,
   FileTypeValidator,
   Get,
   MaxFileSizeValidator,
   ParseFilePipe,
+  Patch,
   Post,
   Req,
   Res,
@@ -14,13 +16,14 @@ import {
 import { UserService } from './user.service';
 import { JwtAuthGuard } from 'src/Guards/jwt-auth/jwt-auth.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { EditEmailDTO } from 'src/DTO/EditUser/editEmail.dto';
 
 @UseGuards(JwtAuthGuard)
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get('profile')
+  @Get('me')
   getProfile(@Req() req) {
     return req.user;
   }
@@ -41,5 +44,10 @@ export class UserController {
     @Res() res,
   ) {
     return await this.userService.uploadPicture(file, req.user.id, res);
+  }
+
+  @Patch('email')
+  editUser(@Req() req, @Body() body: EditEmailDTO) {
+    return this.userService.editEmail(req.user.id,body);
   }
 }

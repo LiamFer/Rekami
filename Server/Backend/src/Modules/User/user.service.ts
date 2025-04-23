@@ -1,4 +1,10 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  HttpStatus,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/Database/entities/user.entity';
 import { Repository } from 'typeorm';
@@ -6,6 +12,7 @@ import { CloudinaryService } from '../Cloudinary/cloudinary.service';
 import { ResUtil } from 'src/utils/response';
 import { Response } from 'express';
 import { UserInfoDTO } from 'src/DTO/userInfo.dto';
+import { EditEmailDTO } from 'src/DTO/EditUser/editEmail.dto';
 
 @Injectable()
 export class UserService {
@@ -20,11 +27,16 @@ export class UserService {
   }
 
   async updateUser(userID: string, userInfo: UserInfoDTO) {
-    return await this.userRepository.update({ id: userID }, userInfo);
+    await this.userRepository.update({ id: userID }, userInfo);
+    return await this.findById(userID);
   }
 
   async findByEmail(email: string) {
     return await this.userRepository.findOneBy({ email });
+  }
+
+  async findById(id: string) {
+    return await this.userRepository.findOneBy({ id });
   }
 
   async uploadPicture(
@@ -33,12 +45,32 @@ export class UserService {
     res: Response,
   ) {
     const uploadData = await this.cloudinaryService.upload(file, userID);
-    await this.updateUser(userID,{picture:uploadData?.url})
+    await this.updateUser(userID, { picture: uploadData?.url });
     return ResUtil.sendResponse(
       res,
       HttpStatus.OK,
       'Photo Uploaded',
       uploadData?.url,
     );
+  }
+
+  async checkUserPassword(userID: string, password: string) {
+    const user = await this.findById(userID);
+    if (!user) throw new UnauthorizedException();
+    const passwordCompare = await bcrypt.compare(password, user.password);
+    if (!passwordCompare) throw new UnauthorizedException();
+    return true;
+  }
+
+  async editEmail(userID: string, info: EditEmailDTO) {
+    await this.checkUserPassword(userID, info.password);
+    const emailInUse = await this.findByEmail(info.email);
+    if (emailInUse) throw new ConflictException('Email already in use!');
+    const editedUser = await this.updateUser(userID, { email: info.email });
+    return {
+      id: editedUser?.id,
+      name: editedUser?.name,
+      email: editedUser?.email,
+    };
   }
 }
