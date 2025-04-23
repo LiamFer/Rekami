@@ -17,6 +17,7 @@ import { UserService } from './user.service';
 import { JwtAuthGuard } from 'src/Guards/jwt-auth/jwt-auth.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { EditEmailDTO } from 'src/DTO/EditUser/editEmail.dto';
+import { EditPasswordDTO } from 'src/DTO/EditUser/editPassword.dto';
 
 @UseGuards(JwtAuthGuard)
 @Controller('user')
@@ -47,7 +48,12 @@ export class UserController {
   }
 
   @Patch('email')
-  editUser(@Req() req, @Body() body: EditEmailDTO) {
-    return this.userService.editEmail(req.user.id,body);
+  editEmail(@Req() req, @Body() body: EditEmailDTO) {
+    return this.userService.editEmail(req.user.id, body);
+  }
+
+  @Patch('password')
+  editPassword(@Req() req, @Body() body: EditPasswordDTO) {
+    return this.userService.editPassword(req.user.id, body);
   }
 }

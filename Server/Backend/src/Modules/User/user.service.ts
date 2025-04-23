@@ -13,6 +13,8 @@ import { ResUtil } from 'src/utils/response';
 import { Response } from 'express';
 import { UserInfoDTO } from 'src/DTO/userInfo.dto';
 import { EditEmailDTO } from 'src/DTO/EditUser/editEmail.dto';
+import { EditPasswordDTO } from 'src/DTO/EditUser/editPassword.dto';
+import { AuthService } from '../Auth/auth.service';
 
 @Injectable()
 export class UserService {
@@ -67,6 +69,23 @@ export class UserService {
     const emailInUse = await this.findByEmail(info.email);
     if (emailInUse) throw new ConflictException('Email already in use!');
     const editedUser = await this.updateUser(userID, { email: info.email });
+    return {
+      id: editedUser?.id,
+      name: editedUser?.name,
+      email: editedUser?.email,
+    };
+  }
+
+  async editPassword(userID: string, info: EditPasswordDTO) {
+    await this.checkUserPassword(userID, info.password);
+
+    // Conferir se a nova senha é igual a antiga
+    const user = await this.findById(userID) as User
+    const passwordCompare = await bcrypt.compare(info.newPassword, user.password);
+    if (passwordCompare) throw new ConflictException("New Password can't be the same as the Old Password")
+
+    const newPassword = await bcrypt.hash(info.newPassword, 7);
+    const editedUser = await this.updateUser(userID, { password: newPassword });
     return {
       id: editedUser?.id,
       name: editedUser?.name,

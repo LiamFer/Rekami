@@ -28,8 +28,11 @@ export class AuthService {
 
   async register(name: string, email: string, password: string) {
     // Validação se o recebido atende os Requisitos de Novo User
-    const validation = ZodValidateUser.safeParse({name, email,password})
-    if(!validation.success) throw new NotAcceptableException("Fields doesn't fill the Minimum Requirements.")
+    const validation = ZodValidateUser.safeParse({ name, email, password });
+    if (!validation.success)
+      throw new NotAcceptableException(
+        "Fields doesn't fill the Minimum Requirements.",
+      );
     const hashedPassword = await bcrypt.hash(password, 7);
     return await this.userService.createUser(name, email, hashedPassword);
   }
@@ -70,7 +73,7 @@ export class AuthService {
 
   async validateRefreshToken(userID: string, refreshToken: string) {
     const hashedRefreshToken = await this.redisService.get(`refresh:${userID}`);
-    if(!hashedRefreshToken) throw new UnauthorizedException
-    return argon2.verify(hashedRefreshToken,refreshToken)
+    if (!hashedRefreshToken) throw new UnauthorizedException();
+    return argon2.verify(hashedRefreshToken, refreshToken);
   }
 }
