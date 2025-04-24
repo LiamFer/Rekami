@@ -13,12 +13,14 @@ import { UserInfoDTO } from 'src/DTO/userInfo.dto';
 import { interestValue } from 'src/Types/interestValue';
 import { ResUtil } from 'src/utils/response';
 import { Repository } from 'typeorm';
+import { JikanService } from '../Jikan/jikan.service';
 
 @Injectable()
 export class InterestService {
   constructor(
     @InjectRepository(Interest)
     private interestRepository: Repository<Interest>,
+    private readonly jikanService: JikanService,
   ) {}
 
   async findById(id: number) {
@@ -28,6 +30,20 @@ export class InterestService {
     });
     if (!interest) throw new NotFoundException('Interest not found!');
     return interest;
+  }
+
+  async getInterests(userID: string) {
+    const interests = await this.interestRepository.findBy({
+      user: { id: userID },
+    });
+
+    const interestData = await Promise.all(
+      interests
+        .slice(0, 3)
+        .map((interest) => this.jikanService.getAnime(interest.mediaId)),
+    );
+
+    return interestData;
   }
 
   async addInterest(
@@ -52,8 +68,8 @@ export class InterestService {
 
   async editInterest(userID: string, interestID: number, value: interestValue) {
     await this.checkInterestOwnership(userID, interestID);
-    await this.interestRepository.update({id:interestID},{value})
-    return await this.interestRepository.findOneBy({id:interestID})
+    await this.interestRepository.update({ id: interestID }, { value });
+    return await this.interestRepository.findOneBy({ id: interestID });
   }
 
   async deleteInterest(userID: string, interestID: number, res: Response) {
