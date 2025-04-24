@@ -1,4 +1,10 @@
-import { ConflictException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  ForbiddenException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Response } from 'express';
 import { Interest } from 'src/Database/entities/interest.entity';
@@ -13,6 +19,15 @@ export class InterestService {
     @InjectRepository(Interest)
     private interestRepository: Repository<Interest>,
   ) {}
+
+  async findById(id: number) {
+    const interest = await this.interestRepository.findOne({
+      where: { id },
+      relations: ['user'],
+    });
+    if (!interest) throw new NotFoundException('Interest not found!');
+    return interest;
+  }
 
   async addInterest(
     res: Response,
@@ -32,6 +47,16 @@ export class InterestService {
       'Interest Created!',
       newInterest,
     );
+  }
+
+  async deleteInterest(userID: string, interestID: number, res: Response) {
+    const interest = await this.findById(interestID);
+    if (interest.user.id != userID)
+      throw new ForbiddenException(
+        'You cannot delete an interest that does not belong to you',
+      );
+    await this.interestRepository.delete({ id: interestID });
+    return ResUtil.sendResponse(res, HttpStatus.NO_CONTENT);
   }
 
   async checkInterestExists(interestObject: InterestDTO, user: UserInfoDTO) {
