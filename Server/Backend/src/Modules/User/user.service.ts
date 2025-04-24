@@ -23,7 +23,7 @@ export class UserService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
     private cloudinaryService: CloudinaryService,
-    private redisService : RedisService
+    private redisService: RedisService,
   ) {}
 
   async createUser(name: string, email: string, password: string) {
@@ -49,7 +49,7 @@ export class UserService {
     userID: string,
     res: Response,
   ) {
-    const uploadData = await this.cloudinaryService.upload(file, userID);
+    const uploadData = await this.cloudinaryService.upload(file);
     await this.updateUser(userID, { picture: uploadData?.url });
     return ResUtil.sendResponse(
       res,
@@ -103,9 +103,14 @@ export class UserService {
   }
 
   async deleteUser(userID: string, info: DeleteUserDTO, res: Response) {
+    const userInfo = await this.findById(userID);
     await this.checkUserPassword(userID, info.password);
-    await this.userRepository.delete({id:userID})
-    await this.redisService.del(`refresh:${userID}`)
-    return ResUtil.sendResponse(res,HttpStatus.NO_CONTENT)
-}
+    await this.userRepository.delete({ id: userID });
+    await this.redisService.del(`refresh:${userID}`);
+    if (userInfo?.picture) {
+      const assetID = userInfo?.picture.split("/").at(-1)?.replace(".jpg", "")
+      await this.cloudinaryService.delete(assetID);
+    }
+    return ResUtil.sendResponse(res, HttpStatus.NO_CONTENT);
+  }
 }
