@@ -1,7 +1,8 @@
-import { Body, Controller, Delete, Get, Param, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { InterestService } from './interest.service';
 import { JwtAuthGuard } from 'src/Guards/jwt-auth/jwt-auth.guard';
 import { InterestDTO } from 'src/DTO/interest.dto';
+import { EditInterestDTO } from 'src/DTO/editInterest.dto';
 
 @UseGuards(JwtAuthGuard)
 @Controller('interest')
@@ -11,6 +12,11 @@ export class InterestController {
   @Post('add')
   async createInterest(@Req() req, @Body() body : InterestDTO,@Res() res) {
     return this.interestService.addInterest(res,body,req.user)
+  }
+
+  @Patch(':id')
+  async patchInterest(@Req() req, @Param("id") id : number, @Body() body: EditInterestDTO) {
+    return await this.interestService.editInterest(req.user.id,id,body.value)
   }
 
   @Delete(':id')

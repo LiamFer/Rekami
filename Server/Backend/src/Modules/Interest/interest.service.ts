@@ -10,6 +10,7 @@ import { Response } from 'express';
 import { Interest } from 'src/Database/entities/interest.entity';
 import { InterestDTO } from 'src/DTO/interest.dto';
 import { UserInfoDTO } from 'src/DTO/userInfo.dto';
+import { interestValue } from 'src/Types/interestValue';
 import { ResUtil } from 'src/utils/response';
 import { Repository } from 'typeorm';
 
@@ -49,12 +50,14 @@ export class InterestService {
     );
   }
 
+  async editInterest(userID: string, interestID: number, value: interestValue) {
+    await this.checkInterestOwnership(userID, interestID);
+    await this.interestRepository.update({id:interestID},{value})
+    return await this.interestRepository.findOneBy({id:interestID})
+  }
+
   async deleteInterest(userID: string, interestID: number, res: Response) {
-    const interest = await this.findById(interestID);
-    if (interest.user.id != userID)
-      throw new ForbiddenException(
-        'You cannot delete an interest that does not belong to you',
-      );
+    await this.checkInterestOwnership(userID, interestID);
     await this.interestRepository.delete({ id: interestID });
     return ResUtil.sendResponse(res, HttpStatus.NO_CONTENT);
   }
@@ -67,5 +70,13 @@ export class InterestService {
       user,
     });
     if (exists) throw new ConflictException('Interest Already Exists');
+  }
+
+  async checkInterestOwnership(userID: string, interestID: number) {
+    const interest = await this.findById(interestID);
+    if (interest.user.id != userID)
+      throw new ForbiddenException(
+        'You cannot modify an interest that does not belong to you',
+      );
   }
 }
