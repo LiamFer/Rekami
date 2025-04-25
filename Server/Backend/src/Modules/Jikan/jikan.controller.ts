@@ -19,7 +19,7 @@ export class JikanController {
 
   @Get('anime/recommendation')
   async getRecommendations(@Req() req, @Query('page') page: number) {
-    return await this.jikanService.getRecentRecommendations(page);
+    return await this.jikanService.getRecentRecommendations(1);
   }
 
 

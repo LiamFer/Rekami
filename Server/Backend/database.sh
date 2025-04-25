@@ -27,3 +27,16 @@ podman run -d \
   rediscommander/redis-commander:latest
 
 # Redis Commander vai poder ser acessado em http://localhost:8081
+
+# MongoDB Database
+podman network create mongo-network
+podman run -d --name rekami-mongo --network mongo-network -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=pass -p 27017:27017 mongo
+podman run -d --name mongo-express \
+  --network mongo-network \
+  -e ME_CONFIG_MONGODB_SERVER=rekami-mongo \
+  -e ME_CONFIG_MONGODB_ADMINUSERNAME=admin \
+  -e ME_CONFIG_MONGODB_ADMINPASSWORD=pass \
+  -e ME_CONFIG_MONGODB_URL="mongodb://admin:pass@rekami-mongo:27017/" \
+  -p 8082:8081 \
+  mongo-express
+# Mongo Express vai poder ser acessado em http://localhost:8082
