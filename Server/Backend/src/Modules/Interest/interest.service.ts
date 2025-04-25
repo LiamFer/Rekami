@@ -40,7 +40,7 @@ export class InterestService {
     const interestData = await Promise.all(
       interests
         .slice(0, 3)
-        .map((interest) => this.mediaService.getMedia(interest.mediaId)),
+        .map((interest) => this.mediaService.getMediaDetails(interest.mediaId)),
     );
 
     return interestData;

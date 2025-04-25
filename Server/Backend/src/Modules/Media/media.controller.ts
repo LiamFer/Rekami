@@ -19,9 +19,14 @@ import { MediaDTO } from 'src/DTO/media.dto';
 export class MediaController {
   constructor(private readonly mediaService: MediaService) {}
 
-  @Post('library/add')
+  @Post('library')
   async addToLibrary(@Req() req, @Body() body: MediaDTO, @Res() res) {
-    return await this.mediaService.saveMediaInLibrary(body,req.user,res)
+    return await this.mediaService.saveMediaInLibrary(body, req.user, res);
+  }
+
+  @Delete('library/:id')
+  async removeFromLibrary(@Req() req, @Res() res, @Param('id') id: number) {
+    return await this.mediaService.removeMediaFromLibrary(req.user.id, id, res);
   }
 
   @Post('add')

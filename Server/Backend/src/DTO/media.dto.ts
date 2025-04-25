@@ -15,7 +15,7 @@ export class MediaDTO {
   mediaType: mediaType;
 
   @IsOptional()
-  @IsEnum(MediaStatus, { message: 'Invalid mediaType' })
+  @IsEnum(MediaStatus, { message: 'Invalid mediaStatus' })
   status?: MediaStatus;
 
   @IsOptional()

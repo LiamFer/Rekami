@@ -1,4 +1,10 @@
-import { ConflictException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  ForbiddenException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Response } from 'express';
@@ -18,6 +24,15 @@ export class MediaService {
     @InjectModel(Anime.name) private animeModel: Model<AnimeDocument>,
   ) {}
 
+  async findById(mediaID: number) {
+    const media = await this.mediaRepository.findOne({
+      where: { id: mediaID },
+      relations: ['user'],
+    });
+    if (!media) throw new NotFoundException('media not found!');
+    return media;
+  }
+
   async checkMediaExists(mediaObject: MediaDTO, user: UserInfoDTO) {
     const { mediaId, mediaType } = mediaObject;
     const exists = await this.mediaRepository.findOneBy({
@@ -26,6 +41,14 @@ export class MediaService {
       user,
     });
     if (exists) throw new ConflictException('Media Already Exists');
+  }
+
+  async checkMediaOwnership(userID: string, mediaID: number) {
+    const media = await this.findById(mediaID);
+    if (media.user.id != userID)
+      throw new ForbiddenException(
+        'You cannot modify a resource that does not belong to you',
+      );
   }
 
   async saveMediaInLibrary(
@@ -47,12 +70,19 @@ export class MediaService {
     );
   }
 
-  async getMedia(id: number) {
+  async removeMediaFromLibrary(userID: string, mediaID: number, res: Response) {
+    await this.checkMediaOwnership(userID, mediaID);
+    await this.mediaRepository.delete({ id: mediaID });
+    return ResUtil.sendResponse(res, HttpStatus.NO_CONTENT);
+  }
+
+  // Busca detalhes da Media no MongoDB
+  async getMediaDetails(id: number) {
     return await this.animeModel.findOne({ mal_id: id }).exec();
   }
 
   async addMedia(mediaData) {
-    const media = await this.getMedia(mediaData.mal_id);
+    const media = await this.getMediaDetails(mediaData.mal_id);
     if (media) throw new ConflictException('Media Already Exists!');
     const createdAnime = new this.animeModel(mediaData);
     return createdAnime.save();
