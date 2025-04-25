@@ -7,10 +7,11 @@ import { Interest } from 'src/Database/entities/interest.entity';
 import { MediaService } from '../Media/media.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Anime, AnimeSchema } from 'src/MongoDB/anime.schema';
+import { Media } from 'src/Database/entities/media.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Interest]),
+    TypeOrmModule.forFeature([User, Interest,Media]),
     MongooseModule.forFeature([{ name: Anime.name, schema: AnimeSchema }]),
   ],
   controllers: [InterestController],

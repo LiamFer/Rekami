@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Interest } from './interest.entity';
+import { Media } from './media.entity';
 
 @Entity()
 export class User {
@@ -20,4 +21,7 @@ export class User {
 
   @OneToMany(() => Interest, (interest) => interest.user)
   interests: Interest[];
+
+  @OneToMany(() => Media, (media) => media.user)
+  medias: Media[];
 }
