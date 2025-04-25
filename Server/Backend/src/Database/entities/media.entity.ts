@@ -17,7 +17,7 @@ export class Media {
   @Column({ type: 'enum', enum: MediaStatus, default:MediaStatus.ToWatch })
   status: MediaStatus;
 
-  @Column({nullable:true})
+  @Column({nullable:true, default:false})
   favorite: boolean;
 
   @ManyToOne(() => User, (user) => user.medias, { onDelete: 'CASCADE' })
