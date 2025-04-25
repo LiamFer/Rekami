@@ -13,14 +13,14 @@ import { UserInfoDTO } from 'src/DTO/userInfo.dto';
 import { interestValue } from 'src/Types/interestValue';
 import { ResUtil } from 'src/utils/response';
 import { Repository } from 'typeorm';
-import { JikanService } from '../Jikan/jikan.service';
+import { MediaService } from '../Media/media.service';
 
 @Injectable()
 export class InterestService {
   constructor(
     @InjectRepository(Interest)
     private interestRepository: Repository<Interest>,
-    private readonly jikanService: JikanService,
+    private readonly mediaService: MediaService,
   ) {}
 
   async findById(id: number) {
@@ -40,7 +40,7 @@ export class InterestService {
     const interestData = await Promise.all(
       interests
         .slice(0, 3)
-        .map((interest) => this.jikanService.getAnime(interest.mediaId)),
+        .map((interest) => this.mediaService.getMedia(interest.mediaId)),
     );
 
     return interestData;
