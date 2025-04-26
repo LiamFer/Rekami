@@ -6,12 +6,12 @@ import * as cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import { AuthService } from '../Auth/auth.service';
 
-describe('Interest Endpoints (e2e)', () => {
+describe('Media Endpoints (e2e)', () => {
   let app: INestApplication;
   let authService: AuthService;
   let token: string;
   let randomMedia: number;
-  let interestID: number;
+  let mediaID: number;
 
   beforeAll(async () => {
     const moduleFixture = await Test.createTestingModule({
@@ -36,97 +36,85 @@ describe('Interest Endpoints (e2e)', () => {
     ).token;
   });
 
-  it('Should get user Interests', async () => {
+  it('Should get user Media in Library', async () => {
     return request(app.getHttpServer())
-      .get('/interest')
+      .get('/media/library')
       .set('Authorization', `Bearer ${token}`)
       .expect(HttpStatus.OK);
   });
 
-  it('Should create new Interest', async () => {
+  it("Should add Media to user's library", async () => {
     return request(app.getHttpServer())
-      .post('/interest/add')
+      .post('/media/library')
       .set('Authorization', `Bearer ${token}`)
       .send({
         mediaId: randomMedia,
         mediaType: 'anime',
-        value: 1,
+        status: 'paused',
+        favorite: true,
       })
       .expect((res) => {
-        interestID = res.body.data.id;
+        mediaID = res.body.data.id;
         expect(HttpStatus.CREATED);
       });
   });
 
-  it('Should not create a new Interest', async () => {
+  it("Should not add Media to user's library", async () => {
     return request(app.getHttpServer())
-      .post('/interest/add')
+      .post('/media/library')
       .set('Authorization', `Bearer ${token}`)
       .send({
         mediaId: 1,
         mediaType: 'HQ',
-        value: 1,
+        status: 'paused',
+        favorite: true,
       })
       .expect(HttpStatus.BAD_REQUEST);
   });
 
-  it('Should edit an Interest', async () => {
+  it('Should edit a Media', async () => {
     return request(app.getHttpServer())
-      .patch(`/interest/${interestID}`)
+      .patch(`/media/library/${mediaID}`)
       .set('Authorization', `Bearer ${token}`)
       .send({
-        value: 1,
+        favorite: false,
+        status: 'watched',
       })
       .expect(HttpStatus.OK);
   });
 
-  it('Cannot edit other User Interest', async () => {
+  it('Cannot edit Media with an Invalid Value', async () => {
     return request(app.getHttpServer())
-      .patch('/interest/5')
+      .patch(`/media/library/${mediaID}`)
       .set('Authorization', `Bearer ${token}`)
       .send({
-        value: 1,
-      })
-      .expect(HttpStatus.FORBIDDEN);
-  });
-
-  it('Cannot edit Interest with an Invalid Value', async () => {
-    return request(app.getHttpServer())
-      .patch(`/interest/${interestID}`)
-      .set('Authorization', `Bearer ${token}`)
-      .send({
-        value: 22,
+        favorite: false,
+        status: 'rock',
       })
       .expect(HttpStatus.BAD_REQUEST);
   });
 
-  it('Cannot edit Interest that does not Exist', async () => {
+  it('Cannot edit Media that does not Exist', async () => {
     return request(app.getHttpServer())
-      .patch('/interest/-1')
+      .patch(`/media/library/-1`)
       .set('Authorization', `Bearer ${token}`)
       .send({
-        value: 1,
+        favorite: false,
+        status: 'watched',
       })
       .expect(HttpStatus.NOT_FOUND);
   });
 
-  it('Should Delete an Interest', async () => {
+  it('Should Delete a Media from the Library', async () => {
     return request(app.getHttpServer())
-      .delete(`/interest/${interestID}`)
+      .delete(`/media/library/${mediaID}`)
       .set('Authorization', `Bearer ${token}`)
       .expect(HttpStatus.NO_CONTENT);
   });
 
-  it('Cannot Delete other User Interest', async () => {
+  it('Cannot Delete a Media that does not Exist', async () => {
     return request(app.getHttpServer())
-      .delete('/interest/5')
-      .set('Authorization', `Bearer ${token}`)
-      .expect(HttpStatus.FORBIDDEN);
-  });
-
-  it('Cannot Delete Interest that does not Exist', async () => {
-    return request(app.getHttpServer())
-      .delete('/interest/-1')
+      .delete('/media/library/-1')
       .set('Authorization', `Bearer ${token}`)
       .expect(HttpStatus.NOT_FOUND);
   });
