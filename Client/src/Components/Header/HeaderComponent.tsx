@@ -35,7 +35,7 @@ export default function HeaderComponent() {
               onClick={showMobileMenu}
             />
           )}
-          <img src="./logo.svg" alt="" width={30} />
+          <img src={darkMode ? "./darkModeLogo.svg" : "./lightModeLogo.svg"} alt="" width={30} />
           <h1 style={{ margin: 0, fontSize: "1.5rem" }}>Rekami</h1>
         </div>
         <Navbar></Navbar>
