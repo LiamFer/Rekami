@@ -1,17 +1,10 @@
-.desktopMenu {
+.searchBar {
   display: flex;
+  width: 250px;
 }
 
-.mobileMenubutton {
-  display: none;
-}
-
-@media (max-width: 768px) {
-  .desktopMenu {
+@media (max-width: 1070px) {
+  .searchBar {
     display: none;
-  }
-
-  .mobileMenubutton {
-    display: inline-flex; 
   }
 }

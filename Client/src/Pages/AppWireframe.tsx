@@ -1,20 +1,21 @@
-import { Layout, theme } from "antd";
+import { FloatButton, Layout, theme } from "antd";
 import HeaderComponent from "../Components/Header/HeaderComponent";
+import { MoonOutlined, SunOutlined } from "@ant-design/icons";
+import { useAppConfigs } from "../Context/App";
 
-const {  Content, Footer } = Layout;
+const { Content, Footer } = Layout;
 
 export default function AppWireframe() {
+  const { toggleTheme, darkMode } = useAppConfigs();
   const { token } = theme.useToken();
 
   return (
     <Layout
       style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}
     >
-      <HeaderComponent/>
+      <HeaderComponent />
 
-      <Content style={{ flexGrow: 1, padding: "0 48px" }}>
-
-      </Content>
+      <Content style={{ flexGrow: 1, padding: "0 48px" }}></Content>
 
       <Footer
         style={{
@@ -25,6 +26,10 @@ export default function AppWireframe() {
       >
         Rekami ©{new Date().getFullYear()} Created by LiamFer
       </Footer>
+      <FloatButton
+        icon={darkMode ? <MoonOutlined /> : <SunOutlined />}
+        onClick={toggleTheme}
+      ></FloatButton>
     </Layout>
   );
 }

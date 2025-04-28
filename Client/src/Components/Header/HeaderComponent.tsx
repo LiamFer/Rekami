@@ -1,10 +1,11 @@
-import { Layout, theme } from "antd";
-import { useTheme } from "../../Context/Theme";
+import { Button, Layout, theme } from "antd";
+import { useAppConfigs } from "../../Context/App";
 import Navbar from "./Navbar";
+import { MenuOutlined } from "@ant-design/icons";
 const { Header } = Layout;
 
 export default function HeaderComponent() {
-  const { darkMode } = useTheme();
+  const { darkMode, isMobile, showMobileMenu } = useAppConfigs();
   const { token } = theme.useToken();
 
   return (
@@ -24,7 +25,16 @@ export default function HeaderComponent() {
           backdropFilter: "blur(10px)",
         }}
       >
-        <h1 style={{ margin: 0, fontSize: "1.5rem" }}>REKAMI</h1>
+        <div style={{ display: "flex", alignItems: "center", gap:"5px" }}>
+          {isMobile && (
+            <Button
+              icon={<MenuOutlined />}
+              type="text"
+              onClick={showMobileMenu}
+            />
+          )}
+          <h1 style={{ margin: 0, fontSize: "1.5rem" }}>REKAMI</h1>
+        </div>
         <Navbar></Navbar>
       </Header>
     </>

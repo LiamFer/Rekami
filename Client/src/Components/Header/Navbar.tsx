@@ -1,9 +1,7 @@
-import { MenuOutlined, MoonOutlined, SunOutlined } from "@ant-design/icons";
-import { Menu, Button, theme } from "antd";
-import { useState, useEffect } from "react";
-import { useTheme } from "../../Context/Theme";
+import { Menu, theme, Avatar, AutoComplete, Input, Button } from "antd";
 import MobileMenu from "./MobileMenu";
 import "./header.css";
+import { useAppConfigs } from "../../Context/App";
 
 const items = [
   { key: "home", label: "Homepage" },
@@ -13,20 +11,8 @@ const items = [
 ];
 
 export default function Navbar() {
-  const { toggleTheme, darkMode } = useTheme();
-  const [menuActive, setMenuActive] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const { token } = theme.useToken();
-  
-  const showMobileMenu = () => setMenuActive(true);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const { isMobile } = useAppConfigs();
 
   return (
     <>
@@ -38,37 +24,35 @@ export default function Navbar() {
           gap: "10px",
         }}
       >
+        <AutoComplete className="searchBar">
+          <Input.Search placeholder="Search your Movie/Anime"></Input.Search>
+        </AutoComplete>
         {!isMobile && (
-          <div className="desktopMenu">
-            <Menu
-              style={{
-                flexGrow: 1,
-                justifyContent: "flex-end",
-                backgroundColor: "transparent",
-                borderBottom: `1px solid ${token.colorBorderSecondary}`,
-              }}
-              mode="horizontal"
-              items={items}
-            />
-          </div>
-        )}
-
-        {isMobile && (
-          <Button
-            className="mobileMenubutton"
-            icon={<MenuOutlined />}
-            type="text"
-            onClick={showMobileMenu}
+          <Menu
+            style={{
+              flexGrow: 1,
+              justifyContent: "flex-end",
+              backgroundColor: "transparent",
+              borderBottom: `1px solid ${token.colorBorderSecondary}`,
+            }}
+            mode="horizontal"
+            items={items}
           />
         )}
-        <Button
-          icon={darkMode ? <MoonOutlined /> : <SunOutlined />}
-          onClick={toggleTheme}
-        />
+
+        <div style={{ display: "flex", gap: "5px" }}>
+          <Button type="primary">Register</Button>
+          <Button type="default">Sign In</Button>
+        </div>
+        
+
+        <Avatar
+          size="large"
+          src="https://res.cloudinary.com/ddtu2lxue/image/upload/v1745441934/RekamiApp/Users/Pictures/pfpf3ccf500-914d-44c1-8a78-c17a06fbf581.jpg"
+        ></Avatar>
       </nav>
+
       <MobileMenu
-        menuActive={menuActive}
-        setMenuActive={setMenuActive}
         items={items}
       />
     </>

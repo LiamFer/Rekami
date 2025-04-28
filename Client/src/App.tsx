@@ -1,12 +1,12 @@
 import React from "react";
 import AppWireframe from "./Pages/AppWireframe";
-import { ThemeProvider } from "./Context/Theme";
+import { AppProvider } from "./Context/App";
 
 const App: React.FC = () => {
   return (
-    <ThemeProvider>
+    <AppProvider>
       <AppWireframe></AppWireframe>
-    </ThemeProvider>
+    </AppProvider>
   );
 };
 
