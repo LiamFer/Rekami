@@ -11,6 +11,7 @@ export const AppProvider = ({ children }: any) => {
   const [darkMode, setDarkMode] = useState(true);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [menuActive, setMenuActive] = useState(false);
+  const [userMenuActive, setUserMenuActive] = useState(false);
   const showMobileMenu = () => setMenuActive(true);
 
   useEffect(() => {
@@ -38,6 +39,8 @@ export const AppProvider = ({ children }: any) => {
         showMobileMenu,
         menuActive,
         setMenuActive,
+        userMenuActive,
+        setUserMenuActive,
       }}
     >
       <ConfigProvider

@@ -2,6 +2,7 @@ import { Button, Layout, theme } from "antd";
 import { useAppConfigs } from "../../Context/App";
 import Navbar from "./Navbar";
 import { MenuOutlined } from "@ant-design/icons";
+
 const { Header } = Layout;
 
 export default function HeaderComponent() {
@@ -18,6 +19,7 @@ export default function HeaderComponent() {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          padding: "0px 20px",
           backgroundColor: darkMode
             ? "rgba(2, 8, 23, 0.7)"
             : "rgba(255, 255, 255, 0.7)",
@@ -25,7 +27,7 @@ export default function HeaderComponent() {
           backdropFilter: "blur(10px)",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap:"5px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
           {isMobile && (
             <Button
               icon={<MenuOutlined />}
@@ -33,7 +35,8 @@ export default function HeaderComponent() {
               onClick={showMobileMenu}
             />
           )}
-          <h1 style={{ margin: 0, fontSize: "1.5rem" }}>REKAMI</h1>
+          <img src="./logo.svg" alt="" width={30} />
+          <h1 style={{ margin: 0, fontSize: "1.5rem" }}>Rekami</h1>
         </div>
         <Navbar></Navbar>
       </Header>
