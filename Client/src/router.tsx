@@ -1,0 +1,20 @@
+// src/router.tsx
+import { createBrowserRouter } from "react-router-dom";
+import AppWireframe from "./Pages/AppWireframe";
+import Home from "./Pages/Home";
+import Explore from "./Pages/Explore";
+import Library from "./Pages/Library";
+import Recommendations from "./Pages/Recommendations";
+
+export const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <AppWireframe />,
+    children: [
+      { index: true, element: <Home /> },
+      { path: "explore", element: <Explore /> },
+      { path: "library", element: <Library /> },
+      { path: "recommendations", element: <Recommendations /> },
+    ],
+  },
+]);

@@ -5,9 +5,10 @@ import { useAppConfigs } from "../../Context/App";
 import { SearchOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import UserMenu from "./UserMenu";
+import { useNavigate } from "react-router-dom";
 
 const items = [
-  { key: "home", label: "Homepage" },
+  { key: "", label: "Homepage" },
   { key: "explore", label: "Explore" },
   { key: "library", label: "Library" },
   { key: "recommendations", label: "Recommendations" },
@@ -16,6 +17,11 @@ const items = [
 export default function Navbar() {
   const { token } = theme.useToken();
   const { isMobile, setUserMenuActive } = useAppConfigs();
+
+  const navigate = useNavigate();
+  const handleNavigation = (e: { key: string }) => {
+    navigate(`/${e.key}`);
+  };
 
   const mockVal = (str: string, repeat = 1) => ({
     value: str.repeat(repeat),
@@ -58,6 +64,7 @@ export default function Navbar() {
             }}
             mode="horizontal"
             items={items}
+            onClick={handleNavigation}
           />
         )}
 
@@ -70,7 +77,7 @@ export default function Navbar() {
         ></Avatar>
       </nav>
 
-      <MobileMenu items={items} />
+      <MobileMenu items={items} handleNavigation={handleNavigation} />
       {true && <UserMenu />}
     </>
   );

@@ -2,6 +2,7 @@ import { FloatButton, Layout, theme } from "antd";
 import HeaderComponent from "../Components/Header/HeaderComponent";
 import { MoonOutlined, SunOutlined } from "@ant-design/icons";
 import { useAppConfigs } from "../Context/App";
+import { Outlet } from "react-router-dom";
 
 const { Content, Footer } = Layout;
 
@@ -15,7 +16,11 @@ export default function AppWireframe() {
     >
       <HeaderComponent />
 
-      <Content style={{ flexGrow: 1, padding: "0 48px" }}></Content>
+      <Content
+        style={{ flexGrow: 1, padding: "0 48px"}}
+      >
+        <Outlet></Outlet>
+      </Content>
 
       <Footer
         style={{

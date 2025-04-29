@@ -1,13 +1,13 @@
 .searchBar {
   display: flex;
-  width: 250px;
+  width: 350px;
 }
 
 .searchBarMobile {
   display: none;
 }
 
-@media (max-width: 933px) {
+@media (max-width: 988px) {
   .searchBar {
     display: none;
   }
