@@ -1,9 +1,9 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules"; // 👈 importa o módulo
-import { Card, Skeleton, Badge } from "antd";
+import { Autoplay } from "swiper/modules";
 import { useSeasonAnimes } from "../Hooks/useSeasonAnimes";
+import { motion } from "framer-motion";
 import "../styles/explore.css";
-const { Meta } = Card;
+import MediaCard from "./../Components/Card/MediaCard";
 
 export default function Explore() {
   const { seasonalAnimes, loading } = useSeasonAnimes();
@@ -14,7 +14,7 @@ export default function Explore() {
   return (
     <div style={{ padding: "20px" }}>
       <Swiper
-        style={{ maxWidth: "700px",padding:10 }}
+        style={{ maxWidth: "700px", padding: 10 }}
         slidesPerView={3}
         spaceBetween={20}
         modules={[Autoplay]}
@@ -31,40 +31,17 @@ export default function Explore() {
       >
         {data.map((a, i) => (
           <SwiperSlide key={a?.mal_id || i}>
-            <Badge.Ribbon text={a?.score}>
-              <Card
-                style={{ width: "100%" }}
-                hoverable
-                loading={loading}
-                styles={{ body: { padding: "10px" } }}
-                cover={
-                  loading || !a ? (
-                    <Skeleton.Image
-                      active
-                      className="antSkeletonImage"
-                      style={{ height: "200px" }}
-                    />
-                  ) : (
-                    <img
-                      src={a.images.jpg.large_image_url}
-                      alt={a.title}
-                      style={{
-                        width: "100%",
-                        height: "200px",
-                        objectFit: "cover",
-                      }}
-                    />
-                  )
-                }
-              >
-                {!loading && a && (
-                  <Meta
-                    title={a.title}
-                    description={"a"}
-                  />
-                )}
-              </Card>
-            </Badge.Ribbon>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{
+                duration: 0.8,
+                delay: 0.5,
+                ease: [0, 0.71, 0.2, 1.01],
+              }}
+            >
+              <MediaCard media={a} loading={loading}></MediaCard>
+            </motion.div>
           </SwiperSlide>
         ))}
       </Swiper>
