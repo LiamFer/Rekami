@@ -13,7 +13,7 @@ export default function HeaderComponent() {
     <>
       <Header
         style={{
-          top: "0px",
+          top: "-1px",
           position: "sticky",
           width: "100%",
           display: "flex",
@@ -25,6 +25,7 @@ export default function HeaderComponent() {
             : "rgba(255, 255, 255, 0.7)",
           borderBottom: `1px solid ${token.colorBorderSecondary}`,
           backdropFilter: "blur(10px)",
+          zIndex: 10,
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
@@ -35,7 +36,11 @@ export default function HeaderComponent() {
               onClick={showMobileMenu}
             />
           )}
-          <img src={darkMode ? "./darkModeLogo.svg" : "./lightModeLogo.svg"} alt="" width={30} />
+          <img
+            src={darkMode ? "./darkModeLogo.svg" : "./lightModeLogo.svg"}
+            alt=""
+            width={30}
+          />
           <h1 style={{ margin: 0, fontSize: "1.5rem" }}>Rekami</h1>
         </div>
         <Navbar></Navbar>

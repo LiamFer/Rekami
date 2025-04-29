@@ -17,7 +17,7 @@ export default function AppWireframe() {
       <HeaderComponent />
 
       <Content
-        style={{ flexGrow: 1, padding: "0 48px"}}
+        style={{ flexGrow: 1, padding: "0 20px"}}
       >
         <Outlet></Outlet>
       </Content>

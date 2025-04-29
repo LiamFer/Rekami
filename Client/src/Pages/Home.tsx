@@ -1,6 +1,8 @@
-
+import MediaSeason from "../Components/SeasonAnimes/MediaSeason";
 export default function Home() {
   return (
-    <div><h1>asdkodqwokdqwokdqw</h1></div>
-  )
+    <div>
+      <MediaSeason/>
+    </div>
+  );
 }
