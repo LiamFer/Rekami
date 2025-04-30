@@ -39,6 +39,7 @@ export default function TopMediaList() {
           overflow: "auto",
           padding: "0 16px",
           height: "300px",
+          scrollbarWidth: "none",
         }}
       >
         <List

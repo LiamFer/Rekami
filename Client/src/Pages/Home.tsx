@@ -1,7 +1,8 @@
 import MediaSeason from "../Components/MediaSeason/MediaSeason";
 import TopMediaList from "../Components/TopMediaList/TopMediaList";
 import RecommendationCard from "./../Components/RecommendationCard/RecommendationCard";
-import "../styles/home.css"
+import "../styles/home.css";
+import MediaToday from "../Components/MediaToday/MediaToday";
 
 export default function Home() {
   return (
@@ -19,8 +20,17 @@ export default function Home() {
         <RecommendationCard />
         <MediaSeason />
       </section>
-      <section className="full-width-on-wrap" style={{ maxWidth: "500px", width: "100%", height: "100%" }}>
-        <TopMediaList></TopMediaList>
+      <section
+        className="full-width-on-wrap"
+        style={{
+          maxWidth: "500px",
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          gap: "10px",
+        }}
+      >
+        <MediaToday></MediaToday>
         <TopMediaList></TopMediaList>
       </section>
     </div>

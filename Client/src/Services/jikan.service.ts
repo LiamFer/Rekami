@@ -10,3 +10,8 @@ export async function getTopAnime(){
     const response = await jikanApi.get("/top/anime")
     return response.data.data
 }
+
+export async function getScheduleAnime(day: string = ""){
+    const response = await jikanApi.get(`schedules${day ? `?filter=${day}` : ""}`)
+    return response.data.data
+}
