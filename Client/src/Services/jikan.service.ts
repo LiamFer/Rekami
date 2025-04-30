@@ -1,7 +1,7 @@
 import { jikanApi } from "../Api/jikan";
-import { SeasonAnime } from "../Types/SeasonAnime";
+import { StandardAnime } from "../Types/StandardAnime";
 
-export async function getSeasonalAnime(page: number = 1) : Promise<SeasonAnime[]>{
+export async function getSeasonalAnime(page: number = 1) : Promise<StandardAnime[]>{
     const response = await jikanApi.get(`/seasons/now?page=${page}`)
     return response.data.data
 }

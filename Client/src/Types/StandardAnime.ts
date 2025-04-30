@@ -1,4 +1,4 @@
-export type SeasonAnime = {
+export type StandardAnime = {
   mal_id: number;
   url: string;
   images: {

@@ -63,6 +63,8 @@ export default function MediaSeason() {
           0: { slidesPerView: 1 },
           500: { slidesPerView: 2 },
           768: { slidesPerView: 3 },
+          800: { slidesPerView: 4 },
+          950: { slidesPerView: 5 },
         }}
       >
         {data.map((a, i) => (

@@ -1,0 +1,10 @@
+@media (max-width: 768px) {
+  .full-width-on-wrap {
+    max-width: 100% !important;
+  }
+}
+@media (max-width: 1775px) {
+  .full-width-on-wrap {
+    max-width: 1200px !important;
+  }
+}

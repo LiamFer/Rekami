@@ -1,13 +1,13 @@
 import { StarOutlined } from "@ant-design/icons";
 import { Badge, Skeleton, Button } from "antd";
-import { SeasonAnime } from "../../Types/SeasonAnime";
+import { StandardAnime } from "../../Types/StandardAnime";
 import "./mediaCard.css"; // vamos usar um CSS externo pra deixar mais limpo
 
 export default function MediaCard({
   media,
   loading,
 }: {
-  media: SeasonAnime | undefined;
+  media: StandardAnime | undefined;
   loading: boolean;
 }) {
   return (
