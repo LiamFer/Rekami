@@ -1,7 +1,7 @@
 import { StarOutlined } from "@ant-design/icons";
-import { Badge, Skeleton, Button, Card } from "antd";
+import { Badge, Skeleton, Button } from "antd";
 import { SeasonAnime } from "../../Types/SeasonAnime";
-const { Meta } = Card;
+import "./mediaCard.css"; // vamos usar um CSS externo pra deixar mais limpo
 
 export default function MediaCard({
   media,
@@ -15,57 +15,37 @@ export default function MediaCard({
       text={
         <>
           <StarOutlined style={{ color: "yellow", marginRight: 5 }} />
-          {media?.score ? media?.score : "Not Rated"}
+          {media?.score ?? "Not Rated"}
         </>
       }
       color="orange"
     >
-      <Card
-        style={{ width: "100%" }}
-        hoverable
-        loading={loading}
-        styles={{ body: { padding: "10px" } }}
-        cover={
-          loading || !media ? (
-            <Skeleton.Image
-              active
-              className="antSkeletonImage"
-              style={{ height: "300px" }}
-            />
-          ) : (
+      <div className="media-card-wrapper">
+        {loading || !media ? (
+          <Skeleton.Image
+            active
+            className="antSkeletonImage"
+            style={{ height: "300px", width: "100%" }}
+          />
+        ) : (
+          <>
             <img
               src={media.images.jpg.large_image_url}
               alt={media.title}
-              style={{
-                width: "100%",
-                height: "250px",
-                objectFit: "cover",
-                objectPosition: "bottom",
-              }}
+              className="media-card-image"
             />
-          )
-        }
-      >
-        {!loading && media && (
-          <Meta
-            title={media.title}
-            description={
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-              >
+            <div className="media-card-content">
+              <h3>{media.title}</h3>
+              <div className="media-card-footer">
                 <p>{media.status}</p>
                 <Button type="primary" size="small">
                   Open
                 </Button>
               </div>
-            }
-          />
+            </div>
+          </>
         )}
-      </Card>
+      </div>
     </Badge.Ribbon>
   );
 }

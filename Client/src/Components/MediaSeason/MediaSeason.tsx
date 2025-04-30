@@ -2,14 +2,14 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { useSeasonAnimes } from "../../Hooks/useSeasonAnimes";
 import { motion } from "framer-motion";
-import "./animesSeason.css";
+import "./mediaSeason.css";
 import MediaCard from "../Card/MediaCard";
 import { CalendarOutlined } from "@ant-design/icons";
 import { theme } from "antd";
 
 export default function MediaSeason() {
   const { seasonalAnimes, loading } = useSeasonAnimes();
-  const {token} = theme.useToken()
+  const { token } = theme.useToken();
   const data: ((typeof seasonalAnimes)[number] | undefined)[] = loading
     ? Array.from({ length: 3 })
     : seasonalAnimes;
@@ -21,7 +21,8 @@ export default function MediaSeason() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "start",
-        maxWidth: "700px",
+        // maxWidth: "700px",
+        // width: "100%",
       }}
     >
       <div
@@ -38,7 +39,7 @@ export default function MediaSeason() {
             fontSize: "22px",
             padding: 10,
             backgroundColor: token.colorText,
-            color:token.colorBgBase,
+            color: token.colorBgBase,
             borderRadius: "15px",
           }}
         />
