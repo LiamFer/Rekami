@@ -6,6 +6,7 @@ import NotInterestedButton from "../Buttons/NotInterested/NotInterestedButton";
 const { Paragraph, Text } = Typography;
 import "./recommendationcard.css";
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 export default function RecommendationCard() {
   const [animeID, setID] = useState(42310);
@@ -13,7 +14,7 @@ export default function RecommendationCard() {
   const { token } = theme.useToken();
 
   const handleInterest = () => {
-    setID((prev) => prev == 6 ? 42310 : 6);
+    setID((prev) => (prev == 6 ? 42310 : 6));
   };
 
   if (loading)
@@ -42,8 +43,30 @@ export default function RecommendationCard() {
       </div>
     );
 
+  const containerVariants = {
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        when: "beforeChildren",
+        staggerChildren: 0.15, // espaço entre cada animação
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  };
+
   return (
-    <div>
+    <motion.div
+      key={animeID}
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
       <div
         className="recommendationCard"
         style={{
@@ -62,7 +85,8 @@ export default function RecommendationCard() {
             overflow: "hidden",
           }}
         >
-          <div
+          <motion.div
+            variants={containerVariants}
             style={{
               width: "100%",
               display: "flex",
@@ -70,57 +94,84 @@ export default function RecommendationCard() {
               gap: "10px",
             }}
           >
-            <h1 style={{ fontSize: "2rem", margin: 0 }}>{animeFull?.title}</h1>
-            <Rate
-              disabled
-              allowHalf
-              defaultValue={(animeFull?.score || 0) / 2}
-            />
-            <Swiper
+            <motion.h1
+              variants={itemVariants}
               style={{
-                width: "100%",
-              }}
-              spaceBetween={8}
-              slidesPerView="auto"
-              modules={[Autoplay]}
-              autoplay={{
-                delay: 3000,
-                disableOnInteraction: false,
+                fontSize: "2rem",
+                margin: 0,
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
               }}
             >
-              {[
-                ...(animeFull?.genres.map((g) => {
-                  return { ...g, about: "genres" };
-                }) || []),
-                ...(animeFull?.themes.map((t) => {
-                  return { ...t, about: "themes" };
-                }) || []),
-              ].map((item) => (
-                <SwiperSlide key={item.name} style={{ width: "auto" }}>
-                  <Tag color={item?.about == "genres" ? "default" : "red"}>
-                    {item.name}
-                  </Tag>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
+              {animeFull?.title}
+            </motion.h1>
 
-          <Paragraph ellipsis={{ rows: 6 }}>{animeFull?.synopsis}</Paragraph>
+            <motion.div variants={itemVariants}>
+              <Rate
+                disabled
+                allowHalf
+                defaultValue={(animeFull?.score || 0) / 2}
+              />
+            </motion.div>
 
-          <div style={{ display: "flex", gap: "10px" }}>
-            <NotInterestedButton></NotInterestedButton>{" "}
-            <Button onClick={handleInterest} style={{ height: "32px" }} type="primary">
+            <motion.div variants={itemVariants}>
+              <Swiper
+                style={{ width: "100%" }}
+                spaceBetween={8}
+                slidesPerView="auto"
+                modules={[Autoplay]}
+                autoplay={{
+                  delay: 3000,
+                  disableOnInteraction: false,
+                }}
+              >
+                {[
+                  ...(animeFull?.genres.map((g) => {
+                    return { ...g, about: "genres" };
+                  }) || []),
+                  ...(animeFull?.themes.map((t) => {
+                    return { ...t, about: "themes" };
+                  }) || []),
+                ].map((item) => (
+                  <SwiperSlide key={item.name} style={{ width: "auto" }}>
+                    <Tag color={item?.about == "genres" ? "default" : "red"}>
+                      {item.name}
+                    </Tag>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </motion.div>
+          </motion.div>
+
+          <motion.div variants={itemVariants}>
+            <Paragraph ellipsis={{ rows: 6 }}>{animeFull?.synopsis}</Paragraph>
+          </motion.div>
+
+          <motion.div
+            variants={itemVariants}
+            style={{ display: "flex", gap: "10px" }}
+          >
+            <NotInterestedButton />
+            <Button
+              onClick={handleInterest}
+              style={{ height: "32px" }}
+              type="primary"
+            >
               Interested
             </Button>
-          </div>
+          </motion.div>
         </div>
 
-        <img
+        <motion.img
           className="recommendationImage"
           src={animeFull?.images.jpg.large_image_url}
           alt="anime"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }} 
+          transition={{ duration: 0.5, ease: "easeOut" }}
         />
       </div>
-    </div>
+    </motion.div>
   );
 }
