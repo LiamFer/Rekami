@@ -60,3 +60,24 @@
 .NotInterestedButton:active .icon svg {
   transform: scale(0.8);
 }
+
+@media (max-width: 338px) {
+  .NotInterestedButton {
+    width: 150px;
+  }
+
+  .NotInterestedButton .text {
+    margin-left: -30px;
+  }
+
+  .NotInterestedButton .icon {
+    height: 22px;
+    width: 22px;
+  transform: translateX(100px);
+  }
+  .NotInterestedButton:hover .icon {
+    width: 120px;
+    border-left: none;
+    transform: translateX(0);
+  }
+}

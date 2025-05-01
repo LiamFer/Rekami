@@ -4,10 +4,17 @@ import { Button, Rate, Spin, Tag, theme, Typography } from "antd";
 import { useAnimeFull } from "../../Hooks/useAnimeFull";
 import NotInterestedButton from "../Buttons/NotInterested/NotInterestedButton";
 const { Paragraph, Text } = Typography;
+import "./recommendationcard.css";
+import { useState } from "react";
 
 export default function RecommendationCard() {
-  const { animeFull, loading } = useAnimeFull(42310);
+  const [animeID, setID] = useState(42310);
+  const { animeFull, loading } = useAnimeFull(animeID);
   const { token } = theme.useToken();
+
+  const handleInterest = () => {
+    setID((prev) => prev == 6 ? 42310 : 6);
+  };
 
   if (loading)
     return (
@@ -38,17 +45,10 @@ export default function RecommendationCard() {
   return (
     <div>
       <div
+        className="recommendationCard"
         style={{
-          display: "flex",
-          flexWrap: "nowrap",
-          backgroundColor: token.colorBgContainer,
-          border: "1px solid",
           borderColor: token.colorBorderSecondary,
-          overflow: "hidden",
-          borderRadius: "10px",
-          width: "100%",
-          height: "350px",
-          minHeight: "350px",
+          backgroundColor: token.colorBgContainer,
         }}
       >
         <div
@@ -109,17 +109,14 @@ export default function RecommendationCard() {
 
           <div style={{ display: "flex", gap: "10px" }}>
             <NotInterestedButton></NotInterestedButton>{" "}
-            <Button type="primary">Interested</Button>
+            <Button onClick={handleInterest} style={{ height: "32px" }} type="primary">
+              Interested
+            </Button>
           </div>
         </div>
 
         <img
-          style={{
-            height: "100%",
-            width: "auto",
-            objectFit: "cover",
-            objectPosition: "bottom",
-          }}
+          className="recommendationImage"
           src={animeFull?.images.jpg.large_image_url}
           alt="anime"
         />

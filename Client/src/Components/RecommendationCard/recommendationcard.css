@@ -1,0 +1,38 @@
+.recommendationImage {
+  height: 100%;
+  width: 400px;
+  object-fit: cover;
+  object-position: bottom;
+}
+
+.recommendationCard {
+  display: flex;
+  flex-wrap: nowrap;
+  border: 1px solid;
+  overflow: hidden;
+  border-radius: 10px;
+  width: 100%;
+  height: 350px;
+  min-height: 350px;
+}
+
+@media (max-width: 768px) {
+  .recommendationImage {
+    width: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .recommendationCard {
+    flex-direction: column-reverse;
+    height: auto; 
+  }
+
+  .recommendationImage {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    object-fit: cover;
+    object-position: center;
+  }
+}

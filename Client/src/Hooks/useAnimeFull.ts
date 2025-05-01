@@ -10,7 +10,7 @@ export function useAnimeFull(id: number) {
     getAnimeFull(id)
       .then(setAnimeFull)
       .finally(() => setLoading(false));
-  }, []);
+  }, [id]);
 
   return { animeFull, loading };
 }
