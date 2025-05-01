@@ -9,40 +9,9 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 
 export default function RecommendationCard() {
+  const { token } = theme.useToken();
   const [animeID, setID] = useState(42310);
   const { animeFull, loading } = useAnimeFull(animeID);
-  const { token } = theme.useToken();
-
-  const handleInterest = () => {
-    setID((prev) => (prev == 6 ? 42310 : 6));
-  };
-
-  if (loading)
-    return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: token.colorBgContainer,
-          border: "1px solid",
-          borderColor: token.colorBorderSecondary,
-          borderRadius: "10px",
-          width: "100%",
-          height: "350px",
-          minHeight: "350px",
-          textAlign: "center",
-          gap: "10px",
-        }}
-      >
-        <Spin percent="auto" size="large" />
-        <Text type="secondary">
-          Wait a moment while we build your recommendations
-        </Text>
-      </div>
-    );
-
   const containerVariants = {
     hidden: { opacity: 0, scale: 0.9 },
     visible: {
@@ -50,7 +19,7 @@ export default function RecommendationCard() {
       scale: 1,
       transition: {
         when: "beforeChildren",
-        staggerChildren: 0.15, // espaço entre cada animação
+        staggerChildren: 0.15,
       },
     },
   };
@@ -59,6 +28,43 @@ export default function RecommendationCard() {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
   };
+
+  const handleInterest = () => {
+    setID((prev) => (prev == 6 ? 42310 : 6));
+  };
+
+  if (loading)
+    return (
+      <motion.div
+        key={animeID}
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: token.colorBgContainer,
+            border: "1px solid",
+            borderColor: token.colorBorderSecondary,
+            borderRadius: "10px",
+            width: "100%",
+            height: "350px",
+            minHeight: "350px",
+            textAlign: "center",
+            gap: "10px",
+          }}
+        >
+          <Spin percent="auto" size="large" />
+          <Text type="secondary">
+            Wait a moment while we build your recommendations
+          </Text>
+        </div>
+      </motion.div>
+    );
 
   return (
     <motion.div
@@ -168,7 +174,7 @@ export default function RecommendationCard() {
           src={animeFull?.images.jpg.large_image_url}
           alt="anime"
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }} 
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
         />
       </div>
