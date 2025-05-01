@@ -11,6 +11,11 @@ export async function getTopAnime(){
     return response.data.data
 }
 
+export async function getAnimeFull(id: number){
+    const response = await jikanApi.get(`anime/${id}/full`)
+    return response.data.data
+}
+
 export async function getScheduleAnime(day: string = ""){
     const response = await jikanApi.get(`schedules${day ? `?filter=${day}` : ""}`)
     return response.data.data

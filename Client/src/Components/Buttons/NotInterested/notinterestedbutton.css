@@ -1,0 +1,62 @@
+.NotInterestedButton {
+  width: 150px;
+  height: 32px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background: red;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+  background: #e62222;
+}
+
+.NotInterestedButton,
+.NotInterestedButton span {
+  transition: 200ms;
+}
+
+.NotInterestedButton .text {
+  transform: translateX(35px);
+  color: white;
+  font-weight: bold;
+  margin-left: -25px;
+}
+
+.NotInterestedButton .icon {
+  position: absolute;
+  border-left: 1px solid #c41b1b;
+  transform: translateX(110px);
+  height: 32px;
+  width: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.NotInterestedButton svg {
+  width: 15px;
+  fill: #eee;
+}
+
+.NotInterestedButton:hover {
+  background: #ff3636;
+}
+
+.NotInterestedButton:hover .text {
+  color: transparent;
+}
+
+.NotInterestedButton:hover .icon {
+  width: 150px;
+  border-left: none;
+  transform: translateX(0);
+}
+
+.NotInterestedButton:focus {
+  outline: none;
+}
+
+.NotInterestedButton:active .icon svg {
+  transform: scale(0.8);
+}
