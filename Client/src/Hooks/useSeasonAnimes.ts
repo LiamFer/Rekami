@@ -8,7 +8,13 @@ export function useSeasonAnimes(page: number = 1) {
 
   useEffect(() => {
     getSeasonalAnime(page)
-      .then(setSeasonalAnimes)
+      .then((res: StandardAnime[]) => {
+        const uniqueAnimes = res.filter(
+          (anime, index, self) =>
+            index === self.findIndex((a) => a.mal_id === anime.mal_id)
+        );
+        setSeasonalAnimes(uniqueAnimes);
+      })
       .finally(() => setLoading(false));
   }, []);
 
