@@ -5,13 +5,19 @@ import { useAnimeFull } from "../../Hooks/useAnimeFull";
 import NotInterestedButton from "../Buttons/NotInterested/NotInterestedButton";
 const { Paragraph, Text } = Typography;
 import "./recommendationcard.css";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
+import CardTour from "./CardTour";
 
 export default function RecommendationCard() {
   const { token } = theme.useToken();
   const [animeID, setID] = useState(42310);
   const { animeFull, loading } = useAnimeFull(animeID);
+
+  const card = useRef(null);
+  const buttons = useRef(null);
+  const interested = useRef(null);
+  const notInterested = useRef(null);
 
   const containerVariants = {
     hidden: { opacity: 0, scale: 0.9 },
@@ -75,6 +81,7 @@ export default function RecommendationCard() {
       animate="visible"
     >
       <div
+        ref={card}
         className="recommendationCard"
         style={{
           border: `1px solid ${token.colorBorderSecondary}`,
@@ -156,11 +163,13 @@ export default function RecommendationCard() {
           </motion.div>
 
           <motion.div
+            ref={buttons}
             variants={itemVariants}
             style={{ display: "flex", gap: "10px" }}
           >
-            <NotInterestedButton />
+            <NotInterestedButton onClick={handleInterest} ref={notInterested} />
             <Button
+              ref={interested}
               onClick={handleInterest}
               style={{ height: "32px" }}
               type="primary"
@@ -179,6 +188,12 @@ export default function RecommendationCard() {
           transition={{ duration: 0.5, ease: "easeOut" }}
         />
       </div>
+      <CardTour
+        card={card}
+        buttons={buttons}
+        interested={interested}
+        notInterested={notInterested}
+      />
     </motion.div>
   );
 }
