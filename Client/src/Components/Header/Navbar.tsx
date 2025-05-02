@@ -6,6 +6,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import UserMenu from "./UserMenu";
 import { useNavigate } from "react-router-dom";
+import useUser from "../../Hooks/useUser";
 
 const items = [
   { key: "", label: "Homepage" },
@@ -15,10 +16,11 @@ const items = [
 ];
 
 export default function Navbar() {
-  const { token } = theme.useToken();
   const { isMobile, setUserMenuActive } = useAppConfigs();
-
+  const { token } = theme.useToken();
+  const user = useUser();
   const navigate = useNavigate();
+
   const handleNavigation = (e: { key: string }) => {
     navigate(`/${e.key}`);
   };
@@ -68,13 +70,15 @@ export default function Navbar() {
           />
         )}
 
-        {/* <Button type="primary">Account</Button> */}
-
-        <Avatar
-          size="large"
-          src="https://res.cloudinary.com/ddtu2lxue/image/upload/v1745441934/RekamiApp/Users/Pictures/pfpf3ccf500-914d-44c1-8a78-c17a06fbf581.jpg"
-          onClick={() => setUserMenuActive(true)}
-        ></Avatar>
+        {user.user ? (
+          <Avatar
+            size="large"
+            src="https://res.cloudinary.com/ddtu2lxue/image/upload/v1745441934/RekamiApp/Users/Pictures/pfpf3ccf500-914d-44c1-8a78-c17a06fbf581.jpg"
+            onClick={() => setUserMenuActive(true)}
+          />
+        ) : (
+          <Button onClick={()=> navigate("/login")} type="primary">Account</Button>
+        )}
       </nav>
 
       <MobileMenu items={items} handleNavigation={handleNavigation} />

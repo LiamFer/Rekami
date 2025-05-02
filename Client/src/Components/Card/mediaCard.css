@@ -5,7 +5,7 @@
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  z-index: 0; /* Adicionado para deixar a badge aparecer por cima */
+  z-index: 0; 
 }
 
 .media-card-image {
