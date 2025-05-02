@@ -12,7 +12,8 @@ export async function getTopAnime(){
 }
 
 export async function getAnimeFull(id: number){
-    const response = await jikanApi.get(`anime/${id}/full`)
+    // const response = await jikanApi.get(`anime/${id}/full`)
+    const response = await jikanApi.get(`random/anime`)
     return response.data.data
 }
 

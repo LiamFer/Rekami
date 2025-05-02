@@ -34,7 +34,7 @@ export default function RecommendationCard() {
     setID((prev) => (prev == 6 ? 42310 : 6));
   };
 
-  if (loading)
+  if (loading || !animeFull)
     return (
       <motion.div
         key={animeID}

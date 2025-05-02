@@ -1,7 +1,7 @@
-import { StarOutlined } from "@ant-design/icons";
+import { StarFilled } from "@ant-design/icons";
 import { Badge, Skeleton, Button } from "antd";
 import { StandardAnime } from "../../Types/StandardAnime";
-import "./mediaCard.css"; // vamos usar um CSS externo pra deixar mais limpo
+import "./mediaCard.css";
 
 export default function MediaCard({
   media,
@@ -14,11 +14,11 @@ export default function MediaCard({
     <Badge.Ribbon
       text={
         <>
-          <StarOutlined style={{ color: "yellow", marginRight: 5 }} />
+          <StarFilled style={{ color: "yellow", marginRight: 5 }} />
           {media?.score ?? "Not Rated"}
         </>
       }
-      color="orange"
+      color="black"
     >
       <div className="media-card-wrapper">
         {loading || !media ? (
