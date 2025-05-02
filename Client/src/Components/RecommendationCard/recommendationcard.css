@@ -5,6 +5,7 @@
   object-position: bottom;
 }
 
+
 .recommendationCard {
   display: flex;
   flex-wrap: nowrap;

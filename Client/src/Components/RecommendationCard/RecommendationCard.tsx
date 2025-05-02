@@ -12,6 +12,7 @@ export default function RecommendationCard() {
   const { token } = theme.useToken();
   const [animeID, setID] = useState(42310);
   const { animeFull, loading } = useAnimeFull(animeID);
+
   const containerVariants = {
     hidden: { opacity: 0, scale: 0.9 },
     visible: {
@@ -76,7 +77,7 @@ export default function RecommendationCard() {
       <div
         className="recommendationCard"
         style={{
-          borderColor: token.colorBorderSecondary,
+          border: `1px solid ${token.colorBorderSecondary}`,
           backgroundColor: token.colorBgContainer,
         }}
       >
