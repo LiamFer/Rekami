@@ -1,14 +1,14 @@
-import { FloatButton, Layout, theme } from "antd";
+import { FloatButton, Layout } from "antd";
 import HeaderComponent from "../Components/Header/HeaderComponent";
 import { MoonOutlined, SunOutlined } from "@ant-design/icons";
 import { useAppConfigs } from "../Context/App";
 import { Outlet } from "react-router-dom";
+import Footer from "../Components/Footer/Footer";
 
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 
 export default function AppWireframe() {
   const { toggleTheme, darkMode } = useAppConfigs();
-  const { token } = theme.useToken();
 
   return (
     <Layout
@@ -22,15 +22,8 @@ export default function AppWireframe() {
         <Outlet></Outlet>
       </Content>
 
-      <Footer
-        style={{
-          textAlign: "center",
-          backgroundColor: token.colorBgBase,
-          borderTop: `1px solid ${token.colorBorderSecondary}`,
-        }}
-      >
-        Rekami ©{new Date().getFullYear()} Created by LiamFer
-      </Footer>
+      <Footer/>
+
       <FloatButton
         icon={darkMode ? <MoonOutlined /> : <SunOutlined />}
         onClick={toggleTheme}

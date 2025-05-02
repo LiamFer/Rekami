@@ -1,8 +1,7 @@
 import { motion } from "motion/react";
-import { Button, theme, Typography } from "antd";
+import { Button, theme } from "antd";
 import { useNavigate } from "react-router-dom";
 import { TypeAnimation } from "react-type-animation";
-const { Text } = Typography;
 import "./logincard.css";
 
 export default function LoginCard() {
