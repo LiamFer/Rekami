@@ -3,8 +3,12 @@ import TopMediaList from "../Components/TopMediaList/TopMediaList";
 import RecommendationCard from "./../Components/RecommendationCard/RecommendationCard";
 import "../styles/home.css";
 import MediaToday from "../Components/MediaToday/MediaToday";
+import useUser from "../Hooks/useUser";
+import LoginCard from "../Components/RecommendationCard/LoginCard";
 
 export default function Home() {
+  const user = useUser()
+
   return (
     <div
       style={{
@@ -17,7 +21,7 @@ export default function Home() {
       }}
     >
       <section style={{ maxWidth: "1200px", width: "100%" }}>
-        <RecommendationCard />
+        {user.user ? <RecommendationCard /> : <LoginCard/>}
         <MediaSeason />
       </section>
       <section

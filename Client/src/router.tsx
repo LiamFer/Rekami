@@ -5,6 +5,7 @@ import Home from "./Pages/Home";
 import Explore from "./Pages/Explore";
 import Library from "./Pages/Library";
 import Recommendations from "./Pages/Recommendations";
+import Login from "./Pages/Login";
 
 export const router = createBrowserRouter([
   {
@@ -17,4 +18,5 @@ export const router = createBrowserRouter([
       { path: "recommendations", element: <Recommendations /> },
     ],
   },
+  { path: "/Login", element: <Login /> },
 ]);
