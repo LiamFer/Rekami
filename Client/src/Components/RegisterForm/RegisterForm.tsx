@@ -1,9 +1,8 @@
-import { Form, Input, Button, Card, message } from "antd";
+import { Form, Input, Button, message } from "antd";
 import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
 
 export default function RegisterForm() {
   const [form] = Form.useForm();
-
   const onFinish = (values: any) => {
     console.log("Form submitted:", values);
     message.success("Registration successful!");
