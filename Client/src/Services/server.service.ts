@@ -50,3 +50,27 @@ export async function refreshToken() {
     return { success: false, error: "Unexpected Error." };
   }
 }
+
+export async function logout() {
+  try {
+    const response = await serverApi.post(`/auth/logout`, {});
+    return { success: true, data: response.data.data };
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      const status = error.response?.status;
+      const message = error.response?.data?.message || "Unknown Error";
+
+      if (status === 401) {
+        return { success: false, error: "Invalid Token." };
+      } else if (status === 400) {
+        return { success: false, error: message };
+      } else {
+        return {
+          success: false,
+          error: "Error while connecting to the Server.",
+        };
+      }
+    }
+    return { success: false, error: "Unexpected Error." };
+  }
+}

@@ -12,6 +12,7 @@ import { GoogleAuthGuard } from 'src/Guards/google-auth/google-auth.guard';
 import { LocalAuthGuard } from 'src/Guards/local-auth/local-auth.guard';
 import { RefreshAuthGuard } from 'src/Guards/refresh-auth/refresh-auth.guard';
 import { UserDTO } from 'src/DTO/user.dto';
+import { JwtAuthGuard } from 'src/Guards/jwt-auth/jwt-auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -29,6 +30,12 @@ export class AuthController {
   @Post('login')
   async Login(@Req() req, @Res() res) {
     return this.authService.login(req.user.id, res);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('logout')
+  async Logout(@Req() req, @Res() res) {
+    return this.authService.logout(req.user.id, res);
   }
 
   @UseGuards(RefreshAuthGuard)

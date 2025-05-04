@@ -1,10 +1,16 @@
 import { Avatar, Drawer, Menu } from "antd";
 import { useAppConfigs } from "../../Context/App";
 import useUser from "../../Hooks/useUser";
+import LogoutButton from "./../Buttons/Logout/LogoutButton";
+const items = [
+  { key: "profile", label: "Profile" },
+  { key: "interests", label: "Interests" },
+  { key: "config", label: "Config." },
+];
 
-export default function UserMenu({ items }: any) {
+export default function UserMenu() {
   const { userMenuActive, setUserMenuActive } = useAppConfigs();
-  const {user} = useUser()
+  const { user } = useUser();
   const onClose = () => setUserMenuActive(false);
 
   return (
@@ -24,6 +30,7 @@ export default function UserMenu({ items }: any) {
         size="large"
         src={user?.picture ? user.picture : "./defaultAvatar.jpg"}
       ></Avatar>
+      <hr />
       <Menu
         style={{
           flexGrow: 1,
@@ -34,6 +41,7 @@ export default function UserMenu({ items }: any) {
         mode="vertical"
         items={items}
       />
+      <LogoutButton></LogoutButton>
     </Drawer>
   );
 }

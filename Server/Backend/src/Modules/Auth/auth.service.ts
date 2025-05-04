@@ -43,27 +43,33 @@ export class AuthService {
   }
 
   async login(userID: string, res: Response) {
-    const user = await this.userService.findById(userID)
+    const user = await this.userService.findById(userID);
     const { token, refreshToken } = await this.generateTokens(userID);
     await this.redisService.setRefreshToken(userID, refreshToken, res);
     return ResUtil.sendResponse(res, HttpStatus.OK, 'Logged In', {
       id: userID,
-      name:user?.name,
-      email:user?.email,
-      picture:user?.picture,
+      name: user?.name,
+      email: user?.email,
+      picture: user?.picture,
       token,
     });
   }
 
+  async logout(userID: string, res: Response) {
+    await this.redisService.del(`refresh:${userID}`);
+    res.clearCookie('refreshToken');
+    return ResUtil.sendResponse(res, HttpStatus.OK, 'Logged out successfully');
+  }
+
   async refreshToken(userID: string, res: Response) {
-    const user = await this.userService.findById(userID)
+    const user = await this.userService.findById(userID);
     const { token, refreshToken } = await this.generateTokens(userID);
     await this.redisService.setRefreshToken(userID, refreshToken, res);
     return ResUtil.sendResponse(res, HttpStatus.OK, 'Token Refreshed', {
       id: userID,
-      name:user?.name,
-      email:user?.email,
-      picture:user?.picture,
+      name: user?.name,
+      email: user?.email,
+      picture: user?.picture,
       token,
     });
   }
