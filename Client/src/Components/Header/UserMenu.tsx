@@ -1,8 +1,10 @@
 import { Avatar, Drawer, Menu } from "antd";
 import { useAppConfigs } from "../../Context/App";
+import useUser from "../../Hooks/useUser";
 
 export default function UserMenu({ items }: any) {
   const { userMenuActive, setUserMenuActive } = useAppConfigs();
+  const {user} = useUser()
   const onClose = () => setUserMenuActive(false);
 
   return (
@@ -20,7 +22,7 @@ export default function UserMenu({ items }: any) {
     >
       <Avatar
         size="large"
-        src="https://res.cloudinary.com/ddtu2lxue/image/upload/v1745441934/RekamiApp/Users/Pictures/pfpf3ccf500-914d-44c1-8a78-c17a06fbf581.jpg"
+        src={user?.picture ? user.picture : "./defaultAvatar.jpg"}
       ></Avatar>
       <Menu
         style={{

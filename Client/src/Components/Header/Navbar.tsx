@@ -18,7 +18,7 @@ const items = [
 export default function Navbar() {
   const { isMobile, setUserMenuActive } = useAppConfigs();
   const { token } = theme.useToken();
-  const user = useUser();
+  const {user} = useUser();
   const navigate = useNavigate();
 
   const handleNavigation = (e: { key: string }) => {
@@ -70,10 +70,10 @@ export default function Navbar() {
           />
         )}
 
-        {user.user ? (
+        {user ? (
           <Avatar
             size="large"
-            src="https://res.cloudinary.com/ddtu2lxue/image/upload/v1745441934/RekamiApp/Users/Pictures/pfpf3ccf500-914d-44c1-8a78-c17a06fbf581.jpg"
+            src={user?.picture ? user.picture : "./defaultAvatar.jpg"}
             onClick={() => setUserMenuActive(true)}
           />
         ) : (

@@ -24,7 +24,7 @@ export default function RegisterForm() {
           label="Name"
           rules={[{ required: true, message: "Please enter your name" }]}
         >
-          <Input prefix={<UserOutlined />} placeholder="Your name" />
+          <Input minLength={6} maxLength={12} prefix={<UserOutlined />} placeholder="Your name" />
         </Form.Item>
 
         <Form.Item
@@ -44,7 +44,12 @@ export default function RegisterForm() {
           rules={[{ required: true, message: "Please enter a password" }]}
           hasFeedback
         >
-          <Input.Password prefix={<LockOutlined />} placeholder="Password" />
+          <Input.Password
+            minLength={6}
+            maxLength={12}
+            prefix={<LockOutlined />}
+            placeholder="Password"
+          />
         </Form.Item>
 
         <Form.Item
@@ -65,6 +70,8 @@ export default function RegisterForm() {
           ]}
         >
           <Input.Password
+            minLength={6}
+            maxLength={12}
             prefix={<LockOutlined />}
             placeholder="Confirm Password"
           />

@@ -11,6 +11,11 @@ async function bootstrap() {
   app.use(cookieParser());
   app.use(helmet());
 
+  app.enableCors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+  });
+
   // Pra fazer Validação do Body automática
   app.useGlobalPipes(
     new ValidationPipe({

@@ -1,16 +1,27 @@
-import { Form, Input, Button, message, Divider } from "antd";
+import { Form, Input, Button, Divider } from "antd";
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import GoogleButton from "../Buttons/GoogleButton/GoogleButton";
+import { login } from "../../Services/server.service";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../Redux/userSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginForm() {
   const [form] = Form.useForm();
-  const onFinish = (values: any) => {
-    console.log("Form submitted:", values);
-    message.success("Registration successful!");
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
+  const onFinish = async (values: { email: string; password: string }) => {
+    const response = await login(values.email, values.password);
+    if (response.success) {
+      dispatch(setUser(response.data));
+      navigate("/")
+    } else {
+      console.log(response);
+    }
   };
 
   return (
-    <div >
+    <div>
       <Form
         form={form}
         name="register"
@@ -35,7 +46,12 @@ export default function LoginForm() {
           label="Password"
           rules={[{ required: true, message: "Please enter a password" }]}
         >
-          <Input.Password prefix={<LockOutlined />} placeholder="Password" />
+          <Input.Password
+            minLength={6}
+            maxLength={12}
+            prefix={<LockOutlined />}
+            placeholder="Password"
+          />
         </Form.Item>
 
         <Form.Item>
@@ -44,7 +60,7 @@ export default function LoginForm() {
           </Button>
         </Form.Item>
       </Form>
-    <Divider>Or</Divider>
+      <Divider>Or</Divider>
       <GoogleButton></GoogleButton>
     </div>
   );
