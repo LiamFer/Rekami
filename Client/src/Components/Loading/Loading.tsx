@@ -4,7 +4,7 @@ export default function Loading() {
   return (
     <Layout
       style={{
-        height: "100%",
+        height: "100vh",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

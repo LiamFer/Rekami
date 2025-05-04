@@ -56,7 +56,9 @@ export default function Login() {
               alt=""
             />
             <h1 style={{ fontWeight: "bold", margin: "0px" }}>REKAMI</h1>
-            <Text type="secondary">We Recommend</Text>
+            <Text style={{ fontSize: "1.2rem" }} type="secondary">
+              We Recommend
+            </Text>
           </div>
           <div
             style={{

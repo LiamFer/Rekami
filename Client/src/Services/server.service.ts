@@ -26,6 +26,11 @@ export async function login(email: string, password: string) {
   }
 }
 
+export async function googleOauth() {
+  window.location.href = "http://localhost:2409/auth/google/login";
+}
+
+
 export async function refreshToken() {
   try {
     const response = await serverApi.post(`/auth/refresh`, {});

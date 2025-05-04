@@ -1,8 +1,14 @@
-import "./googlebutton.css"
+import { googleOauth } from "../../../Services/server.service";
+import "./googlebutton.css";
 
 export default function GoogleButton() {
+  const handleClick = async () => {
+    const response = await googleOauth();
+    console.log(response)
+  };
+
   return (
-    <button className="googleButton">
+    <button onClick={handleClick} className="googleButton">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         preserveAspectRatio="xMidYMid"

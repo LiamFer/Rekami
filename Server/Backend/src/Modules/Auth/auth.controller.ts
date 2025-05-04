@@ -19,9 +19,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register')
-  async Register(
-    @Body() body: UserDTO,
-  ) {
+  async Register(@Body() body: UserDTO) {
     const { email, name, password } = body;
     return await this.authService.register(name, email, password);
   }
@@ -52,6 +50,6 @@ export class AuthController {
   @UseGuards(GoogleAuthGuard)
   @Get('google/callback')
   googleCallback(@Req() req, @Res() res) {
-    return this.authService.login(req.user.id, res);
+    return this.authService.googleLogin(req.user.id, res);
   }
 }

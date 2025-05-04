@@ -55,6 +55,12 @@ export class AuthService {
     });
   }
 
+  async googleLogin(userID: string, res: Response) {
+    const { refreshToken } = await this.generateTokens(userID);
+    await this.redisService.setRefreshToken(userID, refreshToken, res);
+    return res.redirect('http://localhost:5173');
+  }
+
   async logout(userID: string, res: Response) {
     await this.redisService.del(`refresh:${userID}`);
     res.clearCookie('refreshToken');

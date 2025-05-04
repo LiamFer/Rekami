@@ -1,4 +1,4 @@
-import { Avatar, Drawer, Menu } from "antd";
+import { Avatar, Drawer, Menu, Typography } from "antd";
 import { useAppConfigs } from "../../Context/App";
 import useUser from "../../Hooks/useUser";
 import LogoutButton from "./../Buttons/Logout/LogoutButton";
@@ -12,6 +12,7 @@ export default function UserMenu() {
   const { userMenuActive, setUserMenuActive } = useAppConfigs();
   const { user } = useUser();
   const onClose = () => setUserMenuActive(false);
+  const { Text } = Typography;
 
   return (
     <Drawer
@@ -26,22 +27,43 @@ export default function UserMenu() {
         },
       }}
     >
-      <Avatar
-        size="large"
-        src={user?.picture ? user.picture : "./defaultAvatar.jpg"}
-      ></Avatar>
+      <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+        <Avatar
+          size="large"
+          src={user?.picture ? user.picture : "./defaultAvatar.jpg"}
+        ></Avatar>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <p style={{ margin: 0 }}>{user?.name}</p>
+          <Text type="secondary" style={{ fontSize: "0.6rem" }}>
+            {user?.email}
+          </Text>
+        </div>
+      </div>
       <hr />
-      <Menu
+      <div
         style={{
-          flexGrow: 1,
-          justifyContent: "flex-end",
-          backgroundColor: "transparent",
-          border: "none",
+          display: "flex",
+          flexDirection: "column",
+          gap: "25px",
         }}
-        mode="vertical"
-        items={items}
-      />
-      <LogoutButton></LogoutButton>
+      >
+        <Menu
+          style={{
+            flexGrow: 1,
+            justifyContent: "flex-end",
+            backgroundColor: "transparent",
+            border: "none",
+          }}
+          mode="vertical"
+          items={items}
+        />
+        <LogoutButton></LogoutButton>
+      </div>
     </Drawer>
   );
 }
