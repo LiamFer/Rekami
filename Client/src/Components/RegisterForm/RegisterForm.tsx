@@ -1,4 +1,4 @@
-import { Form, Input, Button, message } from "antd";
+import { Form, Input, Button, message, Divider } from "antd";
 import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
 import GoogleButton from "./../Buttons/GoogleButton/GoogleButton";
 
@@ -11,7 +11,6 @@ export default function RegisterForm() {
 
   return (
     <div>
-      <GoogleButton></GoogleButton>
       <Form
         form={form}
         name="register"
@@ -77,6 +76,8 @@ export default function RegisterForm() {
           </Button>
         </Form.Item>
       </Form>
+      <Divider>Or</Divider>
+      <GoogleButton></GoogleButton>
     </div>
   );
 }

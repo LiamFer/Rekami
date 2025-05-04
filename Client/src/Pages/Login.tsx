@@ -2,8 +2,9 @@ import RegisterForm from "./../Components/RegisterForm/RegisterForm";
 import { useEffect, useState } from "react";
 import { useAppConfigs } from "../Context/App";
 import { Content } from "antd/es/layout/layout";
-import { Layout, Segmented } from "antd";
+import { Layout, Segmented, Typography } from "antd";
 import LoginForm from "../Components/LoginForm/LoginForm";
+const { Text } = Typography;
 
 export default function Login() {
   const { toggleTheme, darkMode } = useAppConfigs();
@@ -37,8 +38,9 @@ export default function Login() {
             minWidth: "300px",
             display: "flex",
             flexDirection: "column",
-            justifyContent: "space-around ",
             alignItems: "center",
+            justifyContent: "center",
+            gap: "20px",
           }}
         >
           <div
@@ -53,15 +55,25 @@ export default function Login() {
               src={darkMode ? "./darkModeLogo.svg" : "./lightModeLogo.svg"}
               alt=""
             />
-            <h1 style={{ fontWeight: "bold", margin: "0px" }}>WE RECOMMEND</h1>
+            <h1 style={{ fontWeight: "bold", margin: "0px" }}>REKAMI</h1>
+            <Text type="secondary">We Recommend</Text>
           </div>
-          <div style={{ width: "100%", maxWidth: "400px",minHeight:"500px" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "25px",
+              width: "100%",
+              maxWidth: "400px",
+              flexGrow: 1,
+            }}
+          >
             <Segmented
               options={["Login", "Register"]}
               onChange={(value) => setMode(value)}
               block
             />
-            {mode == "Register" ? <RegisterForm /> : <LoginForm/>}
+            {mode == "Register" ? <RegisterForm /> : <LoginForm />}
           </div>
         </div>
 
