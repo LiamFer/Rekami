@@ -1,12 +1,13 @@
 import RegisterForm from "./../Components/RegisterForm/RegisterForm";
-import GoogleButton from "./../Components/Buttons/GoogleButton/GoogleButton";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAppConfigs } from "../Context/App";
 import { Content } from "antd/es/layout/layout";
-import { Layout } from "antd";
+import { Layout, Segmented } from "antd";
+import LoginForm from "../Components/LoginForm/LoginForm";
 
 export default function Login() {
   const { toggleTheme, darkMode } = useAppConfigs();
+  const [mode, setMode] = useState("Login");
 
   useEffect(() => {
     if (darkMode) {
@@ -54,7 +55,14 @@ export default function Login() {
             />
             <h1 style={{ fontWeight: "bold", margin: "0px" }}>WE RECOMMEND</h1>
           </div>
-          <RegisterForm />
+          <div style={{ width: "100%", maxWidth: "400px",minHeight:"500px" }}>
+            <Segmented
+              options={["Login", "Register"]}
+              onChange={(value) => setMode(value)}
+              block
+            />
+            {mode == "Register" ? <RegisterForm /> : <LoginForm/>}
+          </div>
         </div>
 
         <div

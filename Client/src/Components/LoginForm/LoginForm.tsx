@@ -1,8 +1,8 @@
 import { Form, Input, Button, message } from "antd";
-import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
-import GoogleButton from "./../Buttons/GoogleButton/GoogleButton";
+import { LockOutlined, MailOutlined } from "@ant-design/icons";
+import GoogleButton from "../Buttons/GoogleButton/GoogleButton";
 
-export default function RegisterForm() {
+export default function LoginForm() {
   const [form] = Form.useForm();
   const onFinish = (values: any) => {
     console.log("Form submitted:", values);
@@ -21,14 +21,6 @@ export default function RegisterForm() {
         variant="filled"
       >
         <Form.Item
-          name="name"
-          label="Name"
-          rules={[{ required: true, message: "Please enter your name" }]}
-        >
-          <Input prefix={<UserOutlined />} placeholder="Your name" />
-        </Form.Item>
-
-        <Form.Item
           name="email"
           label="Email"
           rules={[
@@ -43,37 +35,13 @@ export default function RegisterForm() {
           name="password"
           label="Password"
           rules={[{ required: true, message: "Please enter a password" }]}
-          hasFeedback
         >
           <Input.Password prefix={<LockOutlined />} placeholder="Password" />
         </Form.Item>
 
-        <Form.Item
-          name="confirm"
-          label="Confirm Password"
-          dependencies={["password"]}
-          hasFeedback
-          rules={[
-            { required: true, message: "Please confirm your password" },
-            ({ getFieldValue }) => ({
-              validator(_, value) {
-                if (!value || getFieldValue("password") === value) {
-                  return Promise.resolve();
-                }
-                return Promise.reject("Passwords do not match!");
-              },
-            }),
-          ]}
-        >
-          <Input.Password
-            prefix={<LockOutlined />}
-            placeholder="Confirm Password"
-          />
-        </Form.Item>
-
         <Form.Item>
           <Button size="large" type="primary" htmlType="submit" block>
-            Start
+            Login
           </Button>
         </Form.Item>
       </Form>
