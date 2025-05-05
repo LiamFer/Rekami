@@ -2,6 +2,7 @@ import { StarFilled } from "@ant-design/icons";
 import { Badge, Skeleton, Button } from "antd";
 import { StandardAnime } from "../../Types/StandardAnime";
 import "./mediaCard.css";
+import { useNavigate } from "react-router-dom";
 
 export default function MediaCard({
   media,
@@ -10,6 +11,11 @@ export default function MediaCard({
   media: StandardAnime | undefined;
   loading: boolean;
 }) {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`media/${media?.mal_id}`);
+  };
+
   return (
     <Badge.Ribbon
       text={
@@ -20,7 +26,7 @@ export default function MediaCard({
       }
       color="black"
     >
-      <div className="media-card-wrapper">
+      <div onClick={handleClick} className="media-card-wrapper">
         {loading || !media ? (
           <Skeleton.Image
             active

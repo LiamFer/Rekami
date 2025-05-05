@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { getAnimeFull } from "../Services/jikan.service";
+import {  getRandomAnime } from "../Services/jikan.service";
 import { FullAnime } from "../Types/FullAnime";
 
-export function useAnimeFull(id: number | string) {
+export function useRandomAnime(id:number) {
   const [animeFull, setAnimeFull] = useState<FullAnime>();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getAnimeFull(id)
+    getRandomAnime()
       .then(setAnimeFull)
       .finally(() => setLoading(false));
   }, [id]);

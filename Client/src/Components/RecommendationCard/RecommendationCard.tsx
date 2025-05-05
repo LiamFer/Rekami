@@ -1,18 +1,18 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { Button, Rate, Spin, Tag, theme, Typography } from "antd";
-import { useAnimeFull } from "../../Hooks/useAnimeFull";
 import NotInterestedButton from "../Buttons/NotInterested/NotInterestedButton";
 const { Paragraph, Text } = Typography;
 import "./recommendationcard.css";
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import CardTour from "./CardTour";
+import { useRandomAnime } from "../../Hooks/useRandomAnime";
 
 export default function RecommendationCard() {
   const { token } = theme.useToken();
   const [animeID, setID] = useState(42310);
-  const { animeFull, loading } = useAnimeFull(animeID);
+  const { animeFull, loading } = useRandomAnime(animeID);
 
   const card = useRef(null);
   const buttons = useRef(null);

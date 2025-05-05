@@ -71,6 +71,7 @@ export default function MediaSeason() {
           <SwiperSlide key={a?.mal_id || i}>
             <motion.div
               initial={{ opacity: 0, scale: 0.5 }}
+              whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{
                 duration: 0.8,

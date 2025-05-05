@@ -11,8 +11,12 @@ export async function getTopAnime(){
     return response.data.data
 }
 
-export async function getAnimeFull(id: number){
-    // const response = await jikanApi.get(`anime/${id}/full`)
+export async function getAnimeFull(id: number | string){
+    const response = await jikanApi.get(`anime/${id}/full`)
+    return response.data.data
+}
+
+export async function getRandomAnime(){
     const response = await jikanApi.get(`random/anime`)
     return response.data.data
 }

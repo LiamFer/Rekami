@@ -1,10 +1,15 @@
 import { StarFilled, TrophyOutlined } from "@ant-design/icons";
 import { Avatar, List, Skeleton, Tag, theme } from "antd";
 import { useTopAnimes } from "../../Hooks/useTopAnimes";
+import { useNavigate } from "react-router-dom";
 
 export default function TopMediaList() {
   const { token } = theme.useToken();
   const { topAnimes, loading } = useTopAnimes();
+  const navigate = useNavigate();
+  const handleClick = (id:number) => {
+    navigate(`media/${id}`);
+  };
   const placeholderData = Array.from({ length: 5 }, (_, i) => ({
     loading: true,
     key: i,
@@ -57,7 +62,7 @@ export default function TopMediaList() {
                         />
                       }
                       title={
-                        <a href={media.url} target="_blank" rel="noreferrer">
+                        <a onClick={() => handleClick(media.mal_id)}>
                           {media.rank}. {media.title}
                         </a>
                       }
