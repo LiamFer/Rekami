@@ -39,7 +39,8 @@ export class AuthService {
     if (emailInUse) throw new ConflictException('Email already in use!');
 
     const hashedPassword = await bcrypt.hash(password, 7);
-    return await this.userService.createUser(name, email, hashedPassword);
+    const createdUser = await this.userService.createUser(name, email, hashedPassword);
+    return {id:createdUser.id,name:createdUser.name,email:createdUser.email}
   }
 
   async login(userID: string, res: Response) {

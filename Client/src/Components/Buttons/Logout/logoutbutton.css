@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: flex-start;
   width: 45px;
-  height: 45px;
+  height: 35px;
   border: none;
   border-radius: 50%;
   cursor: pointer;
@@ -42,7 +42,7 @@
   transition-duration: .3s;
 }
 /* hover effect on button width */
-.LogoutBtn:hover {
+.LogoutBtn {
   width: 100%;
   border-radius: 40px;
   transition-duration: .3s;

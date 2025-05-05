@@ -1,12 +1,28 @@
-import { Form, Input, Button, message, Divider } from "antd";
+import { Form, Input, Button, Divider, App } from "antd";
 import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
 import GoogleButton from "./../Buttons/GoogleButton/GoogleButton";
+import { register } from "../../Services/server.service";
+import PictureModal from "../UploadPicture/PictureModal";
 
 export default function RegisterForm() {
+  const { notification } = App.useApp();
   const [form] = Form.useForm();
-  const onFinish = (values: any) => {
-    console.log("Form submitted:", values);
-    message.success("Registration successful!");
+  const onFinish = async (values: {
+    email: string;
+    password: string;
+    name: string;
+  }) => {
+    const { name, email, password } = values;
+    const response = await register(name, email, password);
+    if (response.success) {
+      console.log(response);
+    } else {
+      notification.error({
+        message: "Error",
+        description: response.error,
+        placement: "topRight",
+      });
+    }
   };
 
   return (
@@ -24,7 +40,12 @@ export default function RegisterForm() {
           label="Name"
           rules={[{ required: true, message: "Please enter your name" }]}
         >
-          <Input minLength={6} maxLength={12} prefix={<UserOutlined />} placeholder="Your name" />
+          <Input
+            minLength={6}
+            maxLength={12}
+            prefix={<UserOutlined />}
+            placeholder="Your name"
+          />
         </Form.Item>
 
         <Form.Item
@@ -85,6 +106,7 @@ export default function RegisterForm() {
       </Form>
       <Divider>Or</Divider>
       <GoogleButton></GoogleButton>
+      <PictureModal />
     </div>
   );
 }

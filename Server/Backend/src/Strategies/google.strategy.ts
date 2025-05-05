@@ -36,7 +36,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       firstName: profile.name.givenName,
       lastName: profile.name.familyName,
       avatarUrl: profile.photos[0].value,
-      password: '',
+      password: "",
     };
 
     // Verificando se esse Usuário já existe

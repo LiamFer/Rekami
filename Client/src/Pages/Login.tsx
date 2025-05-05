@@ -41,6 +41,7 @@ export default function Login() {
             alignItems: "center",
             justifyContent: "center",
             gap: "20px",
+            margin: "auto",
           }}
         >
           <div
@@ -57,7 +58,7 @@ export default function Login() {
             />
             <h1 style={{ fontWeight: "bold", margin: "0px" }}>REKAMI</h1>
             <Text style={{ fontSize: "1.2rem" }} type="secondary">
-              We Recommend
+              We Recommend, you Watch.
             </Text>
           </div>
           <div

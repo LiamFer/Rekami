@@ -1,6 +1,24 @@
 import axios from "axios";
 import { serverApi } from "../Api/server";
 
+export async function register(name: string, email: string, password: string) {
+  try {
+    const response = await serverApi.post(`/auth/register`, {
+      name,
+      email,
+      password,
+    });
+    return { success: true, data: response.data };
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      const message = error.response?.data?.message || "Unknown Error";
+      return { success: false, error: message };
+    }
+
+    return { success: false, error: "Unexpected Error." };
+  }
+}
+
 export async function login(email: string, password: string) {
   try {
     const response = await serverApi.post(`/auth/login`, { email, password });
@@ -29,7 +47,6 @@ export async function login(email: string, password: string) {
 export async function googleOauth() {
   window.location.href = "http://localhost:2409/auth/google/login";
 }
-
 
 export async function refreshToken() {
   try {
