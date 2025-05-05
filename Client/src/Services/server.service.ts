@@ -96,3 +96,20 @@ export async function logout() {
     return { success: false, error: "Unexpected Error." };
   }
 }
+
+export async function uploadProfilePicture(formData: FormData) {
+  try {
+    const response = await serverApi.post("/user/upload/photo", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return { success: true, data: response.data };
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      const message = error.response?.data?.message || "Unknown Error";
+      return { success: false, error: message };
+    }
+    return { success: false, error: "Unexpected Error." };
+  }
+}

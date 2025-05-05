@@ -1,12 +1,17 @@
 import { Form, Input, Button, Divider, App } from "antd";
 import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
 import GoogleButton from "./../Buttons/GoogleButton/GoogleButton";
-import { register } from "../../Services/server.service";
+import { login, register } from "../../Services/server.service";
 import PictureModal from "../UploadPicture/PictureModal";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../Redux/userSlice";
 
 export default function RegisterForm() {
-  const { notification } = App.useApp();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [form] = Form.useForm();
+  const dispatch = useDispatch();
+  const { notification } = App.useApp();
   const onFinish = async (values: {
     email: string;
     password: string;
@@ -14,8 +19,13 @@ export default function RegisterForm() {
   }) => {
     const { name, email, password } = values;
     const response = await register(name, email, password);
+
     if (response.success) {
-      console.log(response);
+      const loginResponse = await login(email, password);
+      if (loginResponse.success) {
+        dispatch(setUser(loginResponse.data));
+        setIsModalOpen(true);
+      }
     } else {
       notification.error({
         message: "Error",
@@ -38,7 +48,17 @@ export default function RegisterForm() {
         <Form.Item
           name="name"
           label="Name"
-          rules={[{ required: true, message: "Please enter your name" }]}
+          rules={[
+            { required: true, message: "Please enter your name" },
+            {
+              validator: (_, value) => {
+                if (!value || value.trim().length < 6) {
+                  return Promise.reject("Fix the Name!");
+                }
+                return Promise.resolve();
+              },
+            },
+          ]}
         >
           <Input
             minLength={6}
@@ -106,7 +126,7 @@ export default function RegisterForm() {
       </Form>
       <Divider>Or</Divider>
       <GoogleButton></GoogleButton>
-      <PictureModal />
+      <PictureModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
     </div>
   );
 }

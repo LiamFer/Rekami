@@ -1,20 +1,18 @@
-import { Button, Modal } from "antd";
-import { useState } from "react";
+import { Modal } from "antd";
 import UploadPicture from "./UploadPicture";
+import { useNavigate } from "react-router-dom";
 
-export default function PictureModal() {
-  const [isModalOpen, setIsModalOpen] = useState(true);
-
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
+export default function PictureModal({ isModalOpen, setIsModalOpen }: any) {
+  const navigate = useNavigate();
 
   const handleOk = () => {
     setIsModalOpen(false);
+    navigate("/");
   };
 
   const handleCancel = () => {
     setIsModalOpen(false);
+    navigate("/");
   };
 
   return (
@@ -26,6 +24,7 @@ export default function PictureModal() {
         onCancel={handleCancel}
         width={"290px"}
         centered
+        footer={null}
       >
         <UploadPicture />
       </Modal>

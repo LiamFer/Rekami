@@ -49,6 +49,7 @@ export class UserService {
     userID: string,
     res: Response,
   ) {
+    await this.deleteUserPicture(userID)
     const uploadData = await this.cloudinaryService.upload(file);
     await this.updateUser(userID, { picture: uploadData?.url });
     return ResUtil.sendResponse(
@@ -57,6 +58,14 @@ export class UserService {
       'Photo Uploaded',
       uploadData?.url,
     );
+  }
+  async deleteUserPicture(userID: string) {
+    const user = await this.findById(userID);
+    if (!user) throw new UnauthorizedException();
+    if (user.picture) {
+      const imageID = user.picture.split("/").pop()?.split(".")[0]
+      await this.cloudinaryService.delete(imageID);
+    }
   }
 
   async checkUserPassword(userID: string, password: string) {
@@ -108,7 +117,7 @@ export class UserService {
     await this.userRepository.delete({ id: userID });
     await this.redisService.del(`refresh:${userID}`);
     if (userInfo?.picture) {
-      const assetID = userInfo?.picture.split("/").at(-1)?.replace(".jpg", "")
+      const assetID = userInfo?.picture.split('/').at(-1)?.replace('.jpg', '');
       await this.cloudinaryService.delete(assetID);
     }
     return ResUtil.sendResponse(res, HttpStatus.NO_CONTENT);

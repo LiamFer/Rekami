@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface UserData {
   id: string;
@@ -17,7 +17,7 @@ const initialState: UserState = {
 };
 
 const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {
     setUser(state, action) {
@@ -31,8 +31,14 @@ const userSlice = createSlice({
     clearUser(state) {
       state.user = null;
     },
+    updateUserPicture(state, action) {
+      if (state.user) {
+        console.log(`PICTURE IS ${JSON.stringify(action.payload)}`)
+        state.user.picture = action.payload;
+      }
+    },
   },
 });
 
-export const { setUser, clearUser,updateToken } = userSlice.actions;
+export const { setUser, clearUser, updateToken,updateUserPicture } = userSlice.actions;
 export default userSlice.reducer;
