@@ -1,16 +1,13 @@
-import { Tag, Image, Typography, theme, Button } from "antd";
+import { Tag, Image, Typography, theme } from "antd";
 import { FullAnime } from "../../Types/FullAnime";
 import {
-  BookOutlined,
   CalendarOutlined,
   ClockCircleOutlined,
-  DislikeOutlined,
-  LikeOutlined,
   PlayCircleOutlined,
-  ShareAltOutlined,
   TagOutlined,
 } from "@ant-design/icons";
 import IconText from "./IconText";
+import MediaActionOptions from "./MediaActionOptions";
 const { Text } = Typography;
 
 export default function MediaSideInfo({ animeFull }: { animeFull: FullAnime }) {
@@ -28,26 +25,13 @@ export default function MediaSideInfo({ animeFull }: { animeFull: FullAnime }) {
       }}
     >
       <div>
-        
         <Image
           style={{
             boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
           }}
           src={animeFull?.images.jpg.large_image_url}
         ></Image>
-<div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            width: "100%",
-            backgroundColor: token.colorBgContainerDisabled,
-          }}
-        >
-          <Button type="text" icon={<ShareAltOutlined />} style={{ flex: 1 }} />
-          <Button type="text" icon={<DislikeOutlined />} style={{ flex: 1 }} />
-          <Button type="text" icon={<LikeOutlined />} style={{ flex: 1 }} />
-          <Button type="text" icon={<BookOutlined />} style={{ flex: 1 }} />
-        </div>
+        <MediaActionOptions />
       </div>
 
       <div>
@@ -94,6 +78,16 @@ export default function MediaSideInfo({ animeFull }: { animeFull: FullAnime }) {
 
         <div>
           {animeFull.studios.map((studio) => (
+            <Tag>{studio.name}</Tag>
+          ))}
+        </div>
+      </div>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
+        <IconText icon={null} text="Producers" />
+
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
+          {animeFull.producers.map((studio) => (
             <Tag>{studio.name}</Tag>
           ))}
         </div>
