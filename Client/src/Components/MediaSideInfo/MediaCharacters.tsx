@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import CharacterCard from "../CharacterCard/CharacterCard";
 import { useAnimeCharacters } from "../../Hooks/useAnimeCharacters";
 
-export default function MediaCharacters({ id } : {id:string | undefined}) {
+export default function MediaCharacters({ id }: { id: string | undefined }) {
   const { characters, loading } = useAnimeCharacters(id);
   if (loading || !characters) return null;
 
@@ -15,7 +15,6 @@ export default function MediaCharacters({ id } : {id:string | undefined}) {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "start",
-        maxWidth: "1200px",
       }}
     >
       <Swiper
@@ -37,7 +36,7 @@ export default function MediaCharacters({ id } : {id:string | undefined}) {
           500: { slidesPerView: 2 },
           768: { slidesPerView: 3 },
           800: { slidesPerView: 4 },
-          950: { slidesPerView: 5 },
+          950: { slidesPerView: 6 },
         }}
       >
         {characters.map((c) => (

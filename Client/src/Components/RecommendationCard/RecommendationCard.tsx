@@ -8,12 +8,16 @@ import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import CardTour from "./CardTour";
 import { useRandomAnime } from "../../Hooks/useRandomAnime";
+import { useNavigate } from "react-router-dom";
 
 export default function RecommendationCard() {
   const { token } = theme.useToken();
   const [animeID, setID] = useState(42310);
   const { animeFull, loading } = useRandomAnime(animeID);
-
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`media/${animeFull?.mal_id}`);
+  };
   const card = useRef(null);
   const buttons = useRef(null);
   const interested = useRef(null);
@@ -109,6 +113,7 @@ export default function RecommendationCard() {
             }}
           >
             <motion.h1
+              onClick={handleClick}
               variants={itemVariants}
               style={{
                 fontSize: "2rem",
@@ -116,6 +121,7 @@ export default function RecommendationCard() {
                 whiteSpace: "nowrap",
                 overflow: "hidden",
                 textOverflow: "ellipsis",
+                cursor:"pointer"
               }}
             >
               {animeFull?.title}

@@ -2,13 +2,17 @@ import { Button, Layout, theme } from "antd";
 import { useAppConfigs } from "../../Context/App";
 import Navbar from "./Navbar";
 import { MenuOutlined } from "@ant-design/icons";
-import darkLogo from "./darkModeLogo.svg"
+import { useNavigate } from "react-router-dom";
 
 const { Header } = Layout;
 
 export default function HeaderComponent() {
   const { darkMode, isMobile, showMobileMenu } = useAppConfigs();
   const { token } = theme.useToken();
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate("/");
+  };
 
   return (
     <>
@@ -42,7 +46,12 @@ export default function HeaderComponent() {
             alt=""
             width={30}
           />
-          <h1 style={{ margin: 0, fontSize: "1.5rem" }}>Rekami</h1>
+          <h1
+            onClick={handleClick}
+            style={{ margin: 0, fontSize: "1.5rem", cursor: "pointer" }}
+          >
+            Rekami
+          </h1>
         </div>
         <Navbar></Navbar>
       </Header>

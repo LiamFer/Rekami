@@ -27,7 +27,7 @@ export default function CharacterCard({
           />
           <div className="character-card-content">
             <h3 style={{margin:0}}>{character.character.name}</h3>
-            <Text type="secondary" style={{margin:0}}>{character.role}</Text>
+            <Text type="warning" style={{margin:0}}>{character.role}</Text>
           </div>
         </>
       )}
