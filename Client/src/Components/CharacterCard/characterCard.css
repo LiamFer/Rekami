@@ -1,0 +1,46 @@
+.character-card-wrapper {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  z-index: 0;
+}
+
+.character-card-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 1;
+}
+
+.character-card-content {
+  position: absolute;
+  bottom: -1px;
+  width: 100%;
+  padding: 10px;
+  z-index: 1;
+  backdrop-filter: blur(20px);
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  text-overflow: ellipsis;
+}
+
+.character-card-content h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.character-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 5px;
+}

@@ -30,7 +30,7 @@ export default function Media() {
           flexGrow: 1,
           display: "flex",
           flexDirection: "column",
-          maxWidth: "1200px",
+          gap: "15px",
         }}
       >
         <MediaRating animeFull={animeFull} />
@@ -46,13 +46,13 @@ export default function Media() {
           <MediaStatistic title={"Favorites"} value={animeFull.favorites} />
           <MediaStatistic title={"Members"} value={animeFull.members} />
         </div>
-        <div>
+        <div style={{ maxWidth: "700px" }}>
           <h1>Storyline</h1>
           <Text type="secondary">{animeFull?.synopsis}</Text>
         </div>
         <div>
           <h1>Characters</h1>
-          <MediaCharacters id={id}/>
+          <MediaCharacters id={id} />
         </div>
       </section>
     </div>

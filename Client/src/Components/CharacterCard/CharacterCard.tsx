@@ -1,5 +1,7 @@
-import { Skeleton, Button } from "antd";
+import { Skeleton, Typography } from "antd";
 import { AnimeCharacter } from "../../Types/AnimeCharacter";
+import "./characterCard.css";
+const {Text} = Typography
 
 export default function CharacterCard({
   character,
@@ -8,34 +10,27 @@ export default function CharacterCard({
   character: AnimeCharacter | undefined;
   loading: boolean;
 }) {
-
   return (
-
-      <div className="media-card-wrapper">
-        {loading || !character ? (
-          <Skeleton.Image
-            active
-            className="antSkeletonImage"
-            style={{ height: "300px", width: "100%" }}
+    <div className="character-card-wrapper">
+      {loading || !character ? (
+        <Skeleton.Image
+          active
+          className="antSkeletonImage"
+          style={{ height: "300px", width: "100%" }}
+        />
+      ) : (
+        <>
+          <img
+            src={character.character.images.jpg.image_url}
+            alt={character.character.name}
+            className="character-card-image"
           />
-        ) : (
-          <>
-            <img
-              src={character.character.images.jpg.image_url}
-              alt={character.character.name}
-              className="media-card-image"
-            />
-            <div className="media-card-content">
-              <h3>{character.character.name}</h3>
-              <div className="media-card-footer">
-                <p>{character.character.name}</p>
-                <Button type="primary" size="small">
-                  Open
-                </Button>
-              </div>
-            </div>
-          </>
-        )}
-      </div>
+          <div className="character-card-content">
+            <h3 style={{margin:0}}>{character.character.name}</h3>
+            <Text type="secondary" style={{margin:0}}>{character.role}</Text>
+          </div>
+        </>
+      )}
+    </div>
   );
 }

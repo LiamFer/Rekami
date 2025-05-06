@@ -1,15 +1,12 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { motion } from "framer-motion";
-import { theme } from "antd";
 import CharacterCard from "../CharacterCard/CharacterCard";
 import { useAnimeCharacters } from "../../Hooks/useAnimeCharacters";
 
-export default function MediaCharacters({id}) {
+export default function MediaCharacters({ id } : {id:string | undefined}) {
   const { characters, loading } = useAnimeCharacters(id);
-  const { token } = theme.useToken();
-
-  if (loading || !characters) return null
+  if (loading || !characters) return null;
 
   return (
     <div
@@ -18,7 +15,7 @@ export default function MediaCharacters({id}) {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "start",
-
+        maxWidth: "1200px",
       }}
     >
       <Swiper
@@ -43,7 +40,7 @@ export default function MediaCharacters({id}) {
           950: { slidesPerView: 5 },
         }}
       >
-        {characters.map((c, i) => (
+        {characters.map((c) => (
           <SwiperSlide key={c?.character.mal_id}>
             <motion.div
               initial={{ opacity: 0, scale: 0.5 }}

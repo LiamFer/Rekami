@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getAnimeCharacters } from "../Services/jikan.service";
 import { AnimeCharacter } from "../Types/AnimeCharacter";
 
-export function useAnimeCharacters(id: number | string) {
+export function useAnimeCharacters(id: undefined | string) {
   const [characters, setCharacters] = useState<AnimeCharacter[]>();
   const [loading, setLoading] = useState(true);
 

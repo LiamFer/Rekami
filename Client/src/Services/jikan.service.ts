@@ -18,7 +18,7 @@ export async function getAnimeFull(id: number | string) {
   return response.data.data;
 }
 
-export async function getAnimeCharacters(id: number | string) {
+export async function getAnimeCharacters(id: undefined | string) {
   const response = await jikanApi.get(`anime/${id}/characters`);
   return response.data.data;
 }
