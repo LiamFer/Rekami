@@ -5,6 +5,7 @@ import MediaSideInfo from "./../Components/MediaSideInfo/MediaSideInfo";
 import MediaRating from "./../Components/MediaSideInfo/MediaRating";
 import { Typography } from "antd";
 import MediaStatistic from "../Components/MediaSideInfo/MediaStatistic";
+import MediaCharacters from "../Components/MediaSideInfo/MediaCharacters";
 const { Text } = Typography;
 
 export default function Media() {
@@ -24,11 +25,17 @@ export default function Media() {
     >
       <MediaSideInfo animeFull={animeFull}></MediaSideInfo>
 
-      <section style={{ flexGrow: 1 }}>
+      <section
+        style={{
+          flexGrow: 1,
+          display: "flex",
+          flexDirection: "column",
+          maxWidth: "1200px",
+        }}
+      >
         <MediaRating animeFull={animeFull} />
         <div
           style={{
-            width: "100%",
             display: "flex",
             flexWrap: "wrap",
             gap: "50px",
@@ -39,13 +46,13 @@ export default function Media() {
           <MediaStatistic title={"Favorites"} value={animeFull.favorites} />
           <MediaStatistic title={"Members"} value={animeFull.members} />
         </div>
-        <div style={{ maxWidth: "700px" }}>
+        <div>
           <h1>Storyline</h1>
           <Text type="secondary">{animeFull?.synopsis}</Text>
         </div>
-        <div style={{ maxWidth: "600px" }}>
+        <div>
           <h1>Characters</h1>
-          <p>{animeFull?.season}</p>
+          <MediaCharacters id={id}/>
         </div>
       </section>
     </div>

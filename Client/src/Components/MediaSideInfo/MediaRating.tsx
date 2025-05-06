@@ -23,7 +23,7 @@ export default function MediaRating({ animeFull }: { animeFull: FullAnime }) {
           borderRadius: "5px",
         }}
       >
-        <h1 style={{ margin: 0 }}>{animeFull.score}</h1>
+        <h1 style={{ margin: 0 }}>{animeFull.score.toFixed(1)}</h1>
       </div>
       <Rate
         disabled
