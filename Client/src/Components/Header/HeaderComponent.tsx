@@ -2,6 +2,7 @@ import { Button, Layout, theme } from "antd";
 import { useAppConfigs } from "../../Context/App";
 import Navbar from "./Navbar";
 import { MenuOutlined } from "@ant-design/icons";
+import darkLogo from "./darkModeLogo.svg"
 
 const { Header } = Layout;
 
