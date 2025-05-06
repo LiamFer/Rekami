@@ -11,6 +11,7 @@ const { Text } = Typography;
 
 export default function Media() {
   const { id } = useParams();
+  if (!id) return null;
   const { animeFull, loading } = useAnimeFull(id);
   if (loading || !animeFull) return <Loading />;
 
@@ -65,7 +66,7 @@ export default function Media() {
             </div>
           </div>
 
-          <TrailerBox trailerURL={animeFull.trailer.embed_url}/>
+          <TrailerBox trailerURL={animeFull.trailer.embed_url} />
         </div>
 
         <div>

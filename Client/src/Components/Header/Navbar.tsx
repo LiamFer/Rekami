@@ -1,12 +1,12 @@
-import { Menu, theme, Avatar, AutoComplete, Input, Button } from "antd";
+import { Menu, theme, Avatar, Button } from "antd";
 import MobileMenu from "./MobileMenu";
 import "./header.css";
 import { useAppConfigs } from "../../Context/App";
 import { SearchOutlined } from "@ant-design/icons";
-import { useState } from "react";
 import UserMenu from "./UserMenu";
 import { useNavigate } from "react-router-dom";
 import useUser from "../../Hooks/useUser";
+import MediaSearchBar from "../MediaSearchBar/MediaSearchBar";
 
 const items = [
   { key: "", label: "Homepage" },
@@ -25,16 +25,9 @@ export default function Navbar() {
     navigate(`/${e.key}`);
   };
 
-  const mockVal = (str: string, repeat = 1) => ({
-    value: str.repeat(repeat),
-  });
 
-  const [options, setOptions] = useState([]);
 
-  const getPanelValue = (searchText: string) =>
-    !searchText
-      ? []
-      : [mockVal(searchText), mockVal(searchText, 2), mockVal(searchText, 3)];
+  
 
   return (
     <>
@@ -46,13 +39,7 @@ export default function Navbar() {
           gap: "10px",
         }}
       >
-        <AutoComplete
-          className="searchBar"
-          options={options}
-          onSearch={(text) => setOptions(getPanelValue(text))}
-        >
-          <Input.Search placeholder="Search your Movie/Anime"></Input.Search>
-        </AutoComplete>
+        <MediaSearchBar/>
 
         <Button className="searchBarMobile" icon={<SearchOutlined />}></Button>
 

@@ -34,3 +34,8 @@ export async function getScheduleAnime(day: string = "") {
   );
   return response.data.data;
 }
+
+export async function getSearchAnime(searchText: string) : Promise<StandardAnime[]> {
+  const response = await jikanApi.get(`anime?q=${searchText}`);
+  return response.data.data;
+}
