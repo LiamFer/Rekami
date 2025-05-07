@@ -3,11 +3,12 @@ import Loading from "../Components/Loading/Loading";
 import { useAnimeFull } from "../Hooks/useAnimeFull";
 import MediaSideInfo from "./../Components/MediaSideInfo/MediaSideInfo";
 import MediaRating from "./../Components/MediaSideInfo/MediaRating";
-import { Typography } from "antd";
+import { Segmented, Typography } from "antd";
 import MediaStatistic from "../Components/MediaSideInfo/MediaStatistic";
 import MediaCharacters from "../Components/MediaSideInfo/MediaCharacters";
 import TrailerBox from "../Components/TrailerBox/TrailerBox";
-import "../styles/media.css"
+import "../styles/media.css";
+import MediaOtherOptions from "../Components/MediaOtherOptions/MediaOtherOptions";
 const { Text } = Typography;
 
 export default function Media() {
@@ -17,10 +18,7 @@ export default function Media() {
   if (loading || !animeFull) return <Loading />;
 
   return (
-    <div
-      className="mediaContent"
-
-    >
+    <div className="mediaContent">
       <MediaSideInfo animeFull={animeFull} />
 
       <section
@@ -68,6 +66,7 @@ export default function Media() {
           <h1>Characters</h1>
           <MediaCharacters id={id} />
         </div>
+        <MediaOtherOptions animeFull={animeFull}/>
       </section>
     </div>
   );

@@ -123,5 +123,5 @@ export type FullAnime = {
     name: string;
     url: string;
   }[];
-  streaming: any[];
+  streaming: { name: string; url: string }[];
 };

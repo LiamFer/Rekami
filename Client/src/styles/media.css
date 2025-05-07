@@ -14,7 +14,12 @@
   padding: 10px;
 }
 
-
+@media (min-width: 900px) {
+  .mediaSideInfo {
+    position: sticky;
+    top: 75px;
+  }
+}
 
 @media (max-width: 900px) {
   .mediaContent {
