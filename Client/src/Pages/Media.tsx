@@ -7,6 +7,7 @@ import { Typography } from "antd";
 import MediaStatistic from "../Components/MediaSideInfo/MediaStatistic";
 import MediaCharacters from "../Components/MediaSideInfo/MediaCharacters";
 import TrailerBox from "../Components/TrailerBox/TrailerBox";
+import "../styles/media.css"
 const { Text } = Typography;
 
 export default function Media() {
@@ -17,14 +18,8 @@ export default function Media() {
 
   return (
     <div
-      style={{
-        display: "flex",
-        justifyContent: "flex-start",
-        alignItems: "flex-start",
-        flexWrap: "nowrap",
-        padding: "20px 0px",
-        gap: "20px",
-      }}
+      className="mediaContent"
+
     >
       <MediaSideInfo animeFull={animeFull} />
 

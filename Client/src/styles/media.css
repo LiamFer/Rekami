@@ -1,0 +1,39 @@
+.mediaContent {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 20px 0px;
+  gap: 20px;
+}
+
+.mediaSideInfo {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  gap: 10px;
+  padding: 10px;
+}
+
+
+
+@media (max-width: 900px) {
+  .mediaContent {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .mediaSideInfo {
+    max-width: 100%;
+    width: 100%;
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 600px) {
+  .mediaSideInfo {
+    max-width: 100%;
+    width: 100%;
+    flex-direction: column;
+  }
+}
