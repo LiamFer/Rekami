@@ -18,6 +18,11 @@ export async function getAnimeFull(id: number | string) {
   return response.data.data;
 }
 
+export async function getAnimeEpisodes(id: undefined | string | number) {
+  const response = await jikanApi.get(`anime/${id}/episodes`);
+  return response.data.data;
+}
+
 export async function getAnimeCharacters(id: undefined | string) {
   const response = await jikanApi.get(`anime/${id}/characters`);
   return response.data.data;

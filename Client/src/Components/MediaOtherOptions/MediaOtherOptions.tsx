@@ -6,6 +6,8 @@ import {
 import { Segmented, theme } from "antd";
 import { FullAnime } from "../../Types/FullAnime";
 import MediaOverview from "./MediaOverview";
+import { useState } from "react";
+import MediaEpisodes from "./MediaEpisodes";
 
 export default function MediaOtherOptions({
   animeFull,
@@ -13,9 +15,12 @@ export default function MediaOtherOptions({
   animeFull: FullAnime;
 }) {
   const { token } = theme.useToken();
+  const [option, setOption] = useState(0);
+  const options = [<MediaOverview animeFull={animeFull} />,<MediaEpisodes animeFull={animeFull}/>]
   return (
     <div>
       <Segmented
+        onChange={setOption}
         options={[
           {
             label: (
@@ -31,7 +36,7 @@ export default function MediaOtherOptions({
                 Overview
               </div>
             ),
-            value: "Overview",
+            value: 0,
           },
           {
             label: (
@@ -47,7 +52,7 @@ export default function MediaOtherOptions({
                 Episodes
               </div>
             ),
-            value: "Episodes",
+            value: 1,
           },
           {
             label: (
@@ -63,7 +68,7 @@ export default function MediaOtherOptions({
                 Related
               </div>
             ),
-            value: "Related",
+            value: 2,
           },
         ]}
         block
@@ -72,7 +77,7 @@ export default function MediaOtherOptions({
           padding: "5px",
         }}
       />
-      <MediaOverview animeFull={animeFull}/>
+      {options[option]}
     </div>
   );
 }
