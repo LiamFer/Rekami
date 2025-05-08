@@ -12,13 +12,16 @@ export default function EpisodeCard({ ep }: { ep: AnimeEpisode }) {
   }).format(date);
 
   return (
-    <Card style={{ flexGrow: 1 }} styles={{ body: { padding: "12px" } }}>
+    <Card
+      style={{ flexGrow: 1, overflow: "hidden" }}
+      styles={{ body: { padding: "12px" } }}
+    >
       <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <Tag style={{ borderRadius: "10px", width: "fit-content" }}>
             EP {ep.mal_id}
           </Tag>
-          {true && (
+          {ep.filler && (
             <Tag
               color="orange"
               style={{ borderRadius: "10px", width: "fit-content" }}
@@ -27,7 +30,16 @@ export default function EpisodeCard({ ep }: { ep: AnimeEpisode }) {
             </Tag>
           )}
         </div>
-        <h3 style={{ margin: 0 }}>{ep.title}</h3>
+        <h3
+          style={{
+            margin: 0,
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {ep.title}
+        </h3>
         <Text type="secondary">
           <CalendarOutlined /> {airedDate}
         </Text>

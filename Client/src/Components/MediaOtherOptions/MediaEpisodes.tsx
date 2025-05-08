@@ -1,4 +1,4 @@
-import { Card, Tag } from "antd";
+import { Row, Col } from "antd";
 import { useAnimeEpisodes } from "../../Hooks/useAnimeEpisodes";
 import { FullAnime } from "../../Types/FullAnime";
 import EpisodeCard from "../EpisodeCard/EpisodeCard";
@@ -8,11 +8,14 @@ export default function MediaEpisodes({ animeFull }: { animeFull: FullAnime }) {
   return (
     <div>
       <h1>Episodes</h1>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
+
+      <Row gutter={[16, 16]}>
         {episodes?.map((ep) => (
-          <EpisodeCard key={ep.mal_id} ep={ep} />
+          <Col key={ep.mal_id} xs={24} sm={12} md={8}>
+            <EpisodeCard ep={ep} />
+          </Col>
         ))}
-      </div>
+      </Row>
     </div>
   );
 }
