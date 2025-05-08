@@ -1,6 +1,7 @@
 import { Card, Tag } from "antd";
 import { useAnimeEpisodes } from "../../Hooks/useAnimeEpisodes";
 import { FullAnime } from "../../Types/FullAnime";
+import EpisodeCard from "../EpisodeCard/EpisodeCard";
 
 export default function MediaEpisodes({ animeFull }: { animeFull: FullAnime }) {
   const { loading, episodes } = useAnimeEpisodes(animeFull.mal_id);
@@ -9,24 +10,7 @@ export default function MediaEpisodes({ animeFull }: { animeFull: FullAnime }) {
       <h1>Episodes</h1>
       <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
         {episodes?.map((ep) => (
-          <Card style={{ flexGrow: 1 }}>
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <div>
-                <Tag style={{ borderRadius: "10px", width: "fit-content" }}>
-                  EP {ep.mal_id}
-                </Tag>
-                {true && (
-                  <Tag
-                    color="orange"
-                    style={{ borderRadius: "10px", width: "fit-content" }}
-                  >
-                    Filler
-                  </Tag>
-                )}
-              </div>
-              <h3 style={{ margin: 0 }}>{ep.title}</h3>
-            </div>
-          </Card>
+          <EpisodeCard key={ep.mal_id} ep={ep} />
         ))}
       </div>
     </div>
