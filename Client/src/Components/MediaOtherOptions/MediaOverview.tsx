@@ -6,16 +6,25 @@ const { Text } = Typography;
 export default function MediaOverview({ animeFull }: { animeFull: FullAnime }) {
   return (
     <div>
-      <h1>Background</h1>
-      <Text type="secondary">{animeFull.background}</Text>
-      <h1>Where to Watch</h1>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
-        {animeFull.streaming.map((source) => (
-          <a href={source.url} target="_blank">
-            <Button icon={<LinkOutlined />}>{source.name}</Button>
-          </a>
-        ))}
-      </div>
+      {animeFull.background && (
+        <>
+          <h1>Background</h1>
+          <Text type="secondary">{animeFull.background}</Text>
+        </>
+      )}
+
+      {animeFull.streaming.length && (
+        <>
+          <h1>Where to Watch</h1>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+            {animeFull.streaming.map((source) => (
+              <a href={source.url} target="_blank">
+                <Button icon={<LinkOutlined />}>{source.name}</Button>
+              </a>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 }
