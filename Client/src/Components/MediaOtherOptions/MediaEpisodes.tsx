@@ -9,15 +9,24 @@ export default function MediaEpisodes({ animeFull }: { animeFull: FullAnime }) {
       <h1>Episodes</h1>
       <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
         {episodes?.map((ep) => (
-          <Card
-            style={{ flexGrow: 1 }}
-            title={
-              <>
-                <Tag>EP {ep.mal_id}</Tag>
-                {ep.title}
-              </>
-            }
-          ></Card>
+          <Card style={{ flexGrow: 1 }}>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <div>
+                <Tag style={{ borderRadius: "10px", width: "fit-content" }}>
+                  EP {ep.mal_id}
+                </Tag>
+                {true && (
+                  <Tag
+                    color="orange"
+                    style={{ borderRadius: "10px", width: "fit-content" }}
+                  >
+                    Filler
+                  </Tag>
+                )}
+              </div>
+              <h3 style={{ margin: 0 }}>{ep.title}</h3>
+            </div>
+          </Card>
         ))}
       </div>
     </div>
