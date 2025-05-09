@@ -1,5 +1,6 @@
 import { Card, Tag, Typography } from "antd";
 import { AnimeRelation } from "../../Types/AnimeRelation";
+import { useNavigate } from "react-router-dom";
 const { Text } = Typography;
 
 export default function RelationCard({
@@ -7,10 +8,18 @@ export default function RelationCard({
 }: {
   relation: AnimeRelation;
 }) {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    if (relation.type == "anime") {
+      navigate(`/media/${relation.mal_id}`);
+    }
+  };
+
   return (
     <Card
-      style={{ flexGrow: 1, overflow: "hidden" }}
+      style={{ flexGrow: 1, overflow: "hidden",cursor: relation.type == "anime" ? "pointer" : null }}
       styles={{ body: { padding: "12px" } }}
+      onClick={handleClick}
     >
       <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
