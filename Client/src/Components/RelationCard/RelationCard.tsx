@@ -1,7 +1,6 @@
-import { Card, Tag, Typography } from "antd";
+import { Card, Tag } from "antd";
 import { AnimeRelation } from "../../Types/AnimeRelation";
 import { useNavigate } from "react-router-dom";
-const { Text } = Typography;
 
 export default function RelationCard({
   relation,
@@ -17,7 +16,7 @@ export default function RelationCard({
 
   return (
     <Card
-      style={{ flexGrow: 1, overflow: "hidden",cursor: relation.type == "anime" ? "pointer" : null }}
+      style={{ flexGrow: 1, overflow: "hidden",cursor: relation.type == "anime" ? "pointer" : undefined }}
       styles={{ body: { padding: "12px" } }}
       onClick={handleClick}
     >
