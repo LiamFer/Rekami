@@ -6,6 +6,7 @@ const { Text } = Typography;
 export default function MediaOverview({ animeFull }: { animeFull: FullAnime }) {
   return (
     <div>
+
       {animeFull.background && (
         <>
           <h1>Background</h1>
@@ -13,7 +14,7 @@ export default function MediaOverview({ animeFull }: { animeFull: FullAnime }) {
         </>
       )}
 
-      {animeFull.streaming.length && (
+      {animeFull.streaming.length > 0 && (
         <>
           <h1>Where to Watch</h1>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
@@ -25,6 +26,7 @@ export default function MediaOverview({ animeFull }: { animeFull: FullAnime }) {
           </div>
         </>
       )}
+
     </div>
   );
 }

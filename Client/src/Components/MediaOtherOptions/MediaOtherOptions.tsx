@@ -8,6 +8,7 @@ import { FullAnime } from "../../Types/FullAnime";
 import MediaOverview from "./MediaOverview";
 import { useState } from "react";
 import MediaEpisodes from "./MediaEpisodes";
+import MediaRelated from "./MediaRelated";
 
 export default function MediaOtherOptions({
   animeFull,
@@ -16,7 +17,7 @@ export default function MediaOtherOptions({
 }) {
   const { token } = theme.useToken();
   const [option, setOption] = useState(0);
-  const options = [<MediaOverview animeFull={animeFull} />,<MediaEpisodes animeFull={animeFull}/>]
+  const options = [<MediaOverview animeFull={animeFull} />,<MediaEpisodes animeFull={animeFull}/>,<MediaRelated animeFull={animeFull}/>]
   return (
     <div>
       <Segmented

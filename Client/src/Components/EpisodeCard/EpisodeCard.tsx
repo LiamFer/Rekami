@@ -4,12 +4,11 @@ import { CalendarOutlined } from "@ant-design/icons";
 const { Text } = Typography;
 
 export default function EpisodeCard({ ep }: { ep: AnimeEpisode }) {
-  const date = new Date(ep.aired);
-  const airedDate = new Intl.DateTimeFormat("en-US", {
+  const airedDate = ep.aired ? new Intl.DateTimeFormat("en-US", {
     month: "long",
     day: "numeric",
     year: "numeric",
-  }).format(date);
+  }).format(new Date(ep.aired)) : "No Date provided"
 
   return (
     <Card
