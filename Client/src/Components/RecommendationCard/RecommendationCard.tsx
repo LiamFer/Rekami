@@ -9,6 +9,9 @@ import { motion } from "framer-motion";
 import CardTour from "./CardTour";
 import { useRandomAnime } from "../../Hooks/useRandomAnime";
 import { useNavigate } from "react-router-dom";
+import { interestValue } from "../../Types/interestValue";
+import { saveInterest } from "../../Services/media.service";
+import { mediaType } from "../../Types/mediaType";
 
 export default function RecommendationCard() {
   const { token } = theme.useToken();
@@ -40,7 +43,8 @@ export default function RecommendationCard() {
     visible: { opacity: 1, y: 0 },
   };
 
-  const handleInterest = () => {
+  const handleInterest = async (value: interestValue) => {
+    await saveInterest(value,animeFull?.mal_id,mediaType.anime)
     setID((prev) => (prev == 6 ? 42310 : 6));
   };
 
@@ -173,10 +177,10 @@ export default function RecommendationCard() {
             variants={itemVariants}
             style={{ display: "flex", gap: "10px" }}
           >
-            <NotInterestedButton onClick={handleInterest} ref={notInterested} />
+            <NotInterestedButton onClick={() => handleInterest(interestValue.notInterested)} ref={notInterested} />
             <Button
               ref={interested}
-              onClick={handleInterest}
+              onClick={() => handleInterest(interestValue.interested)}
               style={{ height: "32px" }}
               type="primary"
             >
