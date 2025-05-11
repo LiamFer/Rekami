@@ -1,8 +1,14 @@
 import { StandardAnime } from "../../Types/StandardAnime";
 import { CalendarOutlined } from "@ant-design/icons";
 import { Card, Tag, Image } from "antd";
+import { useNavigate } from "react-router-dom";
 
 export default function ScheduleCard({ media }: { media: StandardAnime }) {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`/media/${media.mal_id}`);
+  };
+
   return (
     <Card
       key={media.mal_id}
@@ -31,7 +37,9 @@ export default function ScheduleCard({ media }: { media: StandardAnime }) {
             whiteSpace: "nowrap",
             overflow: "hidden",
             textOverflow: "ellipsis",
+            cursor:"pointer"
           }}
+          onClick={handleClick}
         >
           {media.title}
         </h3>
