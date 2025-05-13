@@ -29,7 +29,7 @@ export default function MediaSideInfo({ animeFull }: { animeFull: FullAnime }) {
           src={animeFull?.images.jpg.large_image_url}
           width={"100%"}
         ></Image>
-        <MediaActionOptions />
+        <MediaActionOptions anime={animeFull} />
       </div>
 
       <div>

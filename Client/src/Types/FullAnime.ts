@@ -1,3 +1,5 @@
+import { interestValue } from "./interestValue";
+
 export type FullAnime = {
   mal_id: number;
   url: string;
@@ -124,4 +126,5 @@ export type FullAnime = {
     url: string;
   }[];
   streaming: { name: string; url: string }[];
+  interest?: interestValue
 };

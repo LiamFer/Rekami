@@ -5,8 +5,9 @@ import {
   BookOutlined,
 } from "@ant-design/icons";
 import { Button, theme } from "antd";
+import { FullAnime } from "../../Types/FullAnime";
 
-export default function MediaActionOptions() {
+export default function MediaActionOptions({ anime }: { anime: FullAnime }) {
   const { token } = theme.useToken();
   return (
     <div
@@ -21,14 +22,14 @@ export default function MediaActionOptions() {
       <Button
         variant="solid"
         type="text"
-        color="red"
+        color={anime?.interest ? "red" : undefined}
         icon={<DislikeOutlined />}
         style={{ flex: 1 }}
       />
       <Button
         variant="solid"
         type="text"
-        color="blue"
+        color={anime?.interest ? "blue" : undefined}
         icon={<LikeOutlined />}
         style={{ flex: 1 }}
       />
