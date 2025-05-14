@@ -1,71 +1,33 @@
-# Rekami
+# 📚 Rekami
 
-**Rekami** é um aplicativo focado em fornecer **recomendações inteligentes de animes e mangás** para os usuários, combinando uma experiência de autenticação moderna com um sistema inteligente de sugestões. O nome vem da junção de "Recomendações" + "Animes/Mangás".
-
----
-
-## 📌 Objetivo
-
-Criar uma plataforma onde os usuários possam:
-
-- Se autenticar usando métodos modernos (incluindo Google OAuth).
-- Receber recomendações personalizadas de animes e mangás com base em suas preferências e histórico.
-- Interagir com um backend robusto em NestJS.
-- Contar com um microserviço em Python (em desenvolvimento) para gerar as recomendações utilizando Machine Learning/NLP.
-
----
-
-## 🧠 Tecnologias Utilizadas
-
-### Backend (`/Server/Backend`)
-- **NestJS** (Framework principal do backend)
-- **TypeScript**
-- **JWT** (para autenticação com tokens)
-- **OAuth2 com Google** (login via conta Google)
-- **Redis** (cache e armazenamento de tokens de refresh)
-- **Cloudinary** (armazenamento de imagens)
-- **TypeORM** (mapeamento do banco de dados relacional)
-- **PostgreSQL** (banco de dados relacional)
-- **Podman** (Containerizar Redis e Postgres)
-- **Jinkan** – Biblioteca para buscar dados detalhados de animes e mangás a partir de diversas fontes (MyAnimeList, Anilist, etc.)
-
-### Microserviço de Recomendação (`/Server/Microservices`)
-- **Python** (ainda em desenvolvimento)
-- **FastAPI** (será o framework principal para expor a API de recomendação)
-- **Scikit-learn / Pandas / Numpy** (para lógica de recomendação com Machine Learning)
-- **NLP** para interpretar gostos e tags dos animes/mangás
+[![React](https://img.shields.io/badge/Frontend-React-%61DAFB?logo=react&logoColor=white)](https://reactjs.org/)
+[![NestJS](https://img.shields.io/badge/Backend-NestJS-E0234E?logo=nestjs&logoColor=white)](https://nestjs.com/)
+[![MongoDB](https://img.shields.io/badge/Database-MongoDB-47A248?logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![PostgreSQL](https://img.shields.io/badge/Database-PostgreSQL-4169E1?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Redis](https://img.shields.io/badge/Cache-Redis-DC382D?logo=redis&logoColor=white)](https://redis.io/)
+[![Podman](https://img.shields.io/badge/Container-Podman-89A1C8?logo=podman&logoColor=white)](https://podman.io/)
+[![JWT](https://img.shields.io/badge/Auth-JWT-000000?logo=jsonwebtokens&logoColor=white)](https://jwt.io/)
+[![Cloudinary](https://img.shields.io/badge/Images-Cloudinary-3448C5?logo=cloudinary&logoColor=white)](https://cloudinary.com/)
+[![Google OAuth](https://img.shields.io/badge/Auth-GoogleOAuth-4285F4?logo=google&logoColor=white)](https://developers.google.com/identity)
+[![Python](https://img.shields.io/badge/Microservice-Python-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![Ant Design](https://img.shields.io/badge/UI-AntDesign-0170FE?logo=antdesign&logoColor=white)](https://ant.design/)
+[![JikanAPI](https://img.shields.io/badge/API-Jikan-1B1F23?logo=graphql&logoColor=white)](https://jikan.moe/)
 
 ---
 
-## 📂 Estrutura de Pastas
+## ✨ Sobre o Projeto
 
-```bash
-Rekami
-├─ LICENSE
-├─ README.md
-└─ Server
-   ├─ Backend
-   │  ├─ src
-   │  │  ├─ Config/              # Configurações de JWT e tokens de refresh
-   │  │  ├─ Database/            # Módulo e entidades do banco de dados
-   │  │  ├─ DTO/                 # Data Transfer Objects (DTOs)
-   │  │  ├─ guards/              # Guards para autenticação (JWT, Google, etc.)
-   │  │  ├─ Modules/
-   │  │  │  ├─ Auth/             # Lógica de autenticação
-   │  │  │  ├─ Redis/            # Módulo Redis
-   │  │  │  ├─ User/             # Lógica relacionada a usuários
-   │  │  │  └─ Cloudinary/       # Upload de imagens para Cloudinary
-   │  │  ├─ Strategies/          # Estratégias de autenticação (JWT, Google, etc.)
-   │  │  ├─ utils/               # Utilitários como manipuladores de resposta
-   │  │  └─ main.ts              # Arquivo principal do app
-   │  ├─ dist/                   # Código transpilado (JS)
-   │  ├─ .env                    # Variáveis de ambiente
-   │  ├─ database.sh             # Script para iniciar/configurar banco
-   │  ├─ package.json            # Dependências e scripts
-   │  └─ tsconfig.json           # Configuração do TypeScript
-   └─ Microservices
-       └─ (em desenvolvimento)
-```
+**Rekami** é um aplicativo focado em fornecer **recomendações inteligentes de animes e mangás** para os usuários, combinando uma experiência de autenticação moderna com um sistema inteligente de sugestões.
+
+- 🌐 **Frontend** em React com Ant Design.
+- 🛠 **Backend** em NestJS com autenticação JWT + Refresh Token e Google OAuth.
+- 🧠 **Recomendações** baseadas em interesses com um microserviço em Python.
+- 🖼 **Fotos de perfil** armazenadas via Cloudinary.
+- 📦 Banco de dados MongoDB e PostgreSQL, ambos containerizados com **Podman**.
+- ⚡ Armazenamento de cache com Redis.
+- 📡 Integração com **Jikan API** para obter dados sobre animes.
+
+---
 
 ## 🔐 Autenticação
 
