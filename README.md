@@ -21,7 +21,9 @@
 
 **Rekami** é um aplicativo completo para fãs de animes e mangás, que vai muito além de simples recomendações. Ele oferece uma experiência personalizada e interativa com uma interface minimalista e intuitiva.
 
-Na página inicial, o usuário é apresentado a um card com informações de um anime, podendo indicar se tem **Interesse** ou **Não**. Essas escolhas alimentam um microserviço em **Python** que ajusta dinamicamente as recomendações futuras com base nos gostos individuais.
+Na página inicial, o usuário é apresentado a um card com informações, podendo indicar se tem **Interesse** ou **Não**. Essas escolhas alimentam um microserviço em **Python** que ajusta dinamicamente as recomendações futuras com base nos gostos individuais.
+
+![App Preview](appShowcase.gif)
 
 ### 🔧 Funcionalidades principais
 
@@ -44,6 +46,4 @@ Na página inicial, o usuário é apresentado a um card com informações de um 
 
 ---
 
-## 🎥 Demonstração
 
-![App Preview](appShowcase.gif)
