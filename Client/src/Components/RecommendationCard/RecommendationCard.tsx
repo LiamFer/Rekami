@@ -12,11 +12,13 @@ import { useNavigate } from "react-router-dom";
 import { interestValue } from "../../Types/interestValue";
 import { saveInterest } from "../../Services/media.service";
 import { mediaType } from "../../Types/mediaType";
+import { useAnimeFull } from "../../Hooks/useAnimeFull";
 
 export default function RecommendationCard() {
   const { token } = theme.useToken();
-  const [animeID, setID] = useState(42310);
-  const { animeFull, loading } = useRandomAnime(animeID);
+  const [animeID, setID] = useState(41467);
+  const { animeFull, loading } = useAnimeFull(animeID);
+  const [showTour, setShowTour] = useState(false);
   const navigate = useNavigate();
   const handleClick = () => {
     navigate(`media/${animeFull?.mal_id}`);
@@ -44,8 +46,8 @@ export default function RecommendationCard() {
   };
 
   const handleInterest = async (value: interestValue) => {
-    await saveInterest(value,animeFull?.mal_id,mediaType.anime)
-    setID((prev) => (prev == 6 ? 42310 : 6));
+    await saveInterest(value, animeFull?.mal_id, mediaType.anime);
+    setID((prev) => (prev == 41467 ? 42310 : 41467));
   };
 
   if (loading || !animeFull)
@@ -87,6 +89,7 @@ export default function RecommendationCard() {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
+      onAnimationComplete={() => setShowTour(true)}
     >
       <div
         ref={card}
@@ -125,7 +128,7 @@ export default function RecommendationCard() {
                 whiteSpace: "nowrap",
                 overflow: "hidden",
                 textOverflow: "ellipsis",
-                cursor:"pointer"
+                cursor: "pointer",
               }}
             >
               {animeFull?.title}
@@ -177,7 +180,10 @@ export default function RecommendationCard() {
             variants={itemVariants}
             style={{ display: "flex", gap: "10px" }}
           >
-            <NotInterestedButton onClick={() => handleInterest(interestValue.notInterested)} ref={notInterested} />
+            <NotInterestedButton
+              onClick={() => handleInterest(interestValue.notInterested)}
+              ref={notInterested}
+            />
             <Button
               ref={interested}
               onClick={() => handleInterest(interestValue.interested)}
@@ -198,12 +204,14 @@ export default function RecommendationCard() {
           transition={{ duration: 0.5, ease: "easeOut" }}
         />
       </div>
-      <CardTour
-        card={card}
-        buttons={buttons}
-        interested={interested}
-        notInterested={notInterested}
-      />
+      {showTour && (
+        <CardTour
+          card={card}
+          buttons={buttons}
+          interested={interested}
+          notInterested={notInterested}
+        />
+      )}
     </motion.div>
   );
 }
