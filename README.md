@@ -46,4 +46,4 @@ Na página inicial, o usuário é apresentado a um card com informações de um 
 
 ## 🎥 Demonstração
 
-
+![App Preview](appShowcase.gif)
