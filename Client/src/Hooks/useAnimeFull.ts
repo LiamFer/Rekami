@@ -14,13 +14,14 @@ export function useAnimeFull(id: number | string) {
       .then(async (res) => {
         const anime = res;
         if (user) {
-          anime.interest = (await getInterest(anime.mal_id)).data?.value;
+          const interest = await getInterest(anime.mal_id)
+          console.log(interest.data)
+          anime.interest = interest.data?.value
         }
-        console.log(anime.interest)
         setAnimeFull(anime);
       })
       .finally(() => setLoading(false));
-  }, [id]);
+  }, [id,user]);
 
   return { animeFull, loading };
 }

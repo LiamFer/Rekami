@@ -32,8 +32,8 @@ export async function getInterest(
   mediaId: string | number,
 ) {
   try {
-    const response : interestObject = await serverApi.get(`/interest/${mediaId}`);
-    return { success: true, data: response };
+    const response : interestObject = await serverApi.get(`/interest/${mediaId}`).then(res => res.data) ;
+    return { success: true, data: response};
   } catch (error: any) {
     if (axios.isAxiosError(error)) {
       const message = error.response?.data?.message || "Unknown Error";
