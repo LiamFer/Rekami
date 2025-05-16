@@ -17,7 +17,7 @@ import { useAnimeFull } from "../../Hooks/useAnimeFull";
 export default function RecommendationCard() {
   const { token } = theme.useToken();
   const [animeID, setID] = useState(41467);
-  const { animeFull, loading } = useAnimeFull(animeID);
+  const { animeFull, loading } = useRandomAnime(animeID);
   const [showTour, setShowTour] = useState(false);
   const navigate = useNavigate();
   const handleClick = () => {

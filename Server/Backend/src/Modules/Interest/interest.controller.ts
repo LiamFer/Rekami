@@ -25,6 +25,11 @@ export class InterestController {
     return await this.interestService.getInterests(req.user.id);
   }
 
+  @Get(':id')
+  async getInterest(@Req() req, @Param('id') id: number) {
+    return await this.interestService.getInterest(req.user.id,id);
+  }
+
   @Post('add')
   async createInterest(@Req() req, @Body() body: InterestDTO, @Res() res) {
     return await this.interestService.addInterest(res, body, req.user);

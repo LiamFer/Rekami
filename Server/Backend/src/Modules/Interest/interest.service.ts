@@ -12,7 +12,7 @@ import { InterestDTO } from 'src/DTO/interest.dto';
 import { UserInfoDTO } from 'src/DTO/userInfo.dto';
 import { interestValue } from 'src/Types/interestValue';
 import { ResUtil } from 'src/utils/response';
-import { Repository } from 'typeorm';
+import { Not, Repository } from 'typeorm';
 import { MediaService } from '../Media/media.service';
 
 @Injectable()
@@ -42,6 +42,14 @@ export class InterestService {
     );
 
     return interestData;
+  }
+
+  async getInterest(userID: string, id: number) {
+    const interest = await this.interestRepository.findOneBy({
+      user: { id: userID },mediaId:id
+    });
+    if(!interest) throw new NotFoundException()
+    return interest;
   }
 
   async addInterest(
