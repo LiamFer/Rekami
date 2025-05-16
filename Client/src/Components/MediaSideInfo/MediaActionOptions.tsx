@@ -6,9 +6,12 @@ import {
 } from "@ant-design/icons";
 import { Button, theme } from "antd";
 import { FullAnime } from "../../Types/FullAnime";
+import { interestValue } from "../../Types/interestValue";
 
 export default function MediaActionOptions({ anime }: { anime: FullAnime }) {
   const { token } = theme.useToken();
+
+
   return (
     <div
       style={{
@@ -22,14 +25,14 @@ export default function MediaActionOptions({ anime }: { anime: FullAnime }) {
       <Button
         variant="solid"
         type="text"
-        color={anime?.interest ? "red" : undefined}
+        color={anime?.interest == interestValue.notInterested ? "red" : undefined}
         icon={<DislikeOutlined />}
         style={{ flex: 1 }}
       />
       <Button
         variant="solid"
         type="text"
-        color={anime?.interest ? "blue" : undefined}
+        color={anime?.interest == interestValue.interested ? "blue" : undefined}
         icon={<LikeOutlined />}
         style={{ flex: 1 }}
       />

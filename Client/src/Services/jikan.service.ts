@@ -1,4 +1,5 @@
 import { jikanApi } from "../Api/jikan";
+import { FullAnime } from "../Types/FullAnime";
 import { StandardAnime } from "../Types/StandardAnime";
 
 export async function getSeasonalAnime(
@@ -13,7 +14,7 @@ export async function getTopAnime() {
   return response.data.data;
 }
 
-export async function getAnimeFull(id: number | string) {
+export async function getAnimeFull(id: number | string) : Promise<FullAnime> {
   const response = await jikanApi.get(`anime/${id}/full`);
   return response.data.data;
 }

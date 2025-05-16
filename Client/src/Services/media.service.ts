@@ -3,6 +3,7 @@ import { serverApi } from "../Api/server";
 import { interestValue } from "../Types/interestValue";
 import { mediaType } from "../Types/mediaType";
 import { getAnimeFull } from "./jikan.service";
+import { interestObject } from "../Types/interestObject";
 
 export async function saveInterest(
   value: interestValue,
@@ -23,6 +24,21 @@ export async function saveInterest(
       return { success: false, error: message };
     }
 
+    return { success: false, error: "Unexpected Error." };
+  }
+}
+
+export async function getInterest(
+  mediaId: string | number,
+) {
+  try {
+    const response : interestObject = await serverApi.get(`/interest/${mediaId}`);
+    return { success: true, data: response };
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      const message = error.response?.data?.message || "Unknown Error";
+      return { success: false, error: message };
+    }
     return { success: false, error: "Unexpected Error." };
   }
 }
