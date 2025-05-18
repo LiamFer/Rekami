@@ -6,7 +6,7 @@ const formatter: StatisticProps["formatter"] = (value) => (
   <CountUp end={value as number} separator="." />
 );
 
-export default function MediaStatistic({ title, value }) {
+export default function MediaStatistic({ title, value } : {title:string,value:number}) {
   return (
     <Statistic
       valueStyle={{ fontSize: "2.5rem" }}

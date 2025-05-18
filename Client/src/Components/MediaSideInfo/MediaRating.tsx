@@ -1,8 +1,7 @@
-import { Rate, theme } from "antd";
+import { Rate } from "antd";
 import { FullAnime } from "../../Types/FullAnime";
 
 export default function MediaRating({ animeFull }: { animeFull: FullAnime }) {
-  const { token } = theme.useToken();
 
   return (
     <div

@@ -4,7 +4,7 @@ import { FullAnime } from "../../Types/FullAnime";
 import EpisodeCard from "../EpisodeCard/EpisodeCard";
 
 export default function MediaEpisodes({ animeFull }: { animeFull: FullAnime }) {
-  const { loading, episodes } = useAnimeEpisodes(animeFull.mal_id);
+  const { episodes } = useAnimeEpisodes(animeFull.mal_id);
   return (
     <div>
       <h1>Episodes</h1>

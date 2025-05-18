@@ -12,7 +12,6 @@ import { useNavigate } from "react-router-dom";
 import { interestValue } from "../../Types/interestValue";
 import { saveInterest } from "../../Services/media.service";
 import { mediaType } from "../../Types/mediaType";
-import { useAnimeFull } from "../../Hooks/useAnimeFull";
 
 export default function RecommendationCard() {
   const { token } = theme.useToken();
