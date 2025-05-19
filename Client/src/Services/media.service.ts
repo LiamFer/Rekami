@@ -47,6 +47,22 @@ export async function editInterest(
   }
 }
 
+export async function removeInterest(
+  interestID: string | number | undefined,
+) {
+  try {
+    const response = await serverApi.delete(`/interest/${interestID}`);
+    return { success: true, data: response.data };
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      const message = error.response?.data?.message || "Unknown Error";
+      return { success: false, error: message };
+    }
+
+    return { success: false, error: "Unexpected Error." };
+  }
+}
+
 export async function getInterest(
   mediaId: string | number,
 ) {

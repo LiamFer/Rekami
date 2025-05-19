@@ -7,24 +7,26 @@ import {
 import { Button, theme } from "antd";
 import { FullAnime } from "../../Types/FullAnime";
 import { interestValue } from "../../Types/interestValue";
-import { editInterest, saveInterest } from "../../Services/media.service";
+import { editInterest, removeInterest, saveInterest } from "../../Services/media.service";
 import { mediaType } from "../../Types/mediaType";
 import { useState } from "react";
 
 export default function MediaActionOptions({ anime }: { anime: FullAnime }) {
-  const [interested,setInterested] = useState(anime.interest?.value)
+  const [interested,setInterested] = useState(anime.interest)
   const { token } = theme.useToken();
 
   const handleInterest = async (value: interestValue) => {
-    if (value == interested) {
-      return;
-    }
-    if (anime.interest == undefined) {
-      await saveInterest(value, anime.mal_id, mediaType.anime);
+    if (value == interested?.value) {
+      await removeInterest(interested.id)
+      setInterested(undefined)
+      return
+    } else if (interested == undefined) {
+      const newInterest = await saveInterest(value, anime.mal_id, mediaType.anime).then(res => res.data.data)
+      setInterested(newInterest)
     } else {
-      await editInterest(value,anime.interest.id)
+      const editedInterest = await editInterest(value,interested.id).then(res => res.data)
+      setInterested(editedInterest)
     }
-    setInterested(value)
   };
 
   return (
@@ -42,7 +44,7 @@ export default function MediaActionOptions({ anime }: { anime: FullAnime }) {
         variant="solid"
         type="text"
         color={
-          interested == interestValue.notInterested
+          interested?.value == interestValue.notInterested
             ? "red"
             : undefined
         }
@@ -54,7 +56,7 @@ export default function MediaActionOptions({ anime }: { anime: FullAnime }) {
         variant="solid"
         type="text"
         color={
-          interested == interestValue.interested
+          interested?.value == interestValue.interested
             ? "blue"
             : undefined
         }
