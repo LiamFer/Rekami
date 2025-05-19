@@ -16,7 +16,7 @@ export function useAnimeFull(id: number | string) {
         if (user) {
           const interest = await getInterest(anime.mal_id)
           console.log(interest.data)
-          anime.interest = interest.data?.value
+          anime.interest = interest.data
         }
         setAnimeFull(anime);
       })
