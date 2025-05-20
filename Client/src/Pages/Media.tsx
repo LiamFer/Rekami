@@ -3,7 +3,7 @@ import Loading from "../Components/Loading/Loading";
 import { useAnimeFull } from "../Hooks/useAnimeFull";
 import MediaSideInfo from "./../Components/MediaSideInfo/MediaSideInfo";
 import MediaRating from "./../Components/MediaSideInfo/MediaRating";
-import { Segmented, Typography } from "antd";
+import { Typography } from "antd";
 import MediaStatistic from "../Components/MediaSideInfo/MediaStatistic";
 import MediaCharacters from "../Components/MediaSideInfo/MediaCharacters";
 import TrailerBox from "../Components/TrailerBox/TrailerBox";
