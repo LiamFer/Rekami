@@ -26,21 +26,25 @@ export default function MediaActionOptions({ anime }: { anime: FullAnime }) {
       return;
     }
     if (value == interested?.value) {
-      await removeInterest(interested.id);
       setInterested(undefined);
+      await removeInterest(interested.id);
       return;
     } else if (interested == undefined) {
-      const newInterest = await saveInterest(
+      setInterested({
+        id: 0,
+        mediaId: anime.mal_id,
+        mediaType: mediaType.anime,
         value,
-        anime.mal_id,
-        mediaType.anime
-      ).then((res) => res.data.data);
-      setInterested(newInterest);
+      });
+      await saveInterest(value, anime.mal_id, mediaType.anime)
+        .then((res) => setInterested(res.data.data))
+        .catch((err) => setInterested(undefined));
     } else {
-      const editedInterest = await editInterest(value, interested.id).then(
-        (res) => res.data
-      );
-      setInterested(editedInterest);
+      const previous = interested;
+      setInterested({ ...previous, value: previous.value });
+      await editInterest(value, interested.id)
+        .then((res) => setInterested(res.data))
+        .catch((err) => setInterested(previous));
     }
   };
 
