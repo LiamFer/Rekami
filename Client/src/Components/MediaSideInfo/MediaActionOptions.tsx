@@ -38,13 +38,13 @@ export default function MediaActionOptions({ anime }: { anime: FullAnime }) {
       });
       await saveInterest(value, anime.mal_id, mediaType.anime)
         .then((res) => setInterested(res.data.data))
-        .catch((err) => setInterested(undefined));
+        .catch(() => setInterested(undefined));
     } else {
       const previous = interested;
       setInterested({ ...previous, value: previous.value });
       await editInterest(value, interested.id)
         .then((res) => setInterested(res.data))
-        .catch((err) => setInterested(previous));
+        .catch(() => setInterested(previous));
     }
   };
 
