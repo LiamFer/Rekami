@@ -10,14 +10,17 @@ import { interestValue } from "../../Types/interestValue";
 import {
   editInterest,
   removeInterest,
+  saveInLibrary,
   saveInterest,
 } from "../../Services/media.service";
 import { mediaType } from "../../Types/mediaType";
 import { useState } from "react";
 import useUser from "../../Hooks/useUser";
+import MediaStatus from "../../Types/mediaStatus";
 
 export default function MediaActionOptions({ anime }: { anime: FullAnime }) {
   const [interested, setInterested] = useState(anime.interest);
+  const [savedInLibrary, setSavedInLibrary] = useState(false);
   const { user } = useUser();
   const { token } = theme.useToken();
 
@@ -45,6 +48,23 @@ export default function MediaActionOptions({ anime }: { anime: FullAnime }) {
       await editInterest(value, interested.id)
         .then((res) => setInterested(res.data))
         .catch(() => setInterested(previous));
+    }
+  };
+
+  const handleLibrary = async () => {
+    if (!user) {
+      return;
+    }
+    if (!savedInLibrary) {
+      await saveInLibrary(
+        anime.mal_id,
+        MediaStatus.ToWatch,
+        mediaType.anime,
+        false
+      ).then((res) => {
+        setSavedInLibrary(res.data.data);
+        console.log(res.data.data);
+      });
     }
   };
 
@@ -78,7 +98,14 @@ export default function MediaActionOptions({ anime }: { anime: FullAnime }) {
         icon={<LikeOutlined />}
         style={{ flex: 1 }}
       />
-      <Button type="text" icon={<BookOutlined />} style={{ flex: 1 }} />
+      <Button
+        onClick={handleLibrary}
+        color={savedInLibrary != false ? "green" : undefined}
+        variant="solid"
+        type="text"
+        icon={<BookOutlined />}
+        style={{ flex: 1 }}
+      />
     </div>
   );
 }
