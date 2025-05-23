@@ -24,6 +24,10 @@ export class MediaController {
   async getLibrary(@Req() req) {
     return await this.mediaService.getUserLibrary(req.user.id);
   }
+  @Get('library/:id')
+  async getMediaInLibrary(@Req() req,  @Param('id') id: number,) {
+    return await this.mediaService.getMedia(req.user.id,id);
+  }
 
   @Post('library')
   async addToLibrary(@Req() req, @Body() body: MediaDTO, @Res() res) {

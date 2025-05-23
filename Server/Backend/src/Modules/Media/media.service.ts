@@ -63,10 +63,16 @@ export class MediaService {
     const completeMedia = await Promise.all(
       rawMedia.map(async (media) => {
         const details = await this.getMediaDetails(media.mediaid);
-        return { ...media, details }
+        return { ...media, details };
       }),
     );
     return completeMedia;
+  }
+
+  async getMedia(userID: string, mediaID: number) {
+    await this.checkMediaOwnership(userID, mediaID);
+    const media = await this.findById(mediaID);
+    return {...media,user:undefined}
   }
 
   async checkMediaExists(mediaObject: MediaDTO, user: UserInfoDTO) {
@@ -83,7 +89,7 @@ export class MediaService {
     const media = await this.findById(mediaID);
     if (media.user.id != userID)
       throw new ForbiddenException(
-        'You cannot modify a resource that does not belong to you',
+        'You cannot modify/access a resource that does not belong to you',
       );
   }
 
@@ -98,12 +104,10 @@ export class MediaService {
       user,
     });
     const newMedia: MediaDTO = await this.mediaRepository.save(media);
-    return ResUtil.sendResponse(
-      res,
-      HttpStatus.CREATED,
-      'Media Created!',
-      newMedia,
-    );
+    return ResUtil.sendResponse(res, HttpStatus.CREATED, 'Media Created!', {
+      ...newMedia,
+      user: undefined,
+    });
   }
 
   async editMediaInLibrary(
@@ -124,7 +128,7 @@ export class MediaService {
 
   // Busca detalhes da Media no MongoDB
   async getMediaDetails(id: number) {
-    return await this.animeModel.findOne({ mal_id: id }).exec();;
+    return await this.animeModel.findOne({ mal_id: id }).exec();
   }
 
   // Adiciona Media no MongoDB caso ela não exista

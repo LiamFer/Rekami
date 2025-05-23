@@ -13,7 +13,7 @@ import {
   saveInLibrary,
   saveInterest,
 } from "../../Services/media.service";
-import { mediaType } from "../../Types/mediaType";
+import { MediaType } from "../../Types/mediaType";
 import { useState } from "react";
 import useUser from "../../Hooks/useUser";
 import MediaStatus from "../../Types/mediaStatus";
@@ -36,10 +36,10 @@ export default function MediaActionOptions({ anime }: { anime: FullAnime }) {
       setInterested({
         id: 0,
         mediaId: anime.mal_id,
-        mediaType: mediaType.anime,
+        mediaType: MediaType.anime,
         value,
       });
-      await saveInterest(value, anime.mal_id, mediaType.anime)
+      await saveInterest(value, anime.mal_id, MediaType.anime)
         .then((res) => setInterested(res.data.data))
         .catch(() => setInterested(undefined));
     } else {
@@ -59,7 +59,7 @@ export default function MediaActionOptions({ anime }: { anime: FullAnime }) {
       await saveInLibrary(
         anime.mal_id,
         MediaStatus.ToWatch,
-        mediaType.anime,
+        MediaType.anime,
         false
       ).then((res) => {
         setSavedInLibrary(res.data.data);

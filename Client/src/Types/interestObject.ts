@@ -1,9 +1,9 @@
 import { interestValue } from "./interestValue";
-import { mediaType } from "./mediaType";
+import { MediaType } from "./mediaType";
 
 export type interestObject = {
   id: number;
   mediaId: number | string;
-  mediaType: mediaType;
+  mediaType: MediaType;
   value: interestValue;
 };

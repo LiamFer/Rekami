@@ -1,7 +1,7 @@
 import axios from "axios";
 import { serverApi } from "../Api/server";
 import { interestValue } from "../Types/interestValue";
-import { mediaType } from "../Types/mediaType";
+import { MediaType } from "../Types/mediaType";
 import { getAnimeFull } from "./jikan.service";
 import { interestObject } from "../Types/interestObject";
 import MediaStatus from "../Types/mediaStatus";
@@ -9,7 +9,7 @@ import MediaStatus from "../Types/mediaStatus";
 export async function saveInterest(
   value: interestValue,
   mediaId: string | number | undefined,
-  mediaType: mediaType
+  mediaType: MediaType
 ) {
   try {
     await saveMediaMongo(mediaId!);
@@ -97,7 +97,7 @@ export async function saveMediaMongo(mediaId: string | number) {
 export async function saveInLibrary(
   mediaId: string | number | undefined,
   status: MediaStatus,
-  mediaType: mediaType,
+  mediaType: MediaType,
   favorite: boolean
 ) {
   try {

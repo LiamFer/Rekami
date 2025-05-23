@@ -11,7 +11,7 @@ import { useRandomAnime } from "../../Hooks/useRandomAnime";
 import { useNavigate } from "react-router-dom";
 import { interestValue } from "../../Types/interestValue";
 import { saveInterest } from "../../Services/media.service";
-import { mediaType } from "../../Types/mediaType";
+import { MediaType } from "../../Types/mediaType";
 
 export default function RecommendationCard() {
   const { token } = theme.useToken();
@@ -45,7 +45,7 @@ export default function RecommendationCard() {
   };
 
   const handleInterest = async (value: interestValue) => {
-    await saveInterest(value, animeFull?.mal_id, mediaType.anime);
+    await saveInterest(value, animeFull?.mal_id, MediaType.anime);
     setID((prev) => (prev == 41467 ? 42310 : 41467));
   };
 
