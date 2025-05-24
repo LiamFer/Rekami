@@ -94,6 +94,21 @@ export async function saveMediaMongo(mediaId: string | number) {
   }
 }
 
+export async function getMediaFromLibrary(mediaId: string | number) {
+  try {
+    const response: interestObject = await serverApi
+      .get(`/media/library/${mediaId}`)
+      .then((res) => res.data);
+    return { success: true, data: response };
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      const message = error.response?.data?.message || "Unknown Error";
+      return { success: false, error: message };
+    }
+    return { success: false, error: "Unexpected Error." };
+  }
+}
+
 export async function saveInLibrary(
   mediaId: string | number | undefined,
   status: MediaStatus,

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getAnimeFull } from "../Services/jikan.service";
 import { FullAnime } from "../Types/FullAnime";
 import useUser from "./useUser";
-import { getInterest } from "../Services/media.service";
+import { getInterest, getMediaFromLibrary } from "../Services/media.service";
 
 export function useAnimeFull(id: number | string) {
   const [animeFull, setAnimeFull] = useState<FullAnime>();

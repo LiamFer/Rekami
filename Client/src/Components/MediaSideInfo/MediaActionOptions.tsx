@@ -20,7 +20,7 @@ import MediaStatus from "../../Types/mediaStatus";
 
 export default function MediaActionOptions({ anime }: { anime: FullAnime }) {
   const [interested, setInterested] = useState(anime.interest);
-  const [savedInLibrary, setSavedInLibrary] = useState(false);
+  const [savedInLibrary, setSavedInLibrary] = useState(anime.library);
   const { user } = useUser();
   const { token } = theme.useToken();
 
@@ -55,7 +55,7 @@ export default function MediaActionOptions({ anime }: { anime: FullAnime }) {
     if (!user) {
       return;
     }
-    if (!savedInLibrary) {
+    if (savedInLibrary == undefined) {
       await saveInLibrary(
         anime.mal_id,
         MediaStatus.ToWatch,
@@ -100,7 +100,7 @@ export default function MediaActionOptions({ anime }: { anime: FullAnime }) {
       />
       <Button
         onClick={handleLibrary}
-        color={savedInLibrary != false ? "green" : undefined}
+        color={savedInLibrary != undefined ? "green" : undefined}
         variant="solid"
         type="text"
         icon={<BookOutlined />}
