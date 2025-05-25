@@ -63,7 +63,6 @@ export default function MediaActionOptions({ anime }: { anime: FullAnime }) {
         false
       ).then((res) => {
         setSavedInLibrary(res.data.data);
-        console.log(res.data.data);
       });
     }
   };
