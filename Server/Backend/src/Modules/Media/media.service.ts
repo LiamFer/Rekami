@@ -70,9 +70,12 @@ export class MediaService {
   }
 
   async getMedia(userID: string, mediaID: number) {
-    await this.checkMediaOwnership(userID, mediaID);
-    const media = await this.findById(mediaID);
-    return {...media,user:undefined}
+    const media = await this.mediaRepository.findOne({
+      where: { mediaId: mediaID, user: { id: userID } },
+      relations: ['user'],
+    });
+    if (!media) throw new NotFoundException('media not found!');
+    return { ...media, user: undefined };
   }
 
   async checkMediaExists(mediaObject: MediaDTO, user: UserInfoDTO) {
@@ -89,7 +92,7 @@ export class MediaService {
     const media = await this.findById(mediaID);
     if (media.user.id != userID)
       throw new ForbiddenException(
-        'You cannot modify/access a resource that does not belong to you',
+        'You cannot modify/access a resource that does not belong to you!',
       );
   }
 

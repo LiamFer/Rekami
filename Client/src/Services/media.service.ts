@@ -5,6 +5,7 @@ import { MediaType } from "../Types/mediaType";
 import { getAnimeFull } from "./jikan.service";
 import { interestObject } from "../Types/interestObject";
 import MediaStatus from "../Types/mediaStatus";
+import { libraryObject } from "../Types/libraryObject";
 
 export async function saveInterest(
   value: interestValue,
@@ -96,7 +97,7 @@ export async function saveMediaMongo(mediaId: string | number) {
 
 export async function getMediaFromLibrary(mediaId: string | number) {
   try {
-    const response: interestObject = await serverApi
+    const response: libraryObject = await serverApi
       .get(`/media/library/${mediaId}`)
       .then((res) => res.data);
     return { success: true, data: response };
