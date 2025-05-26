@@ -134,11 +134,30 @@ export async function saveInLibrary(
   }
 }
 
-export async function deleteInLibrary(
+export async function editInLibrary(
   mediaId: string | number | undefined,
+  status: MediaStatus,
+  favorite: boolean
 ) {
   try {
-    const response = await serverApi.delete(`/media/library/${mediaId}`)
+    const response = await serverApi.patch(`/media/library/${mediaId}`, {
+      favorite,
+      status,
+    });
+    return { success: true, data: response.data };
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      const message = error.response?.data?.message || "Unknown Error";
+      return { success: false, error: message };
+    }
+
+    return { success: false, error: "Unexpected Error." };
+  }
+}
+
+export async function deleteInLibrary(mediaId: string | number | undefined) {
+  try {
+    const response = await serverApi.delete(`/media/library/${mediaId}`);
     return { success: true, data: response };
   } catch (error: any) {
     if (axios.isAxiosError(error)) {

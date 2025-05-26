@@ -115,8 +115,9 @@ export class MediaService {
     changeObject: EditMediaDTO,
   ) {
     await this.checkMediaOwnership(userID, mediaID);
-    await this.mediaRepository.update({ id: mediaID }, changeObject);
-    return await this.mediaRepository.findOneBy({ id: mediaID });
+    await this.mediaRepository.update({ mediaId: mediaID,user:{id:userID} }, changeObject);
+    const media = await this.findById(userID,mediaID)
+    return { ...media, user: undefined }
   }
 
   async removeMediaFromLibrary(userID: string, mediaID: number, res: Response) {

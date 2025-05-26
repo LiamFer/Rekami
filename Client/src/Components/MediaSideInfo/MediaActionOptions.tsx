@@ -9,6 +9,7 @@ import { FullAnime } from "../../Types/FullAnime";
 import { interestValue } from "../../Types/interestValue";
 import {
   deleteInLibrary,
+  editInLibrary,
   editInterest,
   removeInterest,
   saveInLibrary,
@@ -26,7 +27,6 @@ const mediaStatusOptions = [
   { value: MediaStatus.Paused, label: "Paused" },
   { value: MediaStatus.Planning, label: "Planning" },
 ];
-
 
 export default function MediaActionOptions({ anime }: { anime: FullAnime }) {
   const [interested, setInterested] = useState(anime.interest);
@@ -83,6 +83,25 @@ export default function MediaActionOptions({ anime }: { anime: FullAnime }) {
     }
   };
 
+  const handleEdit = async (value: {
+    favorite?: boolean;
+    status?: MediaStatus;
+  }) => {
+    if(savedInLibrary==undefined) return
+    const actual = {
+      favorite: savedInLibrary.favorite,
+      status: savedInLibrary.status,
+      ...value,
+    };
+    await editInLibrary(anime.mal_id, actual.status, actual.favorite).then(
+      (res) => {
+        console.log(res.data)
+        setSavedInLibrary(res.data);
+        anime.library = res.data;
+      }
+    );
+  };
+
   return (
     <>
       <div
@@ -123,11 +142,14 @@ export default function MediaActionOptions({ anime }: { anime: FullAnime }) {
           style={{ flex: 1 }}
         />
       </div>
-      {savedInLibrary && <Select
-        defaultValue={savedInLibrary.status}
-        style={{ width: "100%", marginTop: "10px", textAlign: "center" }}
-        options={mediaStatusOptions}
-      />}
+      {savedInLibrary && (
+        <Select
+          defaultValue={savedInLibrary.status}
+          style={{ width: "100%", marginTop: "10px", textAlign: "center" }}
+          options={mediaStatusOptions}
+          onChange={(value) => handleEdit({ status: value })}
+        />
+      )}
     </>
   );
 }
