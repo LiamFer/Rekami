@@ -1,4 +1,4 @@
-import { Tag, Image, Typography, theme, Select } from "antd";
+import { Tag, Image, Typography, theme } from "antd";
 import { FullAnime } from "../../Types/FullAnime";
 import {
   CalendarOutlined,
@@ -9,16 +9,8 @@ import {
 import IconText from "./IconText";
 import MediaActionOptions from "./MediaActionOptions";
 import "../../styles/media.css";
-import MediaStatus from "../../Types/mediaStatus";
 const { Text } = Typography;
 
-const mediaStatusOptions = [
-  { value: MediaStatus.Watched, label: "Watched" },
-  { value: MediaStatus.Watching, label: "Watching" },
-  { value: MediaStatus.ToWatch, label: "To Watch" },
-  { value: MediaStatus.Paused, label: "Paused" },
-  { value: MediaStatus.Planning, label: "Planning" },
-];
 
 
 export default function MediaSideInfo({ animeFull }: { animeFull: FullAnime }) {
@@ -40,11 +32,7 @@ export default function MediaSideInfo({ animeFull }: { animeFull: FullAnime }) {
           width={"100%"}
         ></Image>
         <MediaActionOptions anime={animeFull} />
-        <Select
-          defaultValue="To Watch"
-          style={{ width: "100%",marginTop:"10px",textAlign:"center" }}
-          options={mediaStatusOptions}
-        />
+
       </div>
 
       <div>

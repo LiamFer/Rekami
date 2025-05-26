@@ -133,3 +133,19 @@ export async function saveInLibrary(
     return { success: false, error: "Unexpected Error." };
   }
 }
+
+export async function deleteInLibrary(
+  mediaId: string | number | undefined,
+) {
+  try {
+    const response = await serverApi.delete(`/media/library/${mediaId}`)
+    return { success: true, data: response };
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      const message = error.response?.data?.message || "Unknown Error";
+      return { success: false, error: message };
+    }
+
+    return { success: false, error: "Unexpected Error." };
+  }
+}

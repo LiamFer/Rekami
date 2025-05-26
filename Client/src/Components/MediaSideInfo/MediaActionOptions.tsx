@@ -4,10 +4,11 @@ import {
   LikeOutlined,
   BookOutlined,
 } from "@ant-design/icons";
-import { Button, theme } from "antd";
+import { Button, Select, theme } from "antd";
 import { FullAnime } from "../../Types/FullAnime";
 import { interestValue } from "../../Types/interestValue";
 import {
+  deleteInLibrary,
   editInterest,
   removeInterest,
   saveInLibrary,
@@ -17,6 +18,15 @@ import { MediaType } from "../../Types/mediaType";
 import { useState } from "react";
 import useUser from "../../Hooks/useUser";
 import MediaStatus from "../../Types/mediaStatus";
+
+const mediaStatusOptions = [
+  { value: MediaStatus.Watched, label: "Watched" },
+  { value: MediaStatus.Watching, label: "Watching" },
+  { value: MediaStatus.ToWatch, label: "To Watch" },
+  { value: MediaStatus.Paused, label: "Paused" },
+  { value: MediaStatus.Planning, label: "Planning" },
+];
+
 
 export default function MediaActionOptions({ anime }: { anime: FullAnime }) {
   const [interested, setInterested] = useState(anime.interest);
@@ -63,48 +73,61 @@ export default function MediaActionOptions({ anime }: { anime: FullAnime }) {
         false
       ).then((res) => {
         setSavedInLibrary(res.data.data);
+        anime.library = res.data.data;
       });
-    } 
+    } else {
+      await deleteInLibrary(anime.mal_id).then(() => {
+        setSavedInLibrary(undefined);
+        anime.library = undefined;
+      });
+    }
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        width: "100%",
-        backgroundColor: token.colorBgContainerDisabled,
-      }}
-    >
-      <Button type="text" icon={<ShareAltOutlined />} style={{ flex: 1 }} />
-      <Button
-        onClick={() => handleInterest(interestValue.notInterested)}
-        variant="solid"
-        type="text"
-        color={
-          interested?.value == interestValue.notInterested ? "red" : undefined
-        }
-        icon={<DislikeOutlined />}
-        style={{ flex: 1 }}
-      />
-      <Button
-        onClick={() => handleInterest(interestValue.interested)}
-        variant="solid"
-        type="text"
-        color={
-          interested?.value == interestValue.interested ? "blue" : undefined
-        }
-        icon={<LikeOutlined />}
-        style={{ flex: 1 }}
-      />
-      <Button
-        onClick={handleLibrary}
-        color={savedInLibrary != undefined ? "green" : undefined}
-        variant="solid"
-        type="text"
-        icon={<BookOutlined />}
-        style={{ flex: 1 }}
-      />
-    </div>
+    <>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          width: "100%",
+          backgroundColor: token.colorBgContainerDisabled,
+        }}
+      >
+        <Button type="text" icon={<ShareAltOutlined />} style={{ flex: 1 }} />
+        <Button
+          onClick={() => handleInterest(interestValue.notInterested)}
+          variant="solid"
+          type="text"
+          color={
+            interested?.value == interestValue.notInterested ? "red" : undefined
+          }
+          icon={<DislikeOutlined />}
+          style={{ flex: 1 }}
+        />
+        <Button
+          onClick={() => handleInterest(interestValue.interested)}
+          variant="solid"
+          type="text"
+          color={
+            interested?.value == interestValue.interested ? "blue" : undefined
+          }
+          icon={<LikeOutlined />}
+          style={{ flex: 1 }}
+        />
+        <Button
+          onClick={handleLibrary}
+          color={savedInLibrary != undefined ? "green" : undefined}
+          variant="solid"
+          type="text"
+          icon={<BookOutlined />}
+          style={{ flex: 1 }}
+        />
+      </div>
+      {savedInLibrary && <Select
+        defaultValue={savedInLibrary.status}
+        style={{ width: "100%", marginTop: "10px", textAlign: "center" }}
+        options={mediaStatusOptions}
+      />}
+    </>
   );
 }

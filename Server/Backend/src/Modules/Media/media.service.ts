@@ -48,9 +48,9 @@ export class MediaService {
       .getRawMany();
   }
 
-  async findById(mediaID: number) {
+  async findById(userID: string,mediaID: number) {
     const media = await this.mediaRepository.findOne({
-      where: { id: mediaID },
+      where: { mediaId: mediaID, user: { id: userID } },
       relations: ['user'],
     });
     if (!media) throw new NotFoundException('media not found!');
@@ -70,11 +70,7 @@ export class MediaService {
   }
 
   async getMedia(userID: string, mediaID: number) {
-    const media = await this.mediaRepository.findOne({
-      where: { mediaId: mediaID, user: { id: userID } },
-      relations: ['user'],
-    });
-    if (!media) throw new NotFoundException('media not found!');
+    const media = await this.findById(userID,mediaID)
     return { ...media, user: undefined };
   }
 
@@ -89,7 +85,7 @@ export class MediaService {
   }
 
   async checkMediaOwnership(userID: string, mediaID: number) {
-    const media = await this.findById(mediaID);
+    const media = await this.findById(userID,mediaID);
     if (media.user.id != userID)
       throw new ForbiddenException(
         'You cannot modify/access a resource that does not belong to you!',
@@ -125,7 +121,7 @@ export class MediaService {
 
   async removeMediaFromLibrary(userID: string, mediaID: number, res: Response) {
     await this.checkMediaOwnership(userID, mediaID);
-    await this.mediaRepository.delete({ id: mediaID });
+    await this.mediaRepository.delete({ mediaId: mediaID,user:{id:userID} });
     return ResUtil.sendResponse(res, HttpStatus.NO_CONTENT);
   }
 

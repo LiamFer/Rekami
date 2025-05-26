@@ -16,7 +16,6 @@ export function useAnimeFull(id: number | string) {
         if (user) {
           const interest = await getInterest(anime.mal_id);
           const library = await getMediaFromLibrary(id);
-          console.log(library)
           anime.interest = interest.data;
           anime.library = library.data
         }
