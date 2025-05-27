@@ -168,3 +168,16 @@ export async function deleteInLibrary(mediaId: string | number | undefined) {
     return { success: false, error: "Unexpected Error." };
   }
 }
+
+export async function getLibrary() {
+  try {
+    const response = await serverApi.get(`/media/library`);
+    return { success: true, data: response.data };
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      const message = error.response?.data?.message || "Unknown Error";
+      return { success: false, error: message };
+    }
+    return { success: false, error: "Unexpected Error." };
+  }
+}
