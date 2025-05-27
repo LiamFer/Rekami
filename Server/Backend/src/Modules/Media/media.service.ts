@@ -63,7 +63,7 @@ export class MediaService {
     const completeMedia = await Promise.all(
       rawMedia.map(async (media) => {
         const details = await this.getMediaDetails(media.mediaid);
-        return { ...media, details };
+        return { ...media, ...details };
       }),
     );
     return completeMedia;
