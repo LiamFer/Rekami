@@ -23,9 +23,7 @@ export default function LogoutButton() {
           dispatch(setUser(null));
           setUserMenuActive(false);
           navigate("/");
-        } else {
-          console.log(response);
-        }
+        } 
       },
     });
   };

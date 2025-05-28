@@ -4,7 +4,6 @@ import "./googlebutton.css";
 export default function GoogleButton() {
   const handleClick = async () => {
     const response = await googleOauth();
-    console.log(response)
   };
 
   return (

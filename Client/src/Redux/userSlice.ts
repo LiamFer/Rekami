@@ -33,7 +33,6 @@ const userSlice = createSlice({
     },
     updateUserPicture(state, action) {
       if (state.user) {
-        console.log(`PICTURE IS ${JSON.stringify(action.payload)}`)
         state.user.picture = action.payload;
       }
     },

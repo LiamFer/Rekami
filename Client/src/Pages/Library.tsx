@@ -12,7 +12,6 @@ export default function Library() {
       await getLibrary().then((res) => {
         setLibrary(res.data);
         setLoading(false);
-        console.log(res.data)
       });
     };
     fetchLibrary();

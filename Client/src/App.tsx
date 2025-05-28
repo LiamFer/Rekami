@@ -12,7 +12,6 @@ export default function App() {
   useEffect(() => {
     const fetchToken = async () => {
       const response = await refreshToken();
-      console.log(response);
       if (response.success) {
         dispatch(setUser(response.data));
       }

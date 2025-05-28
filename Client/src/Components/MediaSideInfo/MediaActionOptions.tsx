@@ -95,7 +95,6 @@ export default function MediaActionOptions({ anime }: { anime: FullAnime }) {
     };
     await editInLibrary(anime.mal_id, actual.status, actual.favorite).then(
       (res) => {
-        console.log(res.data)
         setSavedInLibrary(res.data);
         anime.library = res.data;
       }
