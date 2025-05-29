@@ -3,7 +3,9 @@ import Loading from "../Components/Loading/Loading";
 import { getLibrary } from "../Services/media.service";
 import { LibraryMediaItem } from "../Types/LibraryMediaItem";
 import MediaCard from "../Components/Card/MediaCard";
-import { BookOutlined } from "@ant-design/icons";
+import { ArrowLeftOutlined, BookOutlined } from "@ant-design/icons";
+import { Button } from "antd";
+import { type } from "./../../../Server/Backend/src/MongoDB/anime.schema";
 
 export default function Library() {
   const [library, setLibrary] = useState<LibraryMediaItem[]>([]);
@@ -25,11 +27,16 @@ export default function Library() {
         justifyContent: "center",
       }}
     >
+      <Button type="text" iconPosition="start" icon={<ArrowLeftOutlined />}>
+        Back to Home
+      </Button>
       <div
         style={{
           display: "flex",
           justifyContent: "center",
           gap: "10px",
+          backgroundColor: "red",
+          width: "100%",
         }}
       >
         <h1>
@@ -37,6 +44,7 @@ export default function Library() {
           Your Library
         </h1>
       </div>
+      {/* {library.map(media => <MediaCard media={media._doc} loading={false}/>)} */}
     </div>
   );
 }
