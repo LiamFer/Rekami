@@ -5,7 +5,6 @@ import { LibraryMediaItem } from "../Types/LibraryMediaItem";
 import MediaCard from "../Components/Card/MediaCard";
 import { ArrowLeftOutlined, BookOutlined } from "@ant-design/icons";
 import { Button } from "antd";
-import { type } from "./../../../Server/Backend/src/MongoDB/anime.schema";
 
 export default function Library() {
   const [library, setLibrary] = useState<LibraryMediaItem[]>([]);
@@ -44,7 +43,7 @@ export default function Library() {
           Your Library
         </h1>
       </div>
-      {/* {library.map(media => <MediaCard media={media._doc} loading={false}/>)} */}
+      {library.map(media => <MediaCard media={media._doc} loading={false}/>)}
     </div>
   );
 }
