@@ -3,12 +3,13 @@ import { Badge, Skeleton, Button } from "antd";
 import { StandardAnime } from "../../Types/StandardAnime";
 import "./mediaCard.css";
 import { useNavigate } from "react-router-dom";
+import { LibraryMediaItem } from "../../Types/LibraryMediaItem";
 
 export default function MediaCard({
   media,
   loading,
 }: {
-  media: StandardAnime | undefined;
+  media: StandardAnime | LibraryMediaItem["_doc"] | undefined;
   loading: boolean;
 }) {
   const navigate = useNavigate();
