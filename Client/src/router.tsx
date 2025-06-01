@@ -1,4 +1,3 @@
-// src/router.tsx
 import { createBrowserRouter } from "react-router-dom";
 import AppWireframe from "./Pages/AppWireframe";
 import Home from "./Pages/Home";

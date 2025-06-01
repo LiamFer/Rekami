@@ -11,8 +11,6 @@ import MediaActionOptions from "./MediaActionOptions";
 import "../../styles/media.css";
 const { Text } = Typography;
 
-
-
 export default function MediaSideInfo({ animeFull }: { animeFull: FullAnime }) {
   const { token } = theme.useToken();
 
