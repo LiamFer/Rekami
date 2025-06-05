@@ -45,5 +45,6 @@ Na página inicial, o usuário é apresentado a um card com informações, poden
 - Tudo **containerizado com Podman** para facilitar o deploy e escalabilidade.
 
 ---
+<div align="center"><img src="https://www.pngplay.com/wp-content/uploads/5/Under-Construction-PNG-Background.png" /></div>
 
 
